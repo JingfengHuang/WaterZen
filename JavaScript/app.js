@@ -1,10 +1,14 @@
-const amount = 15;
-const lalala = 789;
+const http = require('http');
 
-if (amount < 12) {
-  console.log('small num');
-} else {
-  console.log('large num');
+const hostname = '127.0.0.1';
+const port = 3000;
 
-  console.log('first app complete');
-}
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World');
+});
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
