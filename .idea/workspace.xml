@@ -43,6 +43,7 @@
       <updated>1629292390078</updated>
       <workItem from="1629292392869" duration="216000" />
       <workItem from="1629354974236" duration="1077000" />
+      <workItem from="1629356680291" duration="353000" />
     </task>
     <servers />
   </component>
@@ -59,6 +60,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
