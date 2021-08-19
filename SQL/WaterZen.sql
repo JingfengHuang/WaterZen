@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 17, 2021 at 10:27 AM
+-- Generation Time: Aug 19, 2021 at 07:08 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `waterzen`
+-- Database: `WaterZen`
 --
 
 -- --------------------------------------------------------
@@ -55,6 +55,24 @@ CREATE TABLE `merchant` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `report`
+--
+
+CREATE TABLE `report` (
+  `reportID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `date` text COLLATE utf8_unicode_ci NOT NULL,
+  `titie` text COLLATE utf8_unicode_ci NOT NULL,
+  `level` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `details` text COLLATE utf8_unicode_ci NOT NULL,
+  `status` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `governmentID` int(11) DEFAULT NULL,
+  `reply` text COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -81,6 +99,14 @@ ALTER TABLE `government`
 --
 ALTER TABLE `merchant`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`reportID`),
+  ADD KEY `FK_ReportID` (`userID`),
+  ADD KEY `FK_governmentID` (`governmentID`);
 
 --
 -- Indexes for table `user`
@@ -120,6 +146,13 @@ ALTER TABLE `government`
 --
 ALTER TABLE `merchant`
   ADD CONSTRAINT `FK_MerchantID` FOREIGN KEY (`id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `report`
+--
+ALTER TABLE `report`
+  ADD CONSTRAINT `FK_ReportID` FOREIGN KEY (`userID`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FK_governmentID` FOREIGN KEY (`governmentID`) REFERENCES `government` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
