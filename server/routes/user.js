@@ -13,15 +13,7 @@ const connection = mysql.createConnection({
 router.get('/', function (req, res) {
 
     // Use the connection
-    connection.query('SELECT * FROM user', (err, rows) => {
-        // when connection done, release it
-
-        if (!err) {
-            res.render('index');
-        } else {
-            console.log(err);
-        }
-    });
+    res.render('index');
 
 });
 
@@ -31,6 +23,19 @@ router.get('/login', function (req, res) {
 
 router.get('/registration', function (req, res) {
     res.render('registration');
+});
+
+router.post('/registration/validation', function (req, res) {
+    var {useremail, nickname, password} = req.body;
+    var avatarPath = "default";
+    connection.query('INSERT INTO user SET email = ?, nickname = ?, password = ?, avatarPath = ?', [useremail, nickname, password, avatarPath], (err, rows) => {
+
+        if (!err) {
+            res.render('registration');
+        } else {
+            console.log(err);
+        }
+    });
 });
 
 module.exports = router;
