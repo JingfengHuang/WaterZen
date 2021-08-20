@@ -17,8 +17,7 @@ router.get('/', function (req, res) {
         // when connection done, release it
 
         if (!err) {
-            let removedUser = req.query.removed;
-            res.render('index', { rows, removedUser });
+            res.render('index');
         } else {
             console.log(err);
         }
@@ -26,10 +25,12 @@ router.get('/', function (req, res) {
 
 });
 
-
-
 router.get('/login', function (req, res) {
     res.render('login');
+});
+
+router.get('/registration', function (req, res) {
+    res.render('registration');
 });
 
 module.exports = router;
