@@ -40,4 +40,25 @@ router.post('/registration/validation', function (req, res) {
     });
 });
 
+router.post('/login/checklogin', function (req, res) {
+    const {useremail, password} = req.body;
+    connection.query('SELECT * FROM user WHERE email = ?', [useremail], (err, rows) => {
+        if (!err) {
+            
+            let hashedpassword = rows[0].password;
+            bcrypt.compare(password, hashedpassword, function(error, res) {
+                if (!error) {
+                    console.log(res); // true
+                } else {
+                    console.log(error);
+                }
+                
+            });
+            res.render('index');
+        } else {
+            console.log(err);
+        }
+    });
+});
+
 module.exports = router;
