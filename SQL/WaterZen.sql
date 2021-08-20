@@ -2,8 +2,8 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 19, 2021 at 07:08 AM
+-- Host: 127.0.0.1
+-- Generation Time: Aug 20, 2021 at 12:18 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -81,7 +81,9 @@ CREATE TABLE `user` (
   `nickname` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` char(128) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avatarPath` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `avatarPath` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isEmailVerified` tinyint(1) NOT NULL,
+  `verificationKey` char(128) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
