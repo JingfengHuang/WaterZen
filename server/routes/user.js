@@ -1,6 +1,7 @@
 var router = require('express').Router();
 const indexController = require('../controllers/indexController');
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');
 
 // Create connection pool
 const connection = mysql.createConnection({
@@ -26,8 +27,9 @@ router.get('/registration', function (req, res) {
 });
 
 router.post('/registration/validation', function (req, res) {
-    var {useremail, nickname, password} = req.body;
-    var avatarPath = "default";
+    const {useremail, nickname} = req.body;
+    const password = bcrypt.hashSync(req.body.password, 10);
+    const avatarPath = "default";
     connection.query('INSERT INTO user SET email = ?, nickname = ?, password = ?, avatarPath = ?', [useremail, nickname, password, avatarPath], (err, rows) => {
 
         if (!err) {
