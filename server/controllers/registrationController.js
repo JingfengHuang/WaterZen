@@ -48,7 +48,6 @@ exports.registrationValidation = function (req, res) {
         const n = crypto.randomInt(0, 1000000);
         crypto.randomInt(0, 1000000, (err, n) => {
             if (err) throw err;
-            console.log(n);
         });
         const verificationCode = n.toString().padStart(6, "0");
 
