@@ -18,8 +18,8 @@ app.use(express.json());
 // Static files
 app.use(express.static('public'));
 
-// templating engine
-app.engine('hbs', exphbs( {extname: '.hbs' }));
+// Templating engine
+app.engine('hbs', exphbs( {extname: '.hbs' })); //Set the extension format of handlebars to hbs
 app.set('view engine', 'hbs');
 
 // Create connection pool

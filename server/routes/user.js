@@ -26,7 +26,7 @@ router.get('/registration', function (req, res) {
     res.render('registration');
 });
 
-// get user input from registraion page and insert into db
+// get user input from registration page and insert into db
 router.post('/registration/validation', function (req, res) {
     // get user input
     const {useremail, nickname} = req.body;
