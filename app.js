@@ -41,4 +41,10 @@ pool.getConnection((err, connection) => {
 const routes = require('./server/routes/user');
 app.use('/', routes);
 
+/* not sure -----------------------------------------------------------*/
+app.get('/public', (req, res) => {
+    res.render('publicArea');
+})
+
+
 app.listen(port, () => console.log(`Listening on ${port}`));
