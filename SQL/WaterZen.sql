@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2021 at 05:24 AM
+-- Generation Time: Aug 21, 2021 at 08:47 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `government` (
   `id` int(11) NOT NULL,
-  `officialName` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `managerName` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phoneNum` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL
+  `officialName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `managerName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phoneNum` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -42,14 +42,14 @@ CREATE TABLE `government` (
 
 CREATE TABLE `merchant` (
   `id` int(11) NOT NULL,
-  `brand` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `brand` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `businessCategory` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
   `state` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
   `city` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `postcode` int(11) NOT NULL,
-  `managerName` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phoneNum` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL
+  `managerName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phoneNum` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -78,8 +78,8 @@ CREATE TABLE `report` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `nickname` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nickname` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` char(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   `avatarPath` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `isEmailVerified` tinyint(1) NOT NULL,
@@ -131,7 +131,7 @@ ALTER TABLE `government`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

@@ -1,3 +1,4 @@
+/** Imports */
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
@@ -19,7 +20,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Templating engine
-app.engine('hbs', exphbs( {extname: '.hbs' })); //Set the extension format of handlebars to hbs
+app.engine('hbs', exphbs( {extname: '.hbs' })); // Set the extension format of handlebars to hbs
 app.set('view engine', 'hbs');
 
 // Create connection pool
@@ -35,7 +36,6 @@ pool.getConnection((err, connection) => {
     if(err) throw err; //not connected
     const today = new Date();
     console.log(`Connect as ID ${connection.threadId} at ${today}`)
-
 });
 
 const routes = require('./server/routes/user');
