@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2021 at 12:18 PM
+-- Generation Time: Aug 21, 2021 at 05:24 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `government` (
   `id` int(11) NOT NULL,
-  `officialName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `managerName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phoneNum` text COLLATE utf8mb4_unicode_ci NOT NULL
+  `officialName` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `managerName` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phoneNum` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -42,14 +42,14 @@ CREATE TABLE `government` (
 
 CREATE TABLE `merchant` (
   `id` int(11) NOT NULL,
-  `brand` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `businessCategory` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `brand` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `businessCategory` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `postcode` int(11) NOT NULL,
-  `managerName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phoneNum` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL
+  `managerName` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phoneNum` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -61,11 +61,11 @@ CREATE TABLE `merchant` (
 CREATE TABLE `report` (
   `reportID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
-  `date` text COLLATE utf8_unicode_ci NOT NULL,
+  `date` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `titie` text COLLATE utf8_unicode_ci NOT NULL,
-  `level` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `level` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `details` text COLLATE utf8_unicode_ci NOT NULL,
-  `status` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `status` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `governmentID` int(11) DEFAULT NULL,
   `reply` text COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -78,8 +78,8 @@ CREATE TABLE `report` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `nickname` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nickname` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` char(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   `avatarPath` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `isEmailVerified` tinyint(1) NOT NULL,
