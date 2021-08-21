@@ -33,7 +33,7 @@ const pool = mysql.createPool({
 // Connect to DB
 pool.getConnection((err, connection) => {
     if(err) throw err; //not connected
-    var today = new Date();
+    const today = new Date();
     console.log(`Connect as ID ${connection.threadId} at ${today}`)
 
 });

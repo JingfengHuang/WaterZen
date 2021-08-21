@@ -1,4 +1,4 @@
-var router = require('express').Router();
+const router = require('express').Router();
 const indexController = require('../controllers/indexController');
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
