@@ -1,7 +1,6 @@
 /** Imports */
 const mysql = require('mysql');
 const bcrypt = require("bcrypt");
-const req = require("express");
 
 /** Create connection pool */
 const pool = mysql.createPool({
@@ -14,7 +13,8 @@ const pool = mysql.createPool({
 /** Logic */
 // Login page
 exports.view = (req, res) => {
-    res.render('login');
+    res.render('login', {'loginAlert': req.app.get('loginAlert')});
+    req.app.set('loginAlert', ``);
 }
 
 // Login verification
@@ -31,8 +31,12 @@ exports.loginVerification = function (req, res) {
 
         // Query user existence
         connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
-            // When done with the connection, release it
-            connection.release();
+
+            // If db cannot find that account
+            if (rows.length === 0) {
+                req.app.set('loginAlert', `Incorrect email account or password!`);
+                return res.redirect('/login');
+            }
 
             // If db match user email
             if (!err) {
@@ -44,15 +48,15 @@ exports.loginVerification = function (req, res) {
 
                 // If matched redirect to home page, if not pop alert
                 if (matched) {
-                    res.render('index', {rows});
+                    req.app.set('loginAlert', ``);
+                    return res.redirect('/');
                 } else {
-                    res.render('login', {rows, alert: `Incorrect email or password!`});
+                    req.app.set('loginAlert', `Incorrect email account or password!`);
+                    return res.redirect('/login');
                 }
             } else {
                 console.log(err);
             }
-
-            console.log(rows);
         });
     });
 };
