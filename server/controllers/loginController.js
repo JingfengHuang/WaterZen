@@ -18,7 +18,7 @@ exports.view = (req, res) => {
 }
 
 // Login verification
-exports.loginVerification = function (req, res) {
+exports.verification = function (req, res) {
 
     // Connect to DB
     pool.getConnection((err, connection) => {
