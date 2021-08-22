@@ -49,5 +49,4 @@ app.get('/public', (req, res) => {
     res.render('publicArea');
 })
 
-
 app.listen(port, () => console.log(`Listening on ${port}`));

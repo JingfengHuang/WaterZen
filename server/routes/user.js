@@ -1,7 +1,5 @@
 /** Imports */
 const router = require('express').Router();
-const mysql = require('mysql');
-const bcrypt = require('bcrypt');
 
 /** Import Controllers */
 const indexController = require('../controllers/indexController');
@@ -20,7 +18,7 @@ router.get('/login', loginController.view);
 router.get('/registration', registrationController.view);
 
 // Get user input from registration page and insert into db
-router.post('/registration/registrationValidation', registrationController.registrationValidation);
+router.post('/registration/validation', registrationController.validation);
 
 // Direct to email verification page
 router.get('/emailVerification', emailVerificationController.view);
@@ -29,6 +27,6 @@ router.get('/emailVerification', emailVerificationController.view);
 router.post('/emailVerification/codeVerification', emailVerificationController.codeVerification);
 
 // Check user login
-router.post('/login/loginVerification', loginController.loginVerification);
+router.post('/login/verification', loginController.verification);
 
 module.exports = router;

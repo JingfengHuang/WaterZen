@@ -19,7 +19,7 @@ exports.view = (req, res) => {
 }
 
 //Registration Validation
-exports.registrationValidation = function (req, res) {
+exports.validation = function (req, res) {
     // Connect to DB
     pool.getConnection((err, connection) => {
         if (err) throw err; //not connected
