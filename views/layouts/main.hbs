@@ -24,7 +24,12 @@
             <h2>Private Area</h2>
             <h2>Product</h2>
             <h2>Report</h2>
+            {{#if login}}
             <h2><a href="/login">Log in</a></h2>
+            {{else}}
+            <h2><a href="/logout">Log out</a></h2>
+            {{/if}} 
+
         </nav>
         
         <hr>
