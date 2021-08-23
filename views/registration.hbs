@@ -13,6 +13,10 @@
 
     {{#if registrationAlert}}
         <p>{{registrationAlert}}</p>
-    {{/if}}
+    {{else}} {{#if emailSent}}
+
+    <p>{{emailSent}}</p>
+    {{/if}}{{/if}}
+    
     
 </form>

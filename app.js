@@ -3,6 +3,8 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
 
 require('dotenv').config();
 
@@ -40,6 +42,31 @@ pool.getConnection((err, connection) => {
     const today = new Date();
     console.log(`Connect as ID ${connection.threadId} at ${today}`)
 });
+
+var sessionStore = new MySQLStore({
+    expiration: 10800000,
+    createDatabaseTable: true,
+    schema: {
+        tableName: 'session_store',	//表名
+        columnNames: {
+            session_id: 'session_id',
+            expires: 'expires',
+            data: 'data'
+        }
+    }
+}, pool);
+
+app.use(session({
+    name: 'sid',
+	secret: 'good_quality_water_for_life',
+	store: sessionStore,
+	resave: false,
+	saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 2,
+        sameSite: true,
+    }
+}));
 
 const routes = require('./server/routes/user');
 app.use('/', routes);
