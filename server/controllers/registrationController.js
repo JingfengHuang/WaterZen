@@ -54,13 +54,6 @@ exports.validation = function (req, res) {
         // set avatar path as default for now
         const avatarPath = "default";
 
-        // Generate random verification code, inspired by https://dev.to/kais_blog/how-to-generate-a-secure-random-number-in-node-js-16io
-        // const n = crypto.randomInt(0, 1000000);
-        // crypto.randomInt(0, 1000000, (err, n) => {
-        //     if (err) throw err;
-        // });
-        // const verificationCode = n.toString().padStart(6, "0");
-
         var verificationKey = crypto.randomBytes(20).toString('hex');
 
         // Set email to not verified
