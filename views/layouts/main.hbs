@@ -30,7 +30,14 @@
                 <li>&nbsp;&nbsp;&nbsp;Private Area&nbsp;&nbsp;&nbsp;|</li>
                 <li>&nbsp;&nbsp;&nbsp;Product&nbsp;&nbsp;&nbsp;|</li>
                 <li>&nbsp;&nbsp;&nbsp;Report&nbsp;&nbsp;&nbsp;|</li>
-                <li>&nbsp;&nbsp;&nbsp;<a href="/login">Log in</a></li>
+                <li>&nbsp;&nbsp;&nbsp;
+                    {{#if login}}
+                        <a href="/login">Log in</a>
+                    {{else}}
+                        <a href="/logout">Log out</a>
+                    {{/if}} 
+                </li>
+                
             </ul>
         </div>
         <br/>

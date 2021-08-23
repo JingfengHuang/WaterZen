@@ -11,7 +11,16 @@ const pool = mysql.createPool({
 
 /** Logic */
 exports.view = (req, res) => {
-    res.render('index');
+    const {userId} = req.session;
+    if (!req.session.userId) {
+        res.render('index', {login: true});
+    } else {
+        res.render('index');
+    }
+    
+    console.log(req.session);
+    console.log(req.sessionID);
+    console.log(req.session.userId);
 
     // Connect to DB
     pool.getConnection((err, connection) => {
@@ -19,6 +28,15 @@ exports.view = (req, res) => {
         const today = new Date();
         console.log(`Connect as ID ${connection.threadId} at ${today}`)
     });
+}
 
-
+exports.logout = (req, res) => {
+    req.session.destroy(err => {
+        // We can also clear out the cookie here. But even if we don't, the
+        // session is already destroyed at this point, so either way, the
+        // user won't be able to authenticate with that same cookie again.
+        res.clearCookie('sid');
+    
+        res.redirect('/');
+    })
 }

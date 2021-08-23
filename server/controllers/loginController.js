@@ -1,6 +1,11 @@
 /** Imports */
+const express = require('express')
 const mysql = require('mysql');
 const bcrypt = require("bcrypt");
+const session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
+
+const app = express()
 
 /** Create connection pool */
 const pool = mysql.createPool({
@@ -10,12 +15,20 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
+
 /** Logic */
 // Login page
 exports.view = (req, res) => {
-    res.render('login', {'loginAlert': req.app.get('loginAlert')});
-    req.app.set('loginAlert', ``);
+    console.log(req.session);
+    if (!req.session.userId) {
+        res.render('login', {login: true, 'loginAlert': req.app.get('loginAlert')});
+    } else {
+        res.render('index');
+    }
+    // res.render('login', {'loginAlert': req.app.get('loginAlert')});
+    // req.app.set('loginAlert', ``);
 }
+
 
 // Login verification
 exports.verification = function (req, res) {
@@ -48,7 +61,8 @@ exports.verification = function (req, res) {
 
                 // If matched redirect to home page, if not pop alert
                 if (matched) {
-                    req.app.set('loginAlert', ``);
+                    // req.app.set('loginAlert', ``);
+                    req.session.userId = userEmail;
                     return res.redirect('/');
                 } else {
                     req.app.set('loginAlert', `Incorrect email account or password!`);

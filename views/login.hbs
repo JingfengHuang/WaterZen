@@ -1,9 +1,9 @@
 <form action="/login/verification" method="post">
     <label for="floatingInput">Email</label>
-    <input type="text" name="userEmail" placeholder="Email">
+    <input type="text" name="userEmail" placeholder="Email" required>
 
     <label for="floatingInput">Password</label>
-    <input type="password" name="password" id="password">
+    <input type="password" name="password" id="password" required>
     <button type="submit">Log in</button>
     <a href="/registration">Sign up</a>
     {{#if loginAlert}}
