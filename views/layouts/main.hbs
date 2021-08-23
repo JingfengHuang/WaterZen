@@ -18,20 +18,24 @@
         <header>
             <h1>WaterZen</h1>
         </header>
-        <nav>
-            <h2><a href="/">Home</a></h2>
-            <h2><a href="/public">Public Area</a></h2>
-            <h2>Private Area</h2>
-            <h2>Product</h2>
-            <h2>Report</h2>
-            {{#if login}}
-            <h2><a href="/login">Log in</a></h2>
-            {{else}}
-            <h2><a href="/logout">Log out</a></h2>
-            {{/if}} 
-
-        </nav>
-        
+        <div class="menu">
+            <ul>
+                <li> <a href="/">Home</a>&nbsp;&nbsp;&nbsp;| </li> 
+                <li>&nbsp;&nbsp;&nbsp;<a href="/public">Public Area</a>&nbsp;&nbsp;&nbsp;|</li>
+                <li>&nbsp;&nbsp;&nbsp;Private Area&nbsp;&nbsp;&nbsp;|</li>
+                <li>&nbsp;&nbsp;&nbsp;Product&nbsp;&nbsp;&nbsp;|</li>
+                <li>&nbsp;&nbsp;&nbsp;Report&nbsp;&nbsp;&nbsp;|</li>
+                <li>&nbsp;&nbsp;&nbsp;
+                    {{#if login}}
+                        <a href="/login">Log in</a>
+                    {{else}}
+                        <a href="/logout">Log out</a>
+                    {{/if}} 
+                </li>
+                
+            </ul>
+        </div>
+        <br/>
         <hr>
 
         <main>
