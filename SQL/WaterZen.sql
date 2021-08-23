@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2021 at 05:29 PM
+-- Generation Time: Aug 23, 2021 at 08:29 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -62,7 +62,7 @@ CREATE TABLE `report` (
   `reportID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `date` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
-  `titie` text COLLATE utf8_unicode_ci NOT NULL,
+  `title` text COLLATE utf8_unicode_ci NOT NULL,
   `level` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `details` text COLLATE utf8_unicode_ci NOT NULL,
   `status` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE `user` (
   `password` char(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   `avatarPath` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `isEmailVerified` tinyint(1) NOT NULL,
-  `verificationCode` char(128) COLLATE utf8mb4_unicode_ci NOT NULL
+  `verificationKey` char(128) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -126,6 +126,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `government`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `report`
+--
+ALTER TABLE `report`
+  MODIFY `reportID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
