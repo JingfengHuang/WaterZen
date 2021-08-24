@@ -1,11 +1,6 @@
 /** Imports */
-const express = require('express')
 const mysql = require('mysql');
 const bcrypt = require("bcrypt");
-const session = require('express-session');
-var MySQLStore = require('express-mysql-session')(session);
-
-const app = express()
 
 /** Create connection pool */
 const pool = mysql.createPool({
@@ -61,7 +56,6 @@ exports.verification = function (req, res) {
 
                 // If matched redirect to home page, if not pop alert
                 if (matched) {
-                    // req.app.set('loginAlert', ``);
                     req.session.userId = userEmail;
                     return res.redirect('/');
                 } else {

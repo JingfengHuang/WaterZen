@@ -132,6 +132,38 @@ footer .copyright {
     color: black;
 }
 
+footer .content div ion-icon{
+    margin: 0 10px;
+}
+
+footer .logo {
+    flex-direction: column;
+    font-family: lobster, serif;
+    font-size: 3rem;
+    color: #fff;
+}
+footer .share {
+    margin: 25px 0 0 0;
+}
+footer .share a{
+    padding: 0 1rem;
+}
+footer .share a ion-icon {
+    color: white;
+    transition: 0.3s;
+
+}
+footer .share a ion-icon:hover {
+    color: #295166;
+}
 
 
-
+footer .copyright {
+    position:fixed;
+    bottom:0px;
+    height: 3%;   
+    width: 100%;
+    text-align: center;
+    background-color: #295166;
+    color: black;
+}

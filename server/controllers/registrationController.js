@@ -28,7 +28,7 @@ exports.view = (req, res) => {
     req.app.set('registrationAlert', '');
 }
 
-//Registration Validation
+// Registration Validation
 exports.validation = function (req, res) {
     // Connect to DB
     pool.getConnection((err, connection) => {
@@ -54,10 +54,10 @@ exports.validation = function (req, res) {
         // set avatar path as default for now
         const avatarPath = "default";
 
-        var verificationKey = crypto.randomBytes(20).toString('hex');
+        let verificationKey = crypto.randomBytes(20).toString('hex');
 
         // Set email to not verified
-        const emailVerified = 0;
+        let emailVerified = 0;
 
         var mailOptions = {
             from: process.env.MAIL,
@@ -118,6 +118,4 @@ exports.verifyEmail = (req, res) => {
     } else {
         res.send('Verification Error, please contact IT Team.')
     }
-    
-    
 }

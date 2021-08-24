@@ -47,7 +47,7 @@ var sessionStore = new MySQLStore({
     expiration: 10800000,
     createDatabaseTable: true,
     schema: {
-        tableName: 'session_store',	//表名
+        tableName: 'session_store',
         columnNames: {
             session_id: 'session_id',
             expires: 'expires',
@@ -68,12 +68,11 @@ app.use(session({
     }
 }));
 
-const routes = require('./server/routes/user');
-app.use('/', routes);
+const userRoutes = require('./server/routes/user');
+app.use('/', userRoutes);
 
-/* not sure -----------------------------------------------------------*/
-app.get('/public', (req, res) => {
-    res.render('publicArea');
-})
+const privateAreaRoutes = require('./server/routes/publicArea');
+app.use('/publicArea', privateAreaRoutes)
+
 
 app.listen(port, () => console.log(`Listening on ${port}`));
