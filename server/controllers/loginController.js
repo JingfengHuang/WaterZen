@@ -1,9 +1,10 @@
 /** Imports */
+const express = require('express');
 const mysql = require('mysql');
 const bcrypt = require("bcrypt");
 const session = require('express-session');
 let MySQLStore = require('express-mysql-session')(session);
-const app = express()
+const app = express();
 
 /** Create connection pool */
 const pool = mysql.createPool({
