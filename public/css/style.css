@@ -1,40 +1,135 @@
-/*測試，這可以刪掉*/
-html,body{
-    height:100%;
-}
-
-body {
+/* reset */
+* {
     margin: 0;
-    font-family: 'Source Sans Pro', sans-serif;
-    background-color: lightblue;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.5rem;
+    transition:all .2s linear;
+}
+body{
+    font-family: Montserrat, serif;
+}
+a {
+    text-decoration: none;
+}
+ul, li {
+    list-style: none;
+}
+.clear {
+    clear: both;
 }
 
-h1{
-    margin-left:5%;
-    margin-top:2%;
+/* header */
+
+header {
+    position: fixed;
+    top:0; left: 0; right:0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background:#fff;
+    padding:1rem 9%;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
 }
 
-.avatar{
-    margin-left:87%;
-    width: 3.5%;
-    height:7%;
+header .logo {
+    font-family: lobster, serif;
+    font-size: 3rem;
+    color: #5c97b7;
 }
 
-.avatar img{
+.navbar a{
+    color: black;
+    margin-left: 2rem;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+header .navbar a:hover{
+    color:red;
+}
+
+#menu-bar {
+    cursor: pointer;
+    border: 1rem solid #666;
+    
+    /* display: none; */
+}
+
+/*main Thanks to Weining*/
+main{
+    position: absolute;
+    margin-top: 10%;
+}
+
+/* footer */
+footer {
     width:100%;
-    height:100%;
+    position:fixed;
+    bottom:0px;
+    margin: 0 auto;
+    background:#5c97b7;
+    text-align: center;
+    color: #fff;
+}
+.footer {
+    display:flex ;
+    padding:2rem 9%;
+}
+footer .box{
+    flex-basis: 50%;
+    padding: 1rem;
+}
+footer .box h1 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    margin: 0 0 30px 0;
 }
 
-.menu{
-    margin-left:55%;
+footer .about p{
+    text-align: justify;
 }
 
-/*horizontal menu*/
-ul li{
-    list-style:none;
-    padding:0;
-    margin:0;
-    float:left;
+footer .content div {
+    margin: 1rem 0;
+}
+
+footer .content div ion-icon{
+    margin: 0 10px;
+}
+
+footer .logo {
+    flex-direction: column;
+    font-family: lobster, serif;
+    font-size: 3rem;
+    color: #fff;
+}
+footer .share {
+    margin: 25px 0 0 0;
+}
+footer .share a{
+    padding: 0 1rem;
+}
+footer .share a ion-icon {
+    color: white;
+    transition: 0.3s;
+
+}
+footer .share a ion-icon:hover {
+    color: #295166;
+}
+
+
+footer .copyright {
+    position:fixed;
+    bottom:0px;
+    height: 3%;   
+    width: 100%;
+    text-align: center;
+    background-color: #295166;
+    color: black;
 }
 
 
