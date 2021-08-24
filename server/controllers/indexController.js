@@ -11,12 +11,11 @@ const pool = mysql.createPool({
 
 /** Logic */
 exports.view = (req, res) => {
-    const userId = req.session;
-
-    if (!req.session.userId) {
+    const {userId} = req.session;
+    if (req.session.login) {
         res.render('index', {login: true});
     } else {
-        res.render('index');
+        res.render('index', {login: false});
     }
     
     console.log(req.session);
