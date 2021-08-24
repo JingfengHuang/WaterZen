@@ -6,7 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="8e90ddcf-d031-4461-b92f-4f3ed75f3d61" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL/WaterZen.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/WaterZen.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/emailVerificationController.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/loginController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/loginController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/registrationController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/registrationController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/emailVerification.hbs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/layouts/main.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/layouts/main.hbs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +37,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -55,6 +61,8 @@
       <workItem from="1629547226952" duration="9694000" />
       <workItem from="1629560254232" duration="59000" />
       <workItem from="1629694358094" duration="2563000" />
+      <workItem from="1629700245304" duration="6878000" />
+      <workItem from="1629708567147" duration="1280000" />
     </task>
     <servers />
   </component>

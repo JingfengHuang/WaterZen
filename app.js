@@ -4,7 +4,7 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const session = require('express-session');
-var MySQLStore = require('express-mysql-session')(session);
+let MySQLStore = require('express-mysql-session')(session);
 
 require('dotenv').config();
 
@@ -43,7 +43,7 @@ pool.getConnection((err, connection) => {
     console.log(`Connect as ID ${connection.threadId} at ${today}`)
 });
 
-var sessionStore = new MySQLStore({
+let sessionStore = new MySQLStore({
     expiration: 10800000,
     createDatabaseTable: true,
     schema: {
