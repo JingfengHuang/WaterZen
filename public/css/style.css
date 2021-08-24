@@ -59,14 +59,14 @@ header .navbar a:hover{
 
 /*main Thanks to Weining*/
 main{
-    position: absolute;
+    /* position: absolute; */
     margin-top: 10%;
 }
 
 /* footer */
 footer {
     width:100%;
-    position:fixed;
+    /* position:fixed; */
     bottom:0px;
     margin: 0 auto;
     background:#5c97b7;

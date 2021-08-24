@@ -5,6 +5,7 @@ const router = require('express').Router();
 const indexController = require('../controllers/indexController');
 const loginController = require('../controllers/loginController');
 const registrationController = require('../controllers/registrationController');
+const profileController = require('../controllers/profileController');
 
 /** Below contents are routers */
 // Direct to Index page
@@ -27,5 +28,11 @@ router.get('/registration/verify_email', registrationController.verifyEmail);
 
 // Check user login
 router.post('/login/verification', loginController.verification);
+
+// Direct to profile page
+router.get('/profile', profileController.view);
+
+// Modify user profile
+router.post('/profile/modifyProfile', profileController.modifyProfile);
 
 module.exports = router;

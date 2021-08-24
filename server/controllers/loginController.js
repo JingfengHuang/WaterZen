@@ -23,8 +23,10 @@ exports.view = (req, res) => {
         req.session.login = false;
         req.session.userId = null;
         req.session.loginAlert = null;
+        req.session.nickname = null;
+        req.session.email = null;
     } else {
-        res.redirect('/index');
+        res.redirect('/');
     }
 }
 
@@ -49,6 +51,8 @@ exports.verification = function (req, res) {
                 req.session.login = false;
                 req.session.userId = null;
                 req.session.loginAlert = 'Incorrect email account or password!';
+                req.session.nickname = null;
+                req.session.email = null;
                 return res.redirect('/login');
             }
 
@@ -65,11 +69,15 @@ exports.verification = function (req, res) {
                     req.session.login = true;
                     req.session.userId = rows[0].id;
                     req.session.loginAlert = null;
+                    req.session.nickname = rows[0].nickname;
+                    req.session.email = rows[0].email;
                     return res.redirect('/');
                 } else {
                     req.session.login = false;
                     req.session.userId = null;
                     req.session.loginAlert = 'Incorrect email account or password!';
+                    req.session.nickname = null;
+                    req.session.email = null;
                     return res.redirect('/login');
                 }
             } else {
