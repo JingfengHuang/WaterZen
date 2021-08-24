@@ -20,7 +20,7 @@
 
     <body>
         <header>
-            <a href="#" class="logo">
+            <a href="/" class="logo">
                 WaterZen
             </a>
 
@@ -40,9 +40,9 @@
                 {{/if}} 
             </nav>
 
+            <!--用户登陆成功才显示-->
             <a href="#"> 
                 <ion-icon name="person-circle-outline" size="large"></ion-icon>
-                <i class="icon person-circle-outline"></i>
             </a>
 
         </header>
@@ -64,28 +64,28 @@
                 <div class="info box">
                     <h1>Address</h1>
                     <div class="content">
-                        <div class="call">
+                        <div class="call text">
                             <span><ion-icon name="call-outline"></ion-icon>Tel: +86 1234566</span>
                         </div>
-                        <div class="mail">
-                            <span><ion-icon name="mail-outline"></ion-icon>Tel: +86 1234566</span>
+                        <div class="mail text">
+                            <span><ion-icon name="mail-outline"></ion-icon>Galaxy6@WaterZen.com</span>
                         </div>
-                        <div class="location">
-                            <span><ion-icon name="location-outline"></ion-icon>Tel: +86 1234566</span>
+                        <div class="location text">
+                            <span><ion-icon name="location-outline"></ion-icon>University of Queensland, Brisbane, Australia</span>
                         </div>  
                     </div>
 
                 </div>
             
-                <div class="logo box">
+                <div class="social box">
 
-                    <a href="#" class="logo "> WaterZen </a>
                     <div class="share">
-                        <a href="#" class="btn"><ion-icon name="logo-facebook" size="large"></ion-icon></a>
-                        <a href="#" class="btn"><ion-icon name="logo-instagram" size="large"></ion-icon></a>
-                        <a href="#" class="btn"><ion-icon name="logo-wechat" size="large"></ion-icon></a>
-                        <a href="#" class="btn"><ion-icon name="logo-linkedin" size="large"></ion-icon></a>
+                        <a href="https://www.facebook.com/" class="btn" target="_blank" ><ion-icon name="logo-facebook" size="large"></ion-icon></a>
+                        <a href="https://www.instagram.com/" class="btn" target="_blank"><ion-icon name="logo-instagram" size="large"></ion-icon></a>
+                        <a href="https://wx.qq.com/" class="btn" target="_blank"><ion-icon name="logo-wechat" size="large"></ion-icon></a>
+                        <a href="https://hk.linkedin.com/" class="btn" target="_blank"><ion-icon name="logo-linkedin" size="large"></ion-icon></a>
                     </div>
+                    <a href="/" class="logo"> WaterZen </a>
                 </div>
 
             </div>
@@ -93,11 +93,16 @@
             <div class="copyright">
                 Created by Team Galaxy 6 © 2021 All rights reserved 
             </div>
-
+            
+            <!-- scroll top button  -->
+            <a href="#" id="scroll-top" ><ion-icon name="caret-up-outline" size="large"></ion-icon></a>
+            
+            <script src="/js/index.js"></script>
 
             <!-- input icon -->
             <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
             <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+            
         </footer>
 
         
