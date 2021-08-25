@@ -9,12 +9,12 @@
 
     <label>Nickname</label>
     {{#if nickname}}
-        <p>{{nickname}}</p>
+    <p>{{nickname}}</p>
     {{/if}}
 
     <label>Email address</label>
-    {{#if emailAddress}}
-        <p>{{emailAddress}}</p>
+    {{#if userEmail}}
+    <p>{{userEmail}}</p>
     {{/if}}
 
 </div>
@@ -27,12 +27,10 @@
         <label for="floatingInput">Nickname</label>
         <input type="text" name="nickname" placeholder="Input your new nickname here" required>
 
-        <label for="floatingInput">Email address</label>
-        <input type="text" name="emailAddress" required>
         <button type="submit">Save</button>
 
         {{#if modifyAlert}}
-            <p>{{modifyAlert}}</p>
+        <p>{{modifyAlert}}</p>
         {{/if}}
     </form>
 </div>

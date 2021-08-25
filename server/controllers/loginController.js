@@ -10,26 +10,14 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
-
-/** Logic */
 // Login page
 exports.view = (req, res) => {
     if (!req.session.login) {
-        if (req.session.loginAlert == null) {
-            res.render('login');
-        } else {
-            res.render('login', {'loginAlert': req.session.loginAlert});
-        }
-        req.session.login = false;
-        req.session.userId = null;
-        req.session.loginAlert = null;
-        req.session.nickname = null;
-        req.session.email = null;
+        res.render('login');
     } else {
         res.redirect('/');
     }
 }
-
 
 // Login verification
 exports.verification =  (req, res) => {
@@ -49,11 +37,8 @@ exports.verification =  (req, res) => {
             // If db cannot find that account
             if (rows.length === 0) {
                 req.session.login = false;
-                req.session.userId = null;
-                req.session.loginAlert = 'Incorrect email account or password!';
-                req.session.nickname = null;
                 req.session.email = null;
-                return res.redirect('/login');
+                res.redirect('/login');
             }
 
             // If db match user email
@@ -67,18 +52,12 @@ exports.verification =  (req, res) => {
                 // If matched redirect to home page, if not pop alert
                 if (matched) {
                     req.session.login = true;
-                    req.session.userId = rows[0].id;
-                    req.session.loginAlert = null;
-                    req.session.nickname = rows[0].nickname;
-                    req.session.email = rows[0].email;
+                    req.session.userEmail = rows[0].email;
                     return res.redirect('/');
                 } else {
                     req.session.login = false;
-                    req.session.userId = null;
-                    req.session.loginAlert = 'Incorrect email account or password!';
-                    req.session.nickname = null;
-                    req.session.email = null;
-                    return res.redirect('/login');
+                    req.session.userEmail = null;
+                    return res.render('/login', {loginAlert: 'Incorrect email account or password!'});
                 }
             } else {
                 console.log(err);

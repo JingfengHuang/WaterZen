@@ -38,13 +38,13 @@ exports.view = (req, res) => {
 
 // Registration Validation
 exports.validation = [check('userEmail')
-    .trim()
-    .isEmail()
-    .normalizeEmail()
-    .withMessage('Invalid email address!'),
-check('password')
-    .isLength({ min: 6 })
-    .withMessage('Password must be longer than 6 characters!'), (req, res) => {
+                        .trim()
+                        .isEmail()
+                        .normalizeEmail()
+                        .withMessage('Invalid email address!'),
+                    check('password')
+                        .isLength({ min: 6 })
+                        .withMessage('Password must be longer than 6 characters!'), (req, res) => {
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -66,11 +66,10 @@ check('password')
                     if (rows.length !== 0) {
                         let isEmailVerified = rows[0].isEmailVerified;
                         if (isEmailVerified === 0) {
-                            req.session.registrationAlert = 'This email address has been registered and is awaiting for verification. Please check your email inbox for instructions.';
+                            res.render('registration', {registrationAlert: 'This email address has been registered and is awaiting for verification. Please check your email inbox for instructions.'});
                         } else {
-                            req.session.registrationAlert = 'This email address has be registered!';
+                            res.render('registration', {registrationAlert: 'This email address has be registered!'});
                         }
-                        return res.redirect('/registration');
                     }
                 });
 
@@ -124,11 +123,11 @@ check('password')
 
 
 exports.verifyEmail = (req, res) => {
-    let q = url.parse(req.originalUrl, true);
+    let path = url.parse(req.originalUrl, true);
 
-    if (q.query.verify) {
-        console.log(q.query.verify);
-        const verificationKey = q.query.verify;
+    if (path.query.verify) {
+        console.log(path.query.verify);
+        const verificationKey = path.query.verify;
         pool.getConnection((err, connection) => {
             if (err) throw err; //not connected
 

@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 /** Create connection pool */
 const pool = mysql.createPool({
-    connectionLimit : 100,
+    connectionLimit: 100,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     database: process.env.DB_NAME
@@ -13,43 +13,49 @@ const pool = mysql.createPool({
 /** Logic */
 // Profile page
 exports.view = (req, res) => {
+
     if (!req.session.login) {
         res.redirect('/login');
     } else {
-        res.render('profile', {login: true, 'nickname': req.session.nickname, 'emailAddress': req.session.email, 'modifyAlert': req.session.modifyAlert});
+        const userEmail = req.session.userEmail;
+
+        pool.getConnection((err, connection) => {
+            if (err) throw err; //not connected
+
+            connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
+                // If db match user email
+                if (!err) {
+                    res.render('profile', { login: true, nickname: rows[0].nickname, userEmail: userEmail, modifyAlert: 'Changes have been saved' });
+                } else {
+                    res.redirect('/login');
+                }
+            });
+        });
     }
-    req.session.modifyAlert = null;
 }
 
 // Modify profile
-exports.modifyProfile = function (req, res)  {
+exports.modifyProfile = function (req, res) {
     if (!req.session.login) {
         res.redirect('/login');
     } else {
         // Connect to DB
         pool.getConnection((err, connection) => {
-            if(err) throw err; //not connected
-            const today = new Date();
-            console.log(`Connect as ID ${connection.threadId} at ${today}`);
+            if (err) throw err; //not connected
 
             // Get user input
-            const {nickname, emailAddress} = req.body;
+            const nickname = req.body.nickname;
 
             // Modify user profile
-            connection.query('UPDATE `user` SET `nickname` = ?, `email` = ? WHERE `user`.`id` = ?', [nickname, emailAddress, req.session.userId], (err, rows) => {
+            connection.query('UPDATE user SET nickname=? WHERE email = ?', [nickname, req.session.userEmail], (err, rows) => {
                 // If db match user email
                 if (!err) {
-                    req.session.nickname = nickname;
-                    req.session.email = emailAddress;
-                    req.session.modifyAlert = 'Changes have been saved';
-                    res.redirect('/profile');
+                    res.render('profile', { login: true, nickname: nickname, userEmail: req.session.userEmail, modifyAlert: 'Changes have been saved' })
                 } else {
-                    req.session.modifyAlert = 'Failed to save the changes, please try again!';
                     console.log(err);
-                    res.redirect('/profile');
+                    res.render('profile', { modifyAlert: 'Failed to save the changes, please try again!' })
                 }
             });
         });
-
     }
 }
