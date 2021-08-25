@@ -1,111 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset = "utf-8">
-        <meta http-euiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width = device-width, initial-scale = 1">
-        <title>WaterZen | Home</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/style.css">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
-        <!-- font -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-    
-    </head>
 
-    <script src="/js/jquery-3.6.0.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <meta http-euiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <title>WaterZen | Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <!-- font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 
-    <body>
-        <header>
-            <a href="/" class="logo">
-                WaterZen
-            </a>
+</head>
 
-            <ion-icon id="menu-bar" name="menu-outline" size="large"></ion-icon>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 
-            <nav class="navbar">
-                <a href="/">Home</a>
-                <a href="/publicArea">Public Area</a>
-                <a href="/privateArea">Private Area</a>
-                <a href="/product">Product</a>
-                <a href="/report">Report</a>
-                {{#if login}}
-                    <a href="/profile">Profile</a>
-                    <a href="/logout">Log out</a>
-                {{else}}
-                    <a href="/login">Log in</a>
-                {{/if}} 
-            </nav>
+<body>
+    <header>
+        <a href="/" class="logo">
+            WaterZen
+        </a>
 
-            <!--用户登陆成功才显示-->
-            <a href="#"> 
-                <ion-icon name="person-circle-outline" size="large"></ion-icon>
-            </a>
+        <ion-icon id="menu-bar" name="menu-outline" size="large"></ion-icon>
 
-        </header>
-                
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="/publicArea">Public Area</a>
+            <a href="/privateArea">Private Area</a>
+            <a href="/product">Product</a>
+            <a href="/report">Report</a>
+            {{#if login}}
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <ion-icon name="person-circle-outline" size="large"></ion-icon>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                    <li><a class="dropdown-item active droplink" href="/profile">My Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item droplink" href="/logout">Log out</a></li>
+                    <li><a class="dropdown-item droplink" href="#">Something else here</a></li>
+                </ul>
+            </div>
+            {{else}}
+            <a href="/login">Log in</a>
+            {{/if}}
 
-        <main>
-            {{{body}}}
-        </main>
+        </nav>
 
-        <footer>
-            <div class="footer">
+        <!--用户登陆成功才显示-->
 
-                <div class="about box">
-                    <h1>About Us</h1>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic voluptates fugit odit suscipit culpa ducimus esse excepturi obcaecati beatae fuga debitis, reiciendis perspiciatis eum minima harum, provident, explicabo quibusdam architecto.
-                    </p>
-                </div>
 
-                <div class="info box">
-                    <h1>Address</h1>
-                    <div class="content">
-                        <div class="call text">
-                            <span><ion-icon name="call-outline"></ion-icon>Tel: +86 1234566</span>
-                        </div>
-                        <div class="mail text">
-                            <span><ion-icon name="mail-outline"></ion-icon>Galaxy6@WaterZen.com</span>
-                        </div>
-                        <div class="location text">
-                            <span><ion-icon name="location-outline"></ion-icon>University of Queensland, Brisbane, Australia</span>
-                        </div>  
+    </header>
+
+
+    <main>
+        {{{body}}}
+    </main>
+
+    <footer>
+        <div class="footer">
+
+            <div class="about box">
+                <h1>About Us</h1>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic voluptates fugit odit suscipit culpa
+                    ducimus esse excepturi obcaecati beatae fuga debitis, reiciendis perspiciatis eum minima harum,
+                    provident, explicabo quibusdam architecto.
+                </p>
+            </div>
+
+            <div class="info box">
+                <h1>Address</h1>
+                <div class="content">
+                    <div class="call text">
+                        <span>
+                            <ion-icon name="call-outline"></ion-icon>Tel: +86 1234566
+                        </span>
                     </div>
-
-                </div>
-            
-                <div class="social box">
-
-                    <div class="share">
-                        <a href="https://www.facebook.com/" class="btn" target="_blank" ><ion-icon name="logo-facebook" size="large"></ion-icon></a>
-                        <a href="https://www.instagram.com/" class="btn" target="_blank"><ion-icon name="logo-instagram" size="large"></ion-icon></a>
-                        <a href="https://wx.qq.com/" class="btn" target="_blank"><ion-icon name="logo-wechat" size="large"></ion-icon></a>
-                        <a href="https://hk.linkedin.com/" class="btn" target="_blank"><ion-icon name="logo-linkedin" size="large"></ion-icon></a>
+                    <div class="mail text">
+                        <span>
+                            <ion-icon name="mail-outline"></ion-icon>Galaxy6@WaterZen.com
+                        </span>
                     </div>
-                    <a href="/" class="logo"> WaterZen </a>
+                    <div class="location text">
+                        <span>
+                            <ion-icon name="location-outline"></ion-icon>University of Queensland, Brisbane, Australia
+                        </span>
+                    </div>
                 </div>
 
             </div>
-        
-            <div class="copyright">
-                Created by Team Galaxy 6 © 2021 All rights reserved 
+
+            <div class="social box">
+
+                <div class="share">
+                    <a href="https://www.facebook.com/" class="btn" target="_blank">
+                        <ion-icon name="logo-facebook" size="large"></ion-icon>
+                    </a>
+                    <a href="https://www.instagram.com/" class="btn" target="_blank">
+                        <ion-icon name="logo-instagram" size="large"></ion-icon>
+                    </a>
+                    <a href="https://wx.qq.com/" class="btn" target="_blank">
+                        <ion-icon name="logo-wechat" size="large"></ion-icon>
+                    </a>
+                    <a href="https://hk.linkedin.com/" class="btn" target="_blank">
+                        <ion-icon name="logo-linkedin" size="large"></ion-icon>
+                    </a>
+                </div>
+                <a href="/" class="logo"> WaterZen </a>
             </div>
-            
-            <!-- scroll top button  -->
-            <a href="#" id="scroll-top" ><ion-icon name="caret-up-outline" size="large"></ion-icon></a>
-            
-            <script src="/js/index.js"></script>
 
-            <!-- input icon -->
-            <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-            <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-            
-        </footer>
+        </div>
 
-        
-    </body>
+        <div class="copyright">
+            Created by Team Galaxy 6 © 2021 All rights reserved
+        </div>
+
+        <!-- scroll top button  -->
+        <a href="#" id="scroll-top">
+            <ion-icon name="caret-up-outline" size="large"></ion-icon>
+        </a>
+
+        <script src="/js/index.js"></script>
+
+        <!-- input icon -->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    </footer>
+
+
+</body>
 
 </html>

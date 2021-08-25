@@ -46,6 +46,10 @@ header .logo {
     font-weight: 300;
 }
 
+.dropdown-menu a{
+    margin: 0;
+}
+
 header .navbar a:hover{
     color:#f12020;
 }
