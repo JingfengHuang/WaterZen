@@ -12,11 +12,12 @@
     <button type="submit">Submit</button>
 
     {{#if registrationAlert}}
-        <p>{{registrationAlert}}</p>
+    <p>{{registrationAlert}}</p>
     {{else}} {{#if emailSent}}
-
     <p>{{emailSent}}</p>
-    {{/if}}{{/if}}
-    
-    
+    {{else}} {{/if}}{{/if}}
+
+    {{#each validationError}}
+    <p>{{msg}}</p>
+    {{/each}}
 </form>

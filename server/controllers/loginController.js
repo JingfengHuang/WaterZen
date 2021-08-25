@@ -32,7 +32,7 @@ exports.view = (req, res) => {
 
 
 // Login verification
-exports.verification = function (req, res) {
+exports.verification =  (req, res) => {
 
     // Connect to DB
     pool.getConnection((err, connection) => {
@@ -85,4 +85,4 @@ exports.verification = function (req, res) {
             }
         });
     });
-};
+}
