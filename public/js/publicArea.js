@@ -38,6 +38,7 @@ let cityId = {
     650000: "Xinjiang"
 };
 
+let notAccessKey = []
 class WaterData {
     constructor(cityId, city, riverBasin, monitoringPoint, time, level, tempture, pH, oxygen, conductivity, turbidity,
         permanganate, ammonia, phosphorus, nitrogen, situation) {
@@ -69,7 +70,7 @@ class WaterData {
         stateSelector.append(newSection);
 
         for (let entries of Object.entries(this)) {
-            console.log(`${entries[0]}, ${entries[1]}`);
+            // console.log(`${entries[0]}, ${entries[1]}`);
             if (entries[0] === "cityId") {
                 continue;
             }
@@ -84,34 +85,61 @@ class WaterData {
     }
 }
 
+function sendRequest(key) {
+    $.ajax({
+        url: "https://liss-cors-anywhere.herokuapp.com/http://106.37.208.243:8068/GJZ/Ajax/Publish.ashx",
+        data: {
+            "AreaID": key,
+            "RiverID": null,
+            "MNName": null,
+            "PageIndex": 1,
+            "PageSize": 200,
+            "action": "getRealDatas"
+        },
+
+        success: function (data) {
+            let dataRecords = eval("(" + data + ")").tbody;
+            if (dataRecords !== undefined) {
+                
+                for (var i = 0; i < notAccessKey.length; i++) {
+                    if (notAccessKey[i] === 9) {
+                        notAccessKey.splice(i, 1);
+                    }
+                }
+
+                for (let i = 0; i < dataRecords.length; i++) {
+                    entries = dataRecords[i];
+                    let waterData = new WaterData(key, entries[0], entries[1], entries[2], entries[3], entries[4], entries[5], entries[6], entries[7], entries[8], entries[9], entries[10], entries[11], entries[12], entries[13], entries[16])
+                    // console.log(waterData);
+                    waterData.generateHTML()
+                }
+            } else {
+                setTimeout(() => {
+                    console.log(key);
+                    sendRequest(key);
+                }, 3000);
+            }
+
+        },
+        error: function (data) {
+            console.log(data.msg);
+        }
+    });
+}
+
+
 
 $(document).ready(function () {
 
     for (let key in cityId) {
-        $.ajax({
-            url: "https://cors-anywhere.herokuapp.com/http://106.37.208.243:8068/GJZ/Ajax/Publish.ashx",
-            data: {
-                "AreaID": key,
-                "RiverID": null,
-                "MNName": null,
-                "PageIndex": 1,
-                "PageSize": 200,
-                "action": "getRealDatas"
-            },
-
-            success: function (data) {
-                let dataRecords = eval("(" + data + ")").tbody;
-                console.log(dataRecords.length);
-                for (let i = 0; i < dataRecords.length; i++) {
-                    entries = dataRecords[i];
-                    let waterData = new WaterData(key, entries[0], entries[1], entries[2], entries[3], entries[4], entries[5], entries[6], entries[7], entries[8], entries[9], entries[10], entries[11], entries[12], entries[13], entries[16])
-                    console.log(waterData);
-                    waterData.generateHTML()
-                }
-            },
-            error: function (data) {
-                console.log(data.msg);
-            }
-        });
+        setTimeout(() => {
+            sendRequest(key);
+        }, 3000);
     }
+
+    // console.log(notAccessKey);
+
+    // while (notAccessKey.length !== 0) {
+    //     sendRequest(notAccessKey[0]);
+    // }
 });
