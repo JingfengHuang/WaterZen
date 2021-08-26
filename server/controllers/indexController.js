@@ -11,7 +11,8 @@ const pool = mysql.createPool({
 
 /** Logic */
 exports.view = (req, res) => {
-    const {userId} = req.session;
+    const {userEmail} = req.session;
+    
     if (req.session.login) {
         res.render('index', {login: true});
     } else {
@@ -20,7 +21,7 @@ exports.view = (req, res) => {
     
     console.log(req.session);
     console.log(req.sessionID);
-    console.log(req.session.userId);
+    console.log(req.session.userEmail);
 
     // Connect to DB
     pool.getConnection((err, connection) => {

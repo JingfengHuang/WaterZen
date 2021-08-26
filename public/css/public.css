@@ -1,0 +1,8 @@
+.entries{
+    display:flex;
+    flex-flow: row wrap;
+}
+
+.data{
+    padding: 10px;
+}
