@@ -1,1 +1,41 @@
-TEST
+<link rel="stylesheet" href="/css/index.css">
+
+
+<div class="container">
+    <div class ="row">
+        <div class ="col-md-2 offset-md-3">
+            <select id ="selectmenu">
+                <option value="Public">Public Area</option>
+                <option value="Private">Private Area</option>
+            </select>
+        </div>
+
+        <script>
+            $("#selectmenu").mouseover(function(){
+                $(".col-md-2").css("border","3.5px solid #295166");
+            });
+            $("#selectmenu").mouseleave(function(){
+                $(".col-md-2").css("border","3.5px solid #5c97b7");
+            });
+        </script>
+
+        <div class ="col-md-4">
+            <input type="text" placeholder="Search......">
+            <a href="/">
+                <ion-icon name="search" size="large"></ion-icon>
+            </a>
+        </div>
+
+        <script>
+            $("input").mouseover(function(){
+                $(".col-md-4").css("border","3.5px solid #295166");
+            });
+            $("input").mouseleave(function(){
+                $(".col-md-4").css("border","3.5px solid #5c97b7");
+            });
+        </script>
+    </div>
+
+    <hr>
+
+</div>
