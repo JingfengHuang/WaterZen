@@ -74,5 +74,8 @@ app.use('/', userRoutes);
 const publicAreaRoutes = require('./server/routes/publicArea');
 app.use('/', publicAreaRoutes);
 
+const privateAreaRoutes = require('./server/routes/privateArea');
+app.use('/', privateAreaRoutes);
+
 
 app.listen(port, () => console.log(`Listening on ${port}`));
