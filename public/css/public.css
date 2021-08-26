@@ -1,8 +1,8 @@
-.sites{
+.entries{
     display:flex;
     flex-flow: row wrap;
 }
 
-.entries{
+.data{
     padding: 10px;
 }
