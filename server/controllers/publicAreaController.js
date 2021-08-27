@@ -16,6 +16,6 @@ exports.view = (req, res) => {
     if (!req.session.login) {
         res.render('publicArea');
     } else {
-        res.render('profile', {login: true});
+        res.render('publicArea', {login: true});
     }
 }
