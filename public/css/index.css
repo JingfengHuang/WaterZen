@@ -50,3 +50,61 @@ select {
     background-color: black;
 }
 
+hr + h2{
+    margin-top: 2.5%;
+    margin-bottom: 4%;
+}
+
+.col-md-3:first-child{
+    margin-left: 4%;
+    background-image: url(/img/privateArea.jpg);
+    background-size: 110% 131%;
+    height: 300px;
+    background-position: center;
+    transition: 0.75s;
+}
+
+.col-md-3:first-child:hover{
+    background-size: 100% 119%;
+    filter:alpha(Opacity=80);
+    -moz-opacity:0.8;
+    opacity: 0.8;
+}
+
+.col-md-3:last-child{
+    background-image: url(/img/sensor.jpg);
+    background-size: 135% 110%;
+    height: 300px;
+    background-position: center;
+    transition: 0.75s;
+}
+
+.col-md-3:last-child:hover{
+    background-size: 123% 100%;
+    filter:alpha(Opacity=80);
+    -moz-opacity:0.8;
+    opacity: 0.8;
+}
+
+.col-md-5{
+    background-image: url(/img/PublicArea.jpg);
+    background-size: 110% 110%;
+    height: 300px;
+    background-position: center;
+    transition: 0.75s;
+}
+
+.col-md-5 h4, .col-md-3 h4{
+    margin-top: 250px;
+    color:mintcream;
+    font-weight: bold;
+}
+
+.col-md-5:hover{
+    background-size: 100% 100%;
+    filter:alpha(Opacity=80);
+    -moz-opacity:0.8;
+    opacity: 0.8;
+}
+
+
