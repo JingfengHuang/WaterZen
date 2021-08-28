@@ -1,8 +1,90 @@
-.entries{
+
+section{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#selectionCity{
+    flex-direction: column;
+    position: absolute;
+    background: #152d421f;
+    backdrop-filter: blur(10px);
+    width: 269px;
+    left: 82%;
+    top: 74%;
+    text-align: center;
+}
+
+#selectionCity p {
+    margin: 0;
+    line-height: 1.7em;
+}
+
+#selectionCity p:hover {
+    box-shadow: 0px 0px 1px 1px rgb(56 67 78 / 20%);
+}
+
+.top {
+    justify-content: space-between;
+    position: relative;
+}
+
+.entries, .top {
+    width: 80%;
+    margin: auto;
+    padding: 5px;
+}
+
+#selection{
+    padding-top: 15px;
+}
+
+#citySelection{
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #00000085;
+    padding-left: 12px;
+}
+
+.entries:hover {
+    box-shadow: 0px 0px 8px 3px rgb(0 126 255 / 20%);
+}
+
+.firstEntries, .secondEntries {
     display:flex;
     flex-flow: row wrap;
 }
 
 .data{
     padding: 10px;
+}
+
+
+
+.level{
+    border-radius: 1em;
+}
+.level::after{
+    content: '';
+    width: 100%;
+}
+
+.level1{
+    background-color: #90be6d;
+}
+.level2{
+    background-color: #dff94f;
+}
+.level3{
+    background-color: #f8961e;
+}
+.level4{
+    background-color: #f94144;
+}
+.level5{
+    background-color: #7e27a1;
+    color: aliceblue;
+}
+.levelInvalid{
+    background-color: #bdbdbd;
 }

@@ -33,12 +33,21 @@ let cityId = {
     540000: "Tibet",
     610000: "Shaanxi",
     620000: "Gansu",
-    630000: "Qinhai",
+    630000: "Qinghai",
     640000: "Ningxia",
     650000: "Xinjiang"
 };
 
-let notAccessKey = []
+let cityName = {}
+
+function getcityName() {
+    for (let k in cityId) {
+        cityName[cityId[k]] = parseInt(k);
+    }
+}
+
+
+
 class WaterData {
     constructor(cityId, city, riverBasin, monitoringPoint, time, level, tempture, pH, oxygen, conductivity, turbidity,
         permanganate, ammonia, phosphorus, nitrogen, situation) {
@@ -68,24 +77,60 @@ class WaterData {
         // add section for this record
         let newSection = document.createElement('section');
         stateSelector.append(newSection);
+        newSection.classList.add('entries');
+
+        let firstEntries = document.createElement('div');
+        newSection.append(firstEntries);
+        firstEntries.classList.add('firstEntries');
+
+        let secondEntries = document.createElement('div');
+        newSection.append(secondEntries);
+        secondEntries.classList.add('secondEntries');
+
+        let addEntries = firstEntries;
 
         for (let entries of Object.entries(this)) {
             // console.log(`${entries[0]}, ${entries[1]}`);
             if (entries[0] === "cityId") {
                 continue;
-            }
-            let newSpan = document.createElement('span');
-            newSection.append(newSpan);
-            newSection.classList.add('entries');
-            newSpan.innerHTML = `${titleCase(entries[0])}: ${entries[1]}`;
-            newSpan.classList.add(`${entries[0]}`);
-            newSpan.classList.add(`data`);
-        }
+            } else {
+                let newSpan = document.createElement('span');
+                addEntries.append(newSpan);
+                newSpan.innerHTML = `${titleCase(entries[0])}: ${entries[1]}`;
+                newSpan.classList.add(`${entries[0]}`);
+                if (entries[0] === "level") {
+                    addEntries = secondEntries;
+                    switch (entries[1]) {
+                        case "Ⅰ":
+                            newSpan.classList.add(`level1`);
+                            break;
+                        case "Ⅱ":
+                            newSpan.classList.add(`level2`);
+                            break;
+                        case "Ⅲ":
+                            newSpan.classList.add(`level3`);
+                            break;
+                        case "Ⅳ":
+                            newSpan.classList.add(`level4`);
+                            break;
+                        case "劣Ⅴ":
+                        case "Ⅴ":
+                            newSpan.classList.add(`level5`);
+                            break;
+                        default:
+                            newSpan.classList.add(`levelInvalid`);
 
+                    }
+                }
+
+                newSpan.classList.add(`data`);
+            }
+        }
     }
 }
 
 function sendRequest(key) {
+
     $.ajax({
         url: "https://liss-cors-anywhere.herokuapp.com/http://106.37.208.243:8068/GJZ/Ajax/Publish.ashx",
         data: {
@@ -100,12 +145,12 @@ function sendRequest(key) {
         success: function (data) {
             let dataRecords = eval("(" + data + ")").tbody;
             if (dataRecords !== undefined) {
-                
-                for (var i = 0; i < notAccessKey.length; i++) {
-                    if (notAccessKey[i] === 9) {
-                        notAccessKey.splice(i, 1);
-                    }
-                }
+
+                // for (var i = 0; i < notAccessKey.length; i++) {
+                //     if (notAccessKey[i] === 9) {
+                //         notAccessKey.splice(i, 1);
+                //     }
+                // }
 
                 for (let i = 0; i < dataRecords.length; i++) {
                     entries = dataRecords[i];
@@ -115,9 +160,9 @@ function sendRequest(key) {
                 }
             } else {
                 setTimeout(() => {
-                    console.log(key);
+                    // console.log(key);
                     sendRequest(key);
-                }, 3000);
+                }, 5000);
             }
 
         },
@@ -127,19 +172,86 @@ function sendRequest(key) {
     });
 }
 
+function getSearchCity() {
+    // console.log(window.location);
+    if (window.location.search.length === 0) {
+        return 0;
+    }
+    let search = window.location.search.slice(6);
+    for (let city in cityName) {
+        if (search === city) {
+            return cityName[city];
+        }
+    }
+    return -1;
+}
 
+function createCitySelectionHtml() {
+    let sectioin = document.querySelector('#selectionCity');
+    for (let key in cityName) {
+        if (key.length !== 0) {
+            let p = document.createElement('p');
+            sectioin.append(p);
+            p.innerHTML = key;
+        }
+    }
+    $("#selectionCity p").hide();
+}
+
+let select = false;
+function selectCity() {
+    $('#citySelection').on({
+        keyup: function() {
+            select = false;
+            let text = document.querySelector('#citySelection').value.toUpperCase();
+            $("#selectionCity p").hide();
+            $("#selectionCity p").each(function(){
+                if (this.innerHTML.toUpperCase().includes(text)) {
+                    $(this).show();
+                }
+            });
+        },
+        blur: function() {
+            if (select === false) {
+            $("#selectionCity p").hide();
+            }
+        }
+    });
+
+    $("#selectionCity p").on({
+        click: function() {
+            select = true;
+            let text = this.innerHTML;
+            document.querySelector('#citySelection').value = text;
+            $("#selectionCity p").hide();
+            $("#citySelection").focus();
+        },
+        mouseover: function() {
+            select = true;
+        },
+        mouseout: function() {
+            select = false;
+        }
+    });
+}
 
 $(document).ready(function () {
 
-    for (let key in cityId) {
-        setTimeout(() => {
-            sendRequest(key);
-        }, 3000);
+    getcityName();
+    createCitySelectionHtml();
+    selectCity();
+
+    let cityid = getSearchCity();
+    console.log(cityid);
+
+    if (cityid === -1) {
+        document.querySelector('h2').innerHTML = "Nothing found, please try another city.";
+    } else if (cityid === 0) {
+        document.querySelector('h2').innerHTML = "Default display: Beijing.";
+        sendRequest(cityName["Beijing"]);
+    } else if (cityid !== -1) {
+        document.querySelector('h2').innerHTML = `City: ${cityId[cityid]}`;
+        sendRequest(cityid);
     }
 
-    // console.log(notAccessKey);
-
-    // while (notAccessKey.length !== 0) {
-    //     sendRequest(notAccessKey[0]);
-    // }
 });
