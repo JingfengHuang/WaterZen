@@ -86,6 +86,7 @@ class WaterData {
         let secondEntries = document.createElement('div');
         newSection.append(secondEntries);
         secondEntries.classList.add('secondEntries');
+        secondEntries.classList.add('secondEntriesHide');
 
         let addEntries = firstEntries;
 
@@ -126,6 +127,13 @@ class WaterData {
                 newSpan.classList.add(`data`);
             }
         }
+
+        $(".firstEntries").off("click").on({
+            click: function() {
+                console.log(this.nextElementSibling);
+                this.nextElementSibling.classList.toggle('secondEntriesHide');
+            }
+        });
     }
 }
 
@@ -156,7 +164,7 @@ function sendRequest(key) {
                     entries = dataRecords[i];
                     let waterData = new WaterData(key, entries[0], entries[1], entries[2], entries[3], entries[4], entries[5], entries[6], entries[7], entries[8], entries[9], entries[10], entries[11], entries[12], entries[13], entries[16])
                     // console.log(waterData);
-                    waterData.generateHTML()
+                    waterData.generateHTML();
                 }
             } else {
                 setTimeout(() => {
@@ -200,7 +208,7 @@ function createCitySelectionHtml() {
 
 let select = false;
 function selectCity() {
-    $('#citySelection').on({
+    $('#citySelection').off('keyup').off('blur').on({
         keyup: function() {
             select = false;
             let text = document.querySelector('#citySelection').value.toUpperCase();
@@ -218,7 +226,7 @@ function selectCity() {
         }
     });
 
-    $("#selectionCity p").on({
+    $("#selectionCity p").off('click').off('mouseover').off('mouseout').on({
         click: function() {
             select = true;
             let text = this.innerHTML;

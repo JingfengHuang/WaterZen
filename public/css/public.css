@@ -51,12 +51,28 @@ section{
 }
 
 .firstEntries, .secondEntries {
-    display:flex;
+    width: 100%;
+    display: flex;
     flex-flow: row wrap;
 }
 
+.secondEntriesHide{
+    display:none;
+}
 .data{
     padding: 10px;
+}
+
+.firstEntries .city,
+.firstEntries .riverBasin,
+.firstEntries .time {
+    flex: 1 1 10rem;
+}
+.firstEntries .level {
+    flex: 0 0 7rem;
+}
+.firstEntries .monitoringPoint {
+    flex: 1 1 17rem;
 }
 
 
@@ -64,10 +80,10 @@ section{
 .level{
     border-radius: 1em;
 }
-.level::after{
+/* .level::after{
     content: '';
     width: 100%;
-}
+} */
 
 .level1{
     background-color: #90be6d;
