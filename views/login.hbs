@@ -1,12 +1,29 @@
-<form action="/login/verification" method="post">
-    <label for="floatingInput">Email</label>
-    <input type="text" name="userEmail" placeholder="Email" required>
+<link rel="stylesheet" href="/css/login.css">
 
-    <label for="floatingInput">Password</label>
-    <input type="password" name="password" id="password" required>
-    <button type="submit">Log in</button>
-    <a href="/registration">Sign up</a>
-    {{#if loginAlert}}
-        <p>{{loginAlert}}</p>
-    {{/if}}
-</form>
+<div class="container">
+    <div class ="row">
+        <div class = "col-md-3 offset-md-4">
+            <h2>Log In</h2>
+            <hr>
+        </div>
+        <div class = "col-md-4 offset-md-4">
+            
+            <form action="/login/verification" method="post">
+                <label for="floatingInput">Enter Your Email Address</label>
+                <br>
+                <input type="text" name="userEmail" placeholder=" Email" id="Email" required>
+                <br>
+                <label for="floatingInput">Password</label>
+                <br>
+                <input type="password" name="password" id="password" required>
+                <br>
+                <button type="submit">Log in</button>
+                <br>
+                <small>Don't have an account?&nbsp;<a href="/registration">Sign up</a></small>
+                {{#if loginAlert}}
+                    <p>{{loginAlert}}</p>
+                {{/if}}
+            </form>
+        </div>
+    </div>
+</div>
