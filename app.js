@@ -36,13 +36,14 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
-// Connect to DB
+// Log connect to DB
 pool.getConnection((err, connection) => {
     if(err) throw err; //not connected
     const today = new Date();
     console.log(`Connect as ID ${connection.threadId} at ${today}`)
 });
 
+// Set session store to database
 let sessionStore = new MySQLStore({
     expiration: 10800000,
     createDatabaseTable: true,
@@ -68,6 +69,7 @@ app.use(session({
     }
 }));
 
+// Route settings
 const userRoutes = require('./server/routes/user');
 app.use('/', userRoutes);
 
