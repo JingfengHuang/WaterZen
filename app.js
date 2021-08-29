@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const session = require('express-session');
 let MySQLStore = require('express-mysql-session')(session);
-var flash = require('connect-flash');
 
 require('dotenv').config();
 
@@ -69,11 +68,6 @@ app.use(session({
         sameSite: true,
     }
 }));
-
-// Flash session
-app.use(express.cookieParser('keyboard cat'));
-app.use(express.session({ cookie: { maxAge: 60000 }}));
-app.use(flash());
 
 // Route settings
 const userRoutes = require('./server/routes/user');
