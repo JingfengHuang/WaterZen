@@ -10,6 +10,8 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
+let modifyAlert = null;
+
 /** Logic */
 // Profile page
 exports.view = (req, res) => {
@@ -25,8 +27,10 @@ exports.view = (req, res) => {
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
                 // If db match user email
                 if (!err) {
-                    res.render('profile', { login: true, nickname: rows[0].nickname, userEmail: userEmail, modifyAlert: 'Changes have been saved' });
+                    res.render('profile', { login: true, nickname: rows[0].nickname, userEmail: userEmail, 'modifyAlert': modifyAlert });
+                    modifyAlert = null;
                 } else {
+                    modifyAlert = null;
                     res.redirect('/login');
                 }
             });
@@ -50,10 +54,12 @@ exports.modifyProfile = function (req, res) {
             connection.query('UPDATE user SET nickname=? WHERE email = ?', [nickname, req.session.userEmail], (err, rows) => {
                 // If db match user email
                 if (!err) {
-                    res.render('profile', { login: true, nickname: nickname, userEmail: req.session.userEmail, modifyAlert: 'Changes have been saved' })
+                    modifyAlert = 'Changes have been saved';
+                    res.redirect('/profile');
                 } else {
                     console.log(err);
-                    res.render('profile', { modifyAlert: 'Failed to save the changes, please try again!' })
+                    modifyAlert = 'Failed to save the changes, please try again!';
+                    res.redirect('/profile');
                 }
             });
         });
