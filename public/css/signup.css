@@ -26,19 +26,19 @@ input:focus{
     letter-spacing: 5px;
 }
 
-#Email{
-    margin-bottom: 10%;
+#Email, #Nickname, #password{
+    margin-bottom: 5%;
 }
 
 button{
-    margin-top: 10%;
+    margin-top: 5%;
     background-color: #295166;
     color: white;
     border: 2px solid #295166;
     border-radius: 3px;
     width: 25%;
     margin-left: 37.5%;
-    height: 35px;
+    height:35px;
 }
 
 button:hover{
@@ -49,7 +49,8 @@ button:hover{
 }
 
 small{
-    margin-top: 5%;
     display:flex;
     justify-content: center;
+    color: red;
 }
+

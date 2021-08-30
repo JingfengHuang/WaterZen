@@ -1,23 +1,40 @@
-<form action="/registration/validation" method="post">
+<link rel="stylesheet" href="/css/signup.css">
 
-    <label for="floatingInput">Email</label>
-    <input type="text" name="userEmail" placeholder="Email">
 
-    <label for="floatingInput">Nickname</label>
-    <input type="text" name="nickname" placeholder="Nickname">
+<div class="container">
+    <div class ="row">
+        <div class = "col-md-3 offset-md-4">
+            <h2>Sign Up</h2>
+            <hr>
+        </div>
+        <div class = "col-md-4 offset-md-4">
 
-    <label for="floatingInput">Password</label>
-    <input type="password" name="password" id="password">
+            <form action="/registration/validation" method="post">
 
-    <button type="submit">Submit</button>
+                <label for="floatingInput">Email</label>
+                <br>
+                <input type="text" name="userEmail" placeholder="Email" id="Email">
+                <br>
+                <label for="floatingInput">Nickname</label>
+                <br>
+                <input type="text" name="nickname" placeholder="Nickname" id="Nickname">
+                <br>
+                <label for="floatingInput">Password</label>
+                <br>
+                <input type="password" name="password" id="password">
+                <br>
+                <button type="submit">Submit</button>
 
-    {{#if registrationAlert}}
-    <p>{{registrationAlert}}</p>
-    {{else}} {{#if emailSent}}
-    <p>{{emailSent}}</p>
-    {{else}} {{/if}}{{/if}}
+                {{#if registrationAlert}}
+                <small>{{registrationAlert}}</small>
+                {{else}} {{#if emailSent}}
+                <small>{{emailSent}}</small>
+                {{else}} {{/if}}{{/if}}
 
-    {{#each validationError}}
-    <p>{{msg}}</p>
-    {{/each}}
-</form>
+                {{#each validationError}}
+                <small>{{msg}}</small>
+                {{/each}}
+            </form>
+        </div>
+    </div>
+</div>
