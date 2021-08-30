@@ -7,7 +7,7 @@ function titleCase(str) {
 let cityId = {
     110000: "Beijing",
     120000: "Tianjin",
-    130000: "Heibei",
+    130000: "Hebei",
     140000: "Shanxi",
     150000: "Nei_Monggol",
     210000: "Liaoning",
@@ -18,7 +18,7 @@ let cityId = {
     330000: "Zhejiang",
     340000: "Anhui",
     350000: "Fujian",
-    360000: "jiangxi",
+    360000: "Jiangxi",
     370000: "Shandong",
     410000: "Henan",
     420000: "Hubei",

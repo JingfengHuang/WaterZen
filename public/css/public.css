@@ -10,8 +10,8 @@ section{
     background: #152d421f;
     backdrop-filter: blur(10px);
     width: 269px;
-    left: 82%;
-    top: 74%;
+    right: 5px;
+    top: 75%;
     text-align: center;
 }
 
@@ -63,16 +63,18 @@ section{
     padding: 10px;
 }
 
-.firstEntries .city,
-.firstEntries .riverBasin,
-.firstEntries .time {
-    flex: 1 1 10rem;
+.firstEntries .city, .firstEntries .time {
+    flex: 1 0 10rem;
+}
+
+.firstEntries .riverBasin {
+    flex: 1 0 11rem;
 }
 .firstEntries .level {
     flex: 0 0 7rem;
 }
 .firstEntries .monitoringPoint {
-    flex: 1 1 17rem;
+    flex: 1 1 19rem;
 }
 
 
