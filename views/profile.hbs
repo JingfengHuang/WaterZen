@@ -1,36 +1,46 @@
-<h1>
-    Profile
-</h1>
+<link rel="stylesheet" href="/css/profile.css">
 
-<div>
-    <h3>
-        General Infomation
-    </h3>
+<div class="container">
+    <h2 class="text-center">
+        My Profile
+    </h2>
+    <img src="/img/avatar.png" alt="avatar">
 
-    <label>Nickname</label>
-    {{#if nickname}}
-    <p>{{nickname}}</p>
-    {{/if}}
+    <hr>
+    
+    <div class="row">
+        <div class="col-md-4 offset-md-2">
+            <h3>
+                General Infomation
+            </h3>
 
-    <label>Email address</label>
-    {{#if userEmail}}
-    <p>{{userEmail}}</p>
-    {{/if}}
+            <label><strong>Nickname:</strong></label>
+            {{#if nickname}}
+            <p>{{nickname}}</p>
+            {{/if}}
 
-</div>
+            <label><strong>Email address:</strong></label>
+            {{#if userEmail}}
+            <p>{{userEmail}}</p>
+            {{/if}}
+        </div>
+    
 
-<div class=''>
-    <h3>
-        Update your profile
-    </h3>
-    <form action="/profile/modifyProfile" method="post">
-        <label for="floatingInput">Nickname</label>
-        <input type="text" name="nickname" placeholder="Input your new nickname here" required>
+        <div class='col-md-4' id="update">
+            <h3>
+                Update Your Profile
+            </h3>
+            <form action="/profile/modifyProfile" method="post">
+                <label for="floatingInput"><strong>Nickname:</strong></label>
+                <br>
+                <input type="text" name="nickname" placeholder="Input new nickname" required>
 
-        <button type="submit">Save</button>
-
-        {{#if modifyAlert}}
-        <p>{{modifyAlert}}</p>
-        {{/if}}
-    </form>
+                <button type="submit">Save</button>
+                
+                {{#if modifyAlert}}
+                <p class="text-success">{{modifyAlert}}</p>
+                {{/if}}
+            </form>
+        </div>
+    </div>
 </div>
