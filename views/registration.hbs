@@ -28,7 +28,8 @@
                 {{#if registrationAlert}}
                 <small>{{registrationAlert}}</small>
                 {{else}} {{#if emailSent}}
-                <small>{{emailSent}}</small>
+                <br>
+                <small class="text-success">{{emailSent}}</small>
                 {{else}} {{/if}}{{/if}}
 
                 {{#each validationError}}
