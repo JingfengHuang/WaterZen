@@ -6,6 +6,11 @@ const nodemailer = require('nodemailer');
 const url = require('url');
 const { check, validationResult } = require('express-validator');
 
+// Variables
+let registrationAlert = null;
+let emailSent = null;
+let validationError = null;
+
 /** Create connection pool */
 const pool = mysql.createPool({
     connectionLimit: 100,
@@ -25,15 +30,18 @@ const transporter = nodemailer.createTransport({
 /** Logic */
 // Registration page
 exports.view = (req, res) => {
-    if (req.session.registrationAlert) {
-        res.render('registration', { 'registrationAlert': req.session.registrationAlert });
-    } else if (req.session.emailSent) {
-        res.render('registration', { 'emailSent': req.session.emailSent });
+    if (registrationAlert) {
+        res.render('registration', { 'registrationAlert': registrationAlert });
+    } else if (emailSent) {
+        res.render('registration', { 'emailSent': emailSent });
+    } else if (validationError) {
+        res.render('registration', { 'validationError': validationError });
     } else {
         res.render('registration');
     }
-    req.session.registrationAlert = null;
-    req.session.emailSent = null;
+    registrationAlert = null;
+    emailSent = null;
+    validationError = null;
 }
 
 // Registration Validation
@@ -50,7 +58,8 @@ exports.validation = [check('userEmail')
         if (!errors.isEmpty()) {
             // return res.status(422).jsonp(errors.array())
             console.log(errors.array());
-            res.render('registration', {validationError: errors.array()})
+            validationError = errors.array();
+            return res.redirect('/registration');
         } else {
             pool.getConnection((err, connection) => {
                 if (err) throw err; //not connected
@@ -66,58 +75,61 @@ exports.validation = [check('userEmail')
                     if (rows.length !== 0) {
                         let isEmailVerified = rows[0].isEmailVerified;
                         if (isEmailVerified === 0) {
-                            res.render('registration', {registrationAlert: 'This email address has been registered and is awaiting for verification. Please check your email inbox for instructions.'});
+                            registrationAlert = 'This email address has been registered and is awaiting for verification. Please check your email inbox for instructions.';
                         } else {
-                            res.render('registration', {registrationAlert: 'This email address has be registered!'});
+                            registrationAlert = 'This email address has be registered!';
                         }
-                    }
-                });
-
-                // Hash password
-                const password = bcrypt.hashSync(req.body.password, 10);
-
-                // Set avatar path as default for now
-                const avatarPath = "default";
-
-                // Generate a verification key
-                let verificationKey = crypto.randomBytes(20).toString('hex');
-
-                // Set email to not verified
-                let emailVerified = 0;
-
-                // Set verification email contents
-                let mailOptions = {
-                    from: process.env.MAIL,
-                    to: userEmail,
-                    subject: 'Verify your WaterZen account',
-                    html: `<p>Hi ${nickname},</p>
-                    <p>Thank you for registering with WaterZen. Please verify your account by clicking this <a href="http://localhost:5000/registration/verify_email/?verify=${verificationKey}">link</a>.</p>
-                    <p>Best Regards,<br>WaterZen IT</p>`
-                };
-
-                // Send verification email
-                transporter.sendMail(mailOptions, function (error, info) {
-                    if (error) {
-                        console.log(error);
+                        return res.redirect('/registration');
                     } else {
-                        console.log('Email sent: ' + info.response);
+                        // Hash password
+                        const password = bcrypt.hashSync(req.body.password, 10);
+
+                        // Set avatar path as default for now
+                        const avatarPath = "default";
+
+                        // Generate a verification key
+                        let verificationKey = crypto.randomBytes(20).toString('hex');
+
+                        // Set email to not verified
+                        let emailVerified = 0;
+
+                        // Set verification email contents
+                        let mailOptions = {
+                            from: process.env.MAIL,
+                            to: userEmail,
+                            subject: 'Verify your WaterZen account',
+                            html: `<p>Hi ${nickname},</p>
+                            <p>Thank you for registering with WaterZen. Please verify your account by clicking this <a href="http://localhost:5000/registration/verify_email/?verify=${verificationKey}">link</a>.</p>
+                            <p>Best Regards,<br>WaterZen IT</p>`
+                        };
+
+                        // Send verification email
+                        transporter.sendMail(mailOptions, function (error, info) {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                console.log('Email sent: ' + info.response);
+                            }
+                        });
+
+                        // Insert into database
+                        connection.query('INSERT INTO user SET email = ?, nickname = ?, password = ?, avatarPath = ?, isEmailVerified = ?, verificationKey = ?', [userEmail, nickname, password, avatarPath, emailVerified, verificationKey], (err, rows) => {
+
+                            // If success refresh registration page
+                            if (!err) {
+                                emailSent = 'A verification email had been sent to your account. Please check your email for further verification.';
+                                return res.redirect('/registration');
+                            } else {
+                                console.log(err);
+                            }
+                        });
+
+
                     }
                 });
 
-                // Insert into database
-                connection.query('INSERT INTO user SET email = ?, nickname = ?, password = ?, avatarPath = ?, isEmailVerified = ?, verificationKey = ?', [userEmail, nickname, password, avatarPath, emailVerified, verificationKey], (err, rows) => {
-
-                    // If success refresh registration page
-                    if (!err) {
-                        req.session.emailSent = 'A verification email had been sent to your account. Please check your email for further verification.';
-                        res.redirect('/registration');
-                    } else {
-                        console.log(err);
-                    }
-                });
             });
         }
-        // Connect to DB
 
     }]
 

@@ -2,6 +2,9 @@
 const mysql = require('mysql');
 const bcrypt = require("bcrypt");
 
+// Variables
+let loginAlert = null;
+
 /** Create connection pool */
 const pool = mysql.createPool({
     connectionLimit : 100,
@@ -13,9 +16,11 @@ const pool = mysql.createPool({
 // Login page
 exports.view = (req, res) => {
     if (!req.session.login) {
-        res.render('login');
+        res.render('login', {'loginAlert': loginAlert});
+        loginAlert = null;
     } else {
         res.redirect('/');
+        loginAlert = null;
     }
 }
 
@@ -38,7 +43,13 @@ exports.verification =  (req, res) => {
             if (rows.length === 0) {
                 req.session.login = false;
                 req.session.email = null;
-                res.redirect('/login');
+                loginAlert = 'Incorrect email address or password!';
+                return res.redirect('/login');
+            } else if (rows[0].isEmailVerified === 0) {
+                req.session.login = false;
+                req.session.email = null;
+                loginAlert = 'This email address has been registered and is awaiting for verification. Please check your email inbox for instructions.';
+                return res.redirect('/login');
             }
 
             // If db match user email
@@ -53,11 +64,13 @@ exports.verification =  (req, res) => {
                 if (matched) {
                     req.session.login = true;
                     req.session.userEmail = rows[0].email;
+                    loginAlert = null;
                     return res.redirect('/');
                 } else {
                     req.session.login = false;
                     req.session.userEmail = null;
-                    return res.render('/login', {loginAlert: 'Incorrect email account or password!'});
+                    loginAlert = 'Incorrect email account or password!';
+                    return res.redirect('/login');
                 }
             } else {
                 console.log(err);
