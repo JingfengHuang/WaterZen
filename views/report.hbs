@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="/css/report.css">
+
+
+<div class="container">
+    <h2>Making a Water Quality Report</h2>
+    <div class="row">
+        <div class = "col-md-1 offset-md-3">
+            <img src="/img/map.png" alt="location icon">
+        </div>
+        <div class = "col-md-2">
+            <h3>Location</h3>
+        </div>
+    </div>
+    <div class="row" id="form">
+        <div class = "col-md-2 offset-md-4">
+            <select>
+                <option value="null">Select State</option>
+                <option value="NSW">NSW</option>
+                <option value="VIC">VIC</option>
+                <option value="QLD">QLD</option>
+                <option value="WA">WA</option>
+                <option value="SA">SA</option>
+                <option value="TAS">TAS</option>
+                <option value="ACT">ACT</option>
+                <option value="NT">NT</option>
+            </select>
+        </div>
+        <div class = "col-md-2">
+            <select>
+                <option value="null">Select City</option>
+            </select>
+        </div>
+        <br>
+        <div class = "col-md-3 offset-md-4">
+            <textarea rows="3" cols="33" placeholder="Input Your Precise Location"></textarea>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var arr = new Array(8);
+    arr[0] = ["NSW", "Sydney", "Newcastle", "Central Coast", "Wollongong", "Albury", "Coffs Harbour", "Wagga Wagga", "Port Macquarie", "Tamworth"
+    "Orange", "Bowral", "Dubbo", "Nowra", "Bathurst", "Lismore", "Nelson Bay", "Taree", "Ballina", "Morisset", "Armidale", "Goulburn", "Forster"
+    "Griffith", "St Georges Basin", "Grafton", "Camden Haven", "Broken Hill", "Batemans Bay", "Singleton", "Ulladulla", "Kempsey", "Lithgow", "Mudgee"
+    "Muswellbrook", "Parkes"];
+    arr[1] = ["VIC", "Melbourne", "Geelong", "Ballarat", "Bendigo", "Melton", "Mildura", "Shepparton", "Pakenham", "Wodonga", "Sunbury", "Warrnambool"
+    "Traralgon", "Wangaratta", "Ocean Grove", "Bacchus Marsh", "Torquay", "Horsham", "Moe", "Warragul", "Morwell", "Sale"];
+    arr[2] = ["QLD", "Brisbane", "Gold Coast", "Sunshine Coast", "Townsville", "Cairns", "Toowoomba", "Mackay", "Rockhampton", "Hervey Bay", "Bundaberg",
+    "Gladstone", "Maryborough", "Mount Isa", "Gympie", "Nambour", "Bongaree", "Yeppoon", "Warwick", "Emerald", "Dalby", "Bargara", "Gracemere", "Kingaroy"];
+    arr[3] = ["WA", "Perth", "Bunbury", "Geraldton", "Kalgoorlie", "Albany", "Busselton", "Karratha", "Broome", "Port Hedland", "Esperance"];
+    arr[4] = ["SA", "Adelaide", "Gawler", "Mount Gambier", "Whyalla", "Murray Bridge", "Mount Barker", "Victor Harbor", "Crafers", "Port Pirie", 
+    "Port Lincoln", "Port Augusta"];
+    arr[5] = ["TAS", "Hobart", "Launceston", "Devonport", "Burnie", "Ulverstone"];
+    arr[6] = ["ACT", "North Canberra", "South Canberra", "Woden Valley", "Belconnen", "Weston Creek", "Tuggeranong", "Gungahlin", "Molonglo Valley"];
+    arr[7] = ["NT", "Darwin", "Palmerston", "Alice Springs", "Litchfield", "Katherine"];
+</script>
