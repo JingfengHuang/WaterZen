@@ -4,16 +4,31 @@ h2{
 
 img{
     width: 75%;
+    max-width: 100px;
 }
 
 .col-md-2 h3{
     padding-top: 7.5%;
 }
 
-#form{
-    margin-top: 2.5%;
+#locationform{
+    margin-top: 0.5%;
 }
 
 textarea{
     margin-top: 2%;
 }
+
+#Issue, #Confirm{
+    margin-top: 2.5%;
+}
+
+.col-md-4 h3{
+    padding-top: 2.5%;
+}
+
+button{
+    width: 30%;
+    margin-left: 35%;
+}
+
