@@ -52,7 +52,12 @@ exports.validation = [check('userEmail')
                         .withMessage('Invalid email address!'),
                     check('password')
                         .isLength({ min: 6 })
-                        .withMessage('Password must be longer than 6 characters!'), (req, res) => {
+                        .withMessage('Password must be longer than 6 characters!'),
+                    check('confirm')
+                        .isLength({ min: 6 })
+                        .withMessage('Confirm password is required.')
+                        .matches('password')
+                        .withMessage('Passwords must match.'), (req, res) => {
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
