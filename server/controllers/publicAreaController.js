@@ -1,6 +1,5 @@
 /** Imports */
 const mysql = require('mysql');
-const bcrypt = require("bcrypt");
 
 /** Create connection pool */
 const pool = mysql.createPool({
@@ -10,12 +9,26 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
-/** Logic */
-// Public area page
 exports.view = (req, res) => {
-    if (!req.session.login) {
-        res.render('publicArea');
+
+    const userEmail = req.session.userEmail;
+
+    if (req.session.login) {
+        pool.getConnection((err, connection) => {
+            if(err) throw err; //not connected
+            const today = new Date();
+            console.log(`Connect as ID ${connection.threadId} at ${today}`);
+
+            connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
+                // If db match user email
+                if (!err) {
+                    res.render('publicArea', {login: true, nickname: rows[0].nickname});
+                } else {
+                    res.render('publicArea', {login: true, nickname: "username"});
+                }
+            });
+        });
     } else {
-        res.render('publicArea', {login: true});
+        res.render('publicArea', {login: false});
     }
 }

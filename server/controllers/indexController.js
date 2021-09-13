@@ -14,7 +14,22 @@ exports.view = (req, res) => {
     const {userEmail} = req.session;
     
     if (req.session.login) {
-        res.render('index', {login: true});
+        const userEmail = req.session.userEmail;
+        
+        pool.getConnection((err, connection) => {
+            if(err) throw err; //not connected
+            const today = new Date();
+            console.log(`Connect as ID ${connection.threadId} at ${today}`)
+
+            connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
+                // If db match user email
+                if (!err) {
+                    res.render('index', {login: true, nickname: rows[0].nickname});
+                } else {
+                    res.render('index', {login: true, nickname: "username"});
+                }
+            });
+        });
     } else {
         res.render('index', {login: false});
     }
@@ -22,13 +37,6 @@ exports.view = (req, res) => {
     console.log(req.session);
     console.log(req.sessionID);
     console.log(req.session.userEmail);
-
-    // Connect to DB
-    pool.getConnection((err, connection) => {
-        if(err) throw err; //not connected
-        const today = new Date();
-        console.log(`Connect as ID ${connection.threadId} at ${today}`)
-    });
 }
 
 exports.logout = (req, res) => {
