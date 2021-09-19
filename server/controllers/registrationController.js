@@ -98,7 +98,7 @@ exports.validation = [check('userEmail')
                         const password = bcrypt.hashSync(req.body.password, 10);
 
                         // Set avatar path as default for now
-                        const avatarPath = "default";
+                        const avatarPath = "avatar.png";
 
                         // Generate a verification key
                         let verificationKey = crypto.randomBytes(20).toString('hex');

@@ -35,4 +35,6 @@ router.get('/profile', profileController.view);
 // Modify user profile
 router.post('/profile/modifyProfile', profileController.modifyProfile);
 
+router.post('/upload', profileController.upload);
+
 module.exports = router;

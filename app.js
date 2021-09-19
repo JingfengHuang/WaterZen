@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const session = require('express-session');
 let MySQLStore = require('express-mysql-session')(session);
+const fileUpload = require('express-fileUpload');
 
 require('dotenv').config();
 
@@ -69,6 +70,11 @@ app.use(session({
     }
 }));
 
+// file upload configure
+app.use(fileUpload({
+    limits: {fileSize: 50 * 1024 * 1024 },
+}));
+
 // Route settings
 const userRoutes = require('./server/routes/user');
 app.use('/', userRoutes);
@@ -84,6 +90,5 @@ app.use('/', productRoutes);
 
 const reportRoutes = require('./server/routes/report');
 app.use('/', reportRoutes);
-
 
 app.listen(port, () => console.log(`Listening on ${port}`));

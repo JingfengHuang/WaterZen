@@ -4,10 +4,19 @@
     <h2 class="text-center">
         My Profile
     </h2>
-    <img src="/img/avatar.png" alt="avatar">
+    <img src="/img/upload/{{avatar}}" alt="avatar">
+    <br>
+    <form action="/upload" method="POST" encType="multipart/form-data">
+        <p>Update Profile Photo</p>
+        {{#if upload}}
+        <p class="text-success">{{upload}}</p>
+        {{/if}}
+        <input type="file" name="sampleFile" accept="image/*" />
+        <input type="submit" class="btn btn-primary">
+    </form>
 
     <hr>
-    
+
     <div class="row">
         <div class="col-md-4 offset-md-2">
             <h3>
@@ -24,7 +33,7 @@
             <p>{{userEmail}}</p>
             {{/if}}
         </div>
-    
+
 
         <div class='col-md-4' id="update">
             <h3>
@@ -36,7 +45,7 @@
                 <input type="text" name="nickname" placeholder="Input new nickname" required>
 
                 <button type="submit">Save</button>
-                
+
                 {{#if modifyAlert}}
                 <p class="text-success">{{modifyAlert}}</p>
                 {{/if}}
