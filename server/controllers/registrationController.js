@@ -60,8 +60,7 @@ exports.validation = [check('userEmail')
                         .custom(async (confirmPassword, {req}) => {
                             const password = req.body.password
                         
-                            // If password and confirm password not same
-                            // don't allow to sign up and throw error
+                            /** Inspired by https://www.geeksforgeeks.org/how-to-compare-password-and-confirm-password-inputs-using-express-validator */
                             if(password !== confirmPassword){
                               throw new Error('Passwords must match')
                             }
