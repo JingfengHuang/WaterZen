@@ -26,6 +26,10 @@ input:focus{
     letter-spacing: 5px;
 }
 
+#confirm:focus{
+    letter-spacing: 5px;
+}
+
 #Email, #Nickname, #password{
     margin-bottom: 5%;
 }

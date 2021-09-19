@@ -51,13 +51,22 @@ exports.validation = [check('userEmail')
                         .normalizeEmail()
                         .withMessage('Invalid email address!'),
                     check('password')
-                        .isLength({ min: 6 })
+                        .trim()
+                        .isLength({ min: 6, max:16 })
                         .withMessage('Password must be longer than 6 characters!'),
                     check('confirm')
                         .isLength({ min: 6 })
                         .withMessage('Confirm password is required.')
-                        .matches('password')
-                        .withMessage('Passwords must match.'), (req, res) => {
+                        .custom(async (confirmPassword, {req}) => {
+                            const password = req.body.password
+                        
+                            // If password and confirm password not same
+                            // don't allow to sign up and throw error
+                            if(password !== confirmPassword){
+                              throw new Error('Passwords must match')
+                            }
+                        }),
+                        (req, res) => {
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
