@@ -2,25 +2,22 @@
 
 <div class="container">
     <h2>Making a Water Quality Report</h2>
-    {{#if alert}}
-        <p>{{alert}}</p>
-    {{/if}}
-    {{#if reportSent}}
-        <p>{{reportSent}}</p>
+    {{#if reportStatus}}
+    <p>{{reportStatus}}</p>
     {{/if}}
     <form action="/report/reportQuality" method="post">
-        <fieldset {{#if disabled}}disabled="disabled"{{/if}}>
+        <fieldset {{#if disabled}}disabled="disabled" {{/if}}>
             <div class="row">
-                <div class = "col-md-1 offset-md-3">
+                <div class="col-md-1 offset-md-3">
                     <img src="/img/map.png" alt="location icon">
                 </div>
-                <div class = "col-md-2">
+                <div class="col-md-2">
                     <h3>Location</h3>
                 </div>
             </div>
             <div class="row" id="locationform">
-                <div class = "col-md-2 offset-md-4">
-                    <select name="state" onchange = "selectCity(this.value)">
+                <div class="col-md-2 offset-md-4">
+                    <select name="state" onchange="selectCity(this.value)">
                         <option value="null">Select State</option>
                         <option value="NSW">NSW</option>
                         <option value="VIC">VIC</option>
@@ -32,48 +29,52 @@
                         <option value="NT">NT</option>
                     </select>
                 </div>
-                <div class = "col-md-2">
+                <div class="col-md-2">
                     <select name="city" id="city">
                         <option value="null">Select City</option>
                     </select>
                 </div>
                 <br>
-                <div class = "col-md-4 offset-md-4">
-                    <textarea rows="3" cols="33" name="preciseLocation" placeholder="Input Your Precise Location"></textarea>
+                <div class="col-md-4 offset-md-4">
+                    <textarea rows="3" cols="33" name="preciseLocation"
+                        placeholder="Input Your Precise Location"></textarea>
                 </div>
             </div>
 
             <div class="row" id="Issue">
-                <div class = "col-md-1 offset-md-3">
+                <div class="col-md-1 offset-md-3">
                     <img src="/img/caution.png" alt="problem icon">
                 </div>
-                <div class = "col-md-4">
+                <div class="col-md-4">
                     <h3>Water Quality Issue</h3>
                 </div>
             </div>
 
             <div class="row" id="issueform">
-                <div class = "col-md-4 offset-md-4">
+                <div class="col-md-4 offset-md-4">
                     <textarea rows="1" cols="33" name="qualityTitle" placeholder="Write the title here"></textarea>
                     <textarea rows="4" cols="33" name="qualityIssue" placeholder="Write the issue here"></textarea>
                 </div>
             </div>
 
             <div class="row" id="Confirm">
-                <div class = "col-md-1 offset-md-3">
+                <div class="col-md-1 offset-md-3">
                     <img src="/img/confirm.png" alt="confirm icon">
                 </div>
-                <div class = "col-md-4">
+                <div class="col-md-4">
                     <h3>Confirm</h3>
                 </div>
             </div>
 
             <div class="row" id="confirmform">
-                <div class = "col-md-4 offset-md-4">
+                <div class="col-md-4 offset-md-4">
                     <input type="checkbox" id="private" name="isPrivate">
                     <label for="private">Report as a private user</label>
                     <br>
-                    <input type="checkbox" id="policy" name="isAgreePolicy">
+                    <input type="checkbox" id="policy" name="isAgreePolicy" required
+                        oninvalid="this.setCustomValidity('You must agree to the privacy policy to report')"
+                        oninput="this.setCustomValidity('')">
+
                     <label for="policy">I agree with the privacy policy</label>
                     <br>
                 </div>
@@ -82,46 +83,43 @@
             <button type="submit">SUMBIT</button>
         </fieldset>
     </form>
-    {{#each validationError}}
-        <small>{{msg}}</small>
-    {{/each}}
 </div>
 
 <script type="text/javascript">
     var arr = new Array(8);
     arr[0] = ["NSW", "Sydney", "Newcastle", "Central Coast", "Wollongong", "Albury", "Coffs Harbour", "Wagga Wagga", "Port Macquarie", "Tamworth",
-    "Orange", "Bowral", "Dubbo", "Nowra", "Bathurst", "Lismore", "Nelson Bay", "Taree", "Ballina", "Morisset", "Armidale", "Goulburn", "Forster",
-    "Griffith", "St Georges Basin", "Grafton", "Camden Haven", "Broken Hill", "Batemans Bay", "Singleton", "Ulladulla", "Kempsey", "Lithgow", "Mudgee",
-    "Muswellbrook", "Parkes"];
+        "Orange", "Bowral", "Dubbo", "Nowra", "Bathurst", "Lismore", "Nelson Bay", "Taree", "Ballina", "Morisset", "Armidale", "Goulburn", "Forster",
+        "Griffith", "St Georges Basin", "Grafton", "Camden Haven", "Broken Hill", "Batemans Bay", "Singleton", "Ulladulla", "Kempsey", "Lithgow", "Mudgee",
+        "Muswellbrook", "Parkes"];
     arr[1] = ["VIC", "Melbourne", "Geelong", "Ballarat", "Bendigo", "Melton", "Mildura", "Shepparton", "Pakenham", "Wodonga", "Sunbury", "Warrnambool",
-    "Traralgon", "Wangaratta", "Ocean Grove", "Bacchus Marsh", "Torquay", "Horsham", "Moe", "Warragul", "Morwell", "Sale"];
+        "Traralgon", "Wangaratta", "Ocean Grove", "Bacchus Marsh", "Torquay", "Horsham", "Moe", "Warragul", "Morwell", "Sale"];
     arr[2] = ["QLD", "Brisbane", "Gold Coast", "Sunshine Coast", "Townsville", "Cairns", "Toowoomba", "Mackay", "Rockhampton", "Hervey Bay", "Bundaberg",
-    "Gladstone", "Maryborough", "Mount Isa", "Gympie", "Nambour", "Bongaree", "Yeppoon", "Warwick", "Emerald", "Dalby", "Bargara", "Gracemere", "Kingaroy"];
+        "Gladstone", "Maryborough", "Mount Isa", "Gympie", "Nambour", "Bongaree", "Yeppoon", "Warwick", "Emerald", "Dalby", "Bargara", "Gracemere", "Kingaroy"];
     arr[3] = ["WA", "Perth", "Bunbury", "Geraldton", "Kalgoorlie", "Albany", "Busselton", "Karratha", "Broome", "Port Hedland", "Esperance"];
-    arr[4] = ["SA", "Adelaide", "Gawler", "Mount Gambier", "Whyalla", "Murray Bridge", "Mount Barker", "Victor Harbor", "Crafers", "Port Pirie", 
-    "Port Lincoln", "Port Augusta"];
+    arr[4] = ["SA", "Adelaide", "Gawler", "Mount Gambier", "Whyalla", "Murray Bridge", "Mount Barker", "Victor Harbor", "Crafers", "Port Pirie",
+        "Port Lincoln", "Port Augusta"];
     arr[5] = ["TAS", "Hobart", "Launceston", "Devonport", "Burnie", "Ulverstone"];
     arr[6] = ["ACT", "North Canberra", "South Canberra", "Woden Valley", "Belconnen", "Weston Creek", "Tuggeranong", "Gungahlin", "Molonglo Valley"];
     arr[7] = ["NT", "Darwin", "Palmerston", "Alice Springs", "Litchfield", "Katherine"];
 
-    function selectCity(val){
+    function selectCity(val) {
         //get city select list
         var city1 = document.getElementById("city");
         var select1 = city1.getElementsByTagName("option");
         //delete existing options
-        for (var a=0; a<select1.length; a++){
+        for (var a = 0; a < select1.length; a++) {
             var option = select1[a];
             city1.removeChild(option);
             a--;
             //console.log(option);
         }
         //Iterate arrays, find same state names
-        for (var b=0; b<arr.length; b++){
+        for (var b = 0; b < arr.length; b++) {
             var arrb = arr[b];
             var firstValue = arrb[0];
-            if (val == firstValue){
+            if (val == firstValue) {
                 //add city names into the select list
-                for (var c=1; c<arrb.length; c++){
+                for (var c = 1; c < arrb.length; c++) {
                     var value1 = arrb[c];
                     var option1 = document.createElement("option");
                     var text1 = document.createTextNode(value1);
