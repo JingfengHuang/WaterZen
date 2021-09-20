@@ -12,6 +12,7 @@ const pool = mysql.createPool({
 exports.view = (req, res) => {
 
     const userEmail = req.session.userEmail;
+    const pageTitle = "Official";
 
     if (req.session.login) {
         pool.getConnection((err, connection) => {
@@ -20,14 +21,12 @@ exports.view = (req, res) => {
             console.log(`Connect as ID ${connection.threadId} at ${today}`);
 
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
-                if (err) {
-                    res.redirect('/login');
+                if (!err) {
+                    res.render('publicArea', {login: true, pageTitle: pageTitle, nickname: rows[0].nickname});
                 }
             });
         });
-
-        res.render('publicArea', {login: true, nickname: req.session.nickname});
     } else {
-        res.render('publicArea', {login: false});
+        res.render('publicArea', {login: false, pageTitle: pageTitle});
     }
 }

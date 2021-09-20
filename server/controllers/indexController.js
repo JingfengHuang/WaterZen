@@ -12,21 +12,22 @@ const pool = mysql.createPool({
 /** Logic */
 exports.view = (req, res) => {
     const {userEmail} = req.session;
-    
+    const pageTitle = "WaterZen | Home";
+
     if (req.session.login) {
         const userEmail = req.session.userEmail;
         
         pool.getConnection((err, connection) => {
             if(err) throw err;
-            const today = new Date();
+            
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
-                if (err) {
-                    res.redirect('/login');
+                if (!err) {
+                    res.render('index', {pageTitle: pageTitle, login: true, nickname: rows[0].nickname});
+                } else {
+                    res.render('index', {login: true, nickname: "username"});
                 }
             });
-        });
-
-        res.render('index', {login: true, nickname: req.session.nickname});
+        }); 
     } else {
         res.render('index', {login: false});
     }
@@ -38,7 +39,6 @@ exports.logout = (req, res) => {
         // session is already destroyed at this point, so either way, the
         // user won't be able to authenticate with that same cookie again.
         res.clearCookie('sid');
-    
         res.redirect('/');
     })
 }
