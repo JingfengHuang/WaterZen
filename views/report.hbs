@@ -2,74 +2,89 @@
 
 <div class="container">
     <h2>Making a Water Quality Report</h2>
-    <div class="row">
-        <div class = "col-md-1 offset-md-3">
-            <img src="/img/map.png" alt="location icon">
-        </div>
-        <div class = "col-md-2">
-            <h3>Location</h3>
-        </div>
-    </div>
-    <div class="row" id="locationform">
-        <div class = "col-md-2 offset-md-4">
-            <select onchange = "selectCity(this.value)">
-                <option value="null">Select State</option>
-                <option value="NSW">NSW</option>
-                <option value="VIC">VIC</option>
-                <option value="QLD">QLD</option>
-                <option value="WA">WA</option>
-                <option value="SA">SA</option>
-                <option value="TAS">TAS</option>
-                <option value="ACT">ACT</option>
-                <option value="NT">NT</option>
-            </select>
-        </div>
-        <div class = "col-md-2">
-            <select id="city">
-                <option value="null">Select City</option>
-            </select>
-        </div>
-        <br>
-        <div class = "col-md-4 offset-md-4">
-            <textarea rows="3" cols="33" placeholder="Input Your Precise Location"></textarea>
-        </div>
-    </div>
+    {{#if alert}}
+        <p>{{alert}}</p>
+    {{/if}}
+    {{#if reportSent}}
+        <p>{{reportSent}}</p>
+    {{/if}}
+    <form action="/report/reportQuality" method="post">
+        <fieldset {{#if disabled}}disabled="disabled"{{/if}}>
+            <div class="row">
+                <div class = "col-md-1 offset-md-3">
+                    <img src="/img/map.png" alt="location icon">
+                </div>
+                <div class = "col-md-2">
+                    <h3>Location</h3>
+                </div>
+            </div>
+            <div class="row" id="locationform">
+                <div class = "col-md-2 offset-md-4">
+                    <select name="state" onchange = "selectCity(this.value)">
+                        <option value="null">Select State</option>
+                        <option value="NSW">NSW</option>
+                        <option value="VIC">VIC</option>
+                        <option value="QLD">QLD</option>
+                        <option value="WA">WA</option>
+                        <option value="SA">SA</option>
+                        <option value="TAS">TAS</option>
+                        <option value="ACT">ACT</option>
+                        <option value="NT">NT</option>
+                    </select>
+                </div>
+                <div class = "col-md-2">
+                    <select name="city" id="city">
+                        <option value="null">Select City</option>
+                    </select>
+                </div>
+                <br>
+                <div class = "col-md-4 offset-md-4">
+                    <textarea rows="3" cols="33" name="preciseLocation" placeholder="Input Your Precise Location"></textarea>
+                </div>
+            </div>
 
-    <div class="row" id="Issue">
-        <div class = "col-md-1 offset-md-3">
-            <img src="/img/caution.png" alt="problem icon">
-        </div>
-        <div class = "col-md-4">
-            <h3>Water Quality Issue</h3>
-        </div>
-    </div>
+            <div class="row" id="Issue">
+                <div class = "col-md-1 offset-md-3">
+                    <img src="/img/caution.png" alt="problem icon">
+                </div>
+                <div class = "col-md-4">
+                    <h3>Water Quality Issue</h3>
+                </div>
+            </div>
 
-    <div class="row" id="issueform">
-        <div class = "col-md-4 offset-md-4">
-            <textarea rows="4" cols="33" placeholder="Write the issue here"></textarea>
-        </div>
-    </div>
+            <div class="row" id="issueform">
+                <div class = "col-md-4 offset-md-4">
+                    <textarea rows="1" cols="33" name="qualityTitle" placeholder="Write the title here"></textarea>
+                    <textarea rows="4" cols="33" name="qualityIssue" placeholder="Write the issue here"></textarea>
+                </div>
+            </div>
 
-    <div class="row" id="Confirm">
-        <div class = "col-md-1 offset-md-3">
-            <img src="/img/confirm.png" alt="confirm icon">
-        </div>
-        <div class = "col-md-4">
-            <h3>Confirm</h3>
-        </div>
-    </div>
+            <div class="row" id="Confirm">
+                <div class = "col-md-1 offset-md-3">
+                    <img src="/img/confirm.png" alt="confirm icon">
+                </div>
+                <div class = "col-md-4">
+                    <h3>Confirm</h3>
+                </div>
+            </div>
 
-    <div class="row" id="confirmform">
-        <div class = "col-md-4 offset-md-4">
-            <input type="checkbox" id="private">
-            <label for="private">Report as a private user</label>
-            <br>
-            <input type="checkbox" id="policy">
-            <label for="policy">I agree with the privacy policy</label>
-            <br>
+            <div class="row" id="confirmform">
+                <div class = "col-md-4 offset-md-4">
+                    <input type="checkbox" id="private" name="isPrivate">
+                    <label for="private">Report as a private user</label>
+                    <br>
+                    <input type="checkbox" id="policy" name="isAgreePolicy">
+                    <label for="policy">I agree with the privacy policy</label>
+                    <br>
+                </div>
+            </div>
+
             <button type="submit">SUMBIT</button>
-        </div>
-    </div>
+        </fieldset>
+    </form>
+    {{#each validationError}}
+        <small>{{msg}}</small>
+    {{/each}}
 </div>
 
 <script type="text/javascript">

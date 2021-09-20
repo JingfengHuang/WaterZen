@@ -21,14 +21,12 @@ exports.view = (req, res) => {
             console.log(`Connect as ID ${connection.threadId} at ${today}`)
     
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
-                // If db match user email
-                if (!err) {
-                    res.render('privateArea', {login: true, nickname: rows[0].nickname});
-                } else {
-                    res.render('privateArea', {login: true, nickname: "username"});
+                if (err) {
+                    res.redirect('/login');
                 }
             });
         });
+        res.render('privateArea', {login: true, nickname: req.session.nickname});
     } else {
         res.render('privateArea', {login: false});
     }

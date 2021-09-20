@@ -27,15 +27,15 @@ exports.view = (req, res) => {
 
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
                 // If db match user email
-                if (!err) {
-                    res.render('profile', { login: true, nickname: rows[0].nickname, userEmail: userEmail, 'modifyAlert': modifyAlert, 'avatar': rows[0].avatarPath, 'upload': upload});
-                    modifyAlert = null;
-                } else {
+                if (err) {
                     modifyAlert = null;
                     res.redirect('/login');
                 }
             });
         });
+
+        res.render('profile', { login: true, nickname: req.session.nickname, userEmail: userEmail, 'modifyAlert': modifyAlert });
+        modifyAlert = null;
     }
 }
 

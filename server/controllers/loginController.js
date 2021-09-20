@@ -42,12 +42,16 @@ exports.verification =  (req, res) => {
             // If db cannot find that account
             if (rows.length === 0) {
                 req.session.login = false;
+                req.session.userID = null;
                 req.session.email = null;
+                req.session.nickname = null;
                 loginAlert = 'Incorrect email address or password!';
                 return res.redirect('/login');
             } else if (rows[0].isEmailVerified === 0) {
                 req.session.login = false;
+                req.session.userID = null;
                 req.session.email = null;
+                req.session.nickname = null;
                 loginAlert = 'This email address has been registered and is awaiting for verification. Please check your email inbox for instructions.';
                 return res.redirect('/login');
             }
@@ -63,12 +67,16 @@ exports.verification =  (req, res) => {
                 // If matched redirect to home page, if not pop alert
                 if (matched) {
                     req.session.login = true;
+                    req.session.userID = rows[0].id;
                     req.session.userEmail = rows[0].email;
+                    req.session.nickname = rows[0].nickname;
                     loginAlert = null;
                     return res.redirect('/');
                 } else {
                     req.session.login = false;
+                    req.session.userID = null;
                     req.session.userEmail = null;
+                    req.session.nickname = null;
                     loginAlert = 'Incorrect email account or password!';
                     return res.redirect('/login');
                 }
