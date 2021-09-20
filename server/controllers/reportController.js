@@ -62,9 +62,9 @@ exports.reportQuality = [check("isAgreePolicy").custom(async (isAgreePolicy, {re
 
                     // Get user input
                     const {state, city, preciseLocation, qualityTitle, qualityIssue} = req.body;
-                    let isPrivate = req.body.private ? true : false;
+                    let isPrivate = req.body.isPrivate ? true : false;
 
-                    connection.query("INSERT INTO report (userID, title, state, city, preciseLocation, latitude, longitude, details, status, governmentID, reply) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [req.session.userID, qualityTitle, state, city, preciseLocation, 0, 0, qualityIssue, isPrivate, 0, "No reply yet."], (err, rows) => {
+                    connection.query("INSERT INTO report (userID, isPrivate, title, state, city, preciseLocation, latitude, longitude, details, status, governmentID, reply) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [req.session.userID, isPrivate,  qualityTitle, state, city, preciseLocation, 0, 0, qualityIssue, "In process", 0, "No reply yet."], (err, rows) => {
                         // If success then insert this report
                         if (!err) {
                             reportSent = "Your report has been successfully sent!";
