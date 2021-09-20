@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2021 at 02:48 PM
+-- Generation Time: Sep 20, 2021 at 09:20 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -33,6 +33,13 @@ CREATE TABLE `government` (
   `managerName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phoneNum` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `government`
+--
+
+INSERT INTO `government` (`id`, `officialName`, `managerName`, `phoneNum`) VALUES
+(0, 'Galaxy 6', 'Yiwei Zhao', '416430816');
 
 -- --------------------------------------------------------
 
@@ -199,11 +206,13 @@ INSERT INTO `qualitydata` (`id`, `placeName`, `country`, `state`, `city`, `latit
 CREATE TABLE `report` (
   `reportID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
-  `date` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `isPrivate` tinyint(1) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
   `title` text COLLATE utf8_unicode_ci NOT NULL,
   `country` varchar(256) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Australia',
   `state` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
   `city` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `preciseLocation` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
   `latitude` float NOT NULL,
   `longitude` float NOT NULL,
   `details` text COLLATE utf8_unicode_ci NOT NULL,
@@ -223,10 +232,17 @@ CREATE TABLE `user` (
   `nickname` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` char(128) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avatarPath` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatarPath` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT 'avatar.png',
   `isEmailVerified` tinyint(1) NOT NULL,
   `verificationKey` char(128) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `nickname`, `email`, `password`, `avatarPath`, `isEmailVerified`, `verificationKey`) VALUES
+(0, 'Galaxy 6', 'huangjingfeng970106@gmail.com', '$2b$10$DJsMcIU71cz66FEwI3rQyezoMr4mmuZBymjOEcR5t0NESYdAUuo3e', 'avatar.png', 1, 'a8fc138161f75ed03cd24091826a1a9491851126');
 
 --
 -- Indexes for dumped tables
@@ -270,12 +286,6 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `government`
---
-ALTER TABLE `government`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `qualitydata`
 --
 ALTER TABLE `qualitydata`
@@ -285,7 +295,7 @@ ALTER TABLE `qualitydata`
 -- AUTO_INCREMENT for table `report`
 --
 ALTER TABLE `report`
-  MODIFY `reportID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `reportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT for table `user`
