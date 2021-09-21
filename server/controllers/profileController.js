@@ -10,9 +10,6 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
-let modifyAlert = null;
-let upload = null;
-
 // Profile page
 exports.view = (req, res) => {
     const pageTitle = "My Profile";
@@ -28,7 +25,7 @@ exports.view = (req, res) => {
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
                 // If db match user email
                 if (!err) {
-                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: rows[0].nickname, userEmail: userEmail, 'modifyAlert': modifyAlert, 'avatar': rows[0].avatarPath, 'upload': upload} );
+                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: rows[0].nickname, userEmail: userEmail, 'modifyAlert': req.flash('modifyAlert'), 'avatar': rows[0].avatarPath, 'upload': req.flash('upload')} );
                 } 
             });
         });
@@ -51,11 +48,11 @@ exports.modifyProfile = function (req, res) {
             connection.query('UPDATE user SET nickname=? WHERE email = ?', [nickname, req.session.userEmail], (err, rows) => {
                 // If db match user email
                 if (!err) {
-                    modifyAlert = 'Changes have been saved';
+                    req.flash('modifyAlert', 'Changes have been saved!');
                     res.redirect('/profile');
                 } else {
                     console.log(err);
-                    modifyAlert = 'Failed to save the changes, please try again!';
+                    req.flash('modifyAlert', 'Failed to save changes, please try again!');
                     res.redirect('/profile');
                 }
             });
@@ -82,7 +79,7 @@ exports.upload = (req, res) => {
 
             connection.query('UPDATE user SET avatarPath = ?', [profileimg.name], (err, rows) => {
                 if (!err) {
-                    upload = "Upload Success!";
+                    req.flash('upload', 'Upload Success!');
                     res.redirect('/profile');
                 } else {
                     console.log(err);

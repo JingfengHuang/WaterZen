@@ -18,8 +18,7 @@ exports.view = (req, res) => {
     const pageTitle = "Log in";
     
     if (!req.session.login) {
-        res.render('login', {pageTitle: pageTitle, loginAlert: loginAlert});
-        loginAlert = null;
+        res.render('login', {pageTitle: pageTitle, loginAlert: req.flash('loginAlert')});
     } else {
         res.redirect('/');
     }
@@ -42,10 +41,10 @@ exports.verification =  (req, res) => {
 
             // If db cannot find that account
             if (rows.length === 0) {
-                loginAlert = 'Incorrect email address or password!';
+                req.flash('loginAlert', 'Incorrect email address or password!.');
                 return res.redirect('/login');
             } else if (rows[0].isEmailVerified === 0) {
-                loginAlert = 'This email address has been registered and is awaiting for verification. Please check your email inbox for instructions.';
+                req.flash('loginAlert', 'This email address has been registered and is awaiting for verification. Please check your email inbox for instructions.');
                 return res.redirect('/login');
             }
 
@@ -64,7 +63,7 @@ exports.verification =  (req, res) => {
                     req.session.userEmail = rows[0].email;
                     return res.redirect('/');
                 } else {
-                    loginAlert = 'Incorrect email account or password!';
+                    req.flash('loginAlert', 'Incorrect email address or password!.');
                     return res.redirect('/login');
                 }
             } else {

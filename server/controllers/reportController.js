@@ -2,9 +2,6 @@
 const mysql = require('mysql');
 const { check, validationResult } = require('express-validator');
 
-/** Variables */
-let reportStatus = null;
-
 /** Create connection pool */
 const pool = mysql.createPool({
     connectionLimit: 100,
@@ -24,7 +21,7 @@ exports.view = (req, res) => {
             const today = new Date();
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
                 if (!err) {
-                    res.render('report', {login: true, pageTitle: pageTitle, nickname: rows[0].nickname, reportStatus: reportStatus, avatar: rows[0].avatarPath});
+                    res.render('report', {login: true, pageTitle: pageTitle, nickname: rows[0].nickname, reportStatus: req.flash('reportStatus'), avatar: rows[0].avatarPath});
                 }
             });
         });
@@ -46,11 +43,11 @@ exports.reportQuality = (req, res) => {
         connection.query("INSERT INTO report (userID, isPrivate, title, state, city, preciseLocation, latitude, longitude, details, status, governmentID, reply) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [req.session.userID, isPrivate, qualityTitle, state, city, preciseLocation, 0, 0, qualityIssue, "In process", 0, "No reply yet."], (err, rows) => {
             // If success then insert this report
             if (!err) {
-                reportStatus = "Your report has been sent successfully!";
+                req.flash('reportStatus', 'Your report has been sent successfully!');
                 return res.redirect('/report');
             } else {
                 console.log(err);
-                reportStatus = "Couldn't send report. Please try again later!";
+                req.flash('reportStatus', "Couldn't send report. Please try again later!");
                 return res.redirect('/report');
             }
         });

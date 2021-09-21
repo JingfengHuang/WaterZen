@@ -6,11 +6,6 @@ const nodemailer = require('nodemailer');
 const url = require('url');
 const { check, validationResult } = require('express-validator');
 
-// Variables
-let registrationAlert = null;
-let emailSent = null;
-let validationError = null;
-
 /** Create connection pool */
 const pool = mysql.createPool({
     connectionLimit: 100,
@@ -31,18 +26,7 @@ const transporter = nodemailer.createTransport({
 // Registration page
 exports.view = (req, res) => {
     const pageTitle = "Registration";
-    if (registrationAlert) {
-        res.render('registration', { 'registrationAlert': registrationAlert, pageTitle: pageTitle });
-    } else if (emailSent) {
-        res.render('registration', { 'emailSent': emailSent, pageTitle: pageTitle });
-    } else if (validationError) {
-        res.render('registration', { 'validationError': validationError, pageTitle: pageTitle });
-    } else {
-        res.render('registration', {pageTitle: pageTitle});
-    }
-    registrationAlert = null;
-    emailSent = null;
-    validationError = null;
+    res.render('registration', { 'registrationAlert': req.flash('registrationAlert'), 'emailSent': req.flash('emailSent'), 'validationError': req.flash('validationError'), pageTitle: pageTitle });
 }
 
 // Registration Validation
@@ -71,7 +55,7 @@ exports.validation = [check('userEmail')
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log(errors.array());
-        validationError = errors.array();
+        req.flash('validationError', errors.array());
         return res.redirect('/registration');
     } else {
         pool.getConnection((err, connection) => {
@@ -86,7 +70,7 @@ exports.validation = [check('userEmail')
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
 
                 if (rows.length !== 0) {
-                    registrationAlert = 'This email address has been registered!';
+                    req.flash('registrationAlert', 'This email address has been registered!');
                     return res.redirect('/registration');
                 } else {
                     // Hash password
@@ -109,7 +93,7 @@ exports.validation = [check('userEmail')
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {
                             console.log(error);
-                            registrationAlert = "Registration failed. Please contact IT team.";
+                            req.flash('registrationAlert', 'Registration failed. Please contact IT team.');
                             res.redirect('/registration');
                         } else {
                             console.log('Email sent: ' + info.response);
@@ -121,11 +105,11 @@ exports.validation = [check('userEmail')
 
                         // If success refresh registration page
                         if (!err) {
-                            emailSent = 'A verification email had been sent to your account. Please check your email for further verification.';
+                            req.flash('emailSent', 'A verification email had been sent to your account. Please check your email for further verification.');
                             return res.redirect('/registration');
                         } else {
                             console.log(err);
-                            registrationAlert = "Registration failed. Please contact IT team.";
+                            req.flash('registrationAlert', 'Registration failed. Please contact IT team.');
                             res.redirect('/registration');
                         }
                     });
