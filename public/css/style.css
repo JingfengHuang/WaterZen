@@ -60,6 +60,10 @@ header .navbar a:hover{
     
 }
 
+.profile {
+    width: 2vw;
+}
+
 /*main Thanks to Weining*/
 main{
     /* position: absolute; */

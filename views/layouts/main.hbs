@@ -41,9 +41,14 @@
             <div class="dropdown">
                 <a href="#" class="dropdown-toggle" id="dropdownMenuButton2" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    <ion-icon name="person-circle-outline" size="large"></ion-icon>
+                    {{#if avatar}}
+                        <img class="profile" src="/img/upload/{{avatar}}" alt="avatar">
+                    {{else}}
+                        <ion-icon name="person-circle-outline" size="large"></ion-icon>
+                    {{/if}}
+
                     {{#if nickname}}
-                    {{nickname}}
+                        {{nickname}}
                     {{/if}}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">

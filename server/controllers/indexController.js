@@ -22,7 +22,7 @@ exports.view = (req, res) => {
             
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
                 if (!err) {
-                    res.render('index', {pageTitle: pageTitle, login: true, nickname: rows[0].nickname});
+                    res.render('index', {pageTitle: pageTitle, login: true, nickname: rows[0].nickname, avatar: rows[0].avatarPath});
                 } else {
                     res.render('index', {login: true, nickname: "username"});
                 }

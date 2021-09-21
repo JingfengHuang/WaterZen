@@ -24,7 +24,7 @@ exports.view = (req, res) => {
             const today = new Date();
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
                 if (!err) {
-                    res.render('report', {login: true, pageTitle: pageTitle, nickname: rows[0].nickname, reportStatus: reportStatus});
+                    res.render('report', {login: true, pageTitle: pageTitle, nickname: rows[0].nickname, reportStatus: reportStatus, avatar: rows[0].avatarPath});
                 }
             });
         });
