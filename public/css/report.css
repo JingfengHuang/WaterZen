@@ -1,10 +1,22 @@
-h2{
-    margin-bottom: 2.5%;
+h2+img{
+    width: 3%;
+    margin-left: 48.5%;
+}
+
+.col-md-6 hr{
+    background-color: #024f79; 
+    height: 3px; 
+    border: 0;
+}
+
+hr + .text-center{
+    color: rgb(199, 5, 5);
 }
 
 img{
-    width: 75%;
-    max-width: 100px;
+    width: 70%;
+    max-width: 80px;
+    margin-left: 30%;
 }
 
 .col-md-2 h3{
@@ -13,6 +25,27 @@ img{
 
 #locationform{
     margin-top: 0.5%;
+}
+
+select, textarea{
+    border: none;
+	border-radius: 8px;
+    outline: 0;
+    padding: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box; 
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	background-color: #e5f0f1;
+    color:#6e777e;
+	-webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
+	box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
+}
+
+select:focus, textarea:focus{
+    background: #d4e6e9e0;
+    transition-duration: 0.25s;
 }
 
 textarea{
@@ -27,8 +60,66 @@ textarea{
     padding-top: 2.5%;
 }
 
+#confirmform label{
+   font-size: 1.12em;
+}
+
+input[type=checkbox] + label {
+    cursor: pointer;
+    margin: 0.1em;
+    padding: 0.1em;
+}
+
+input[type=checkbox]{
+    display: none;
+}
+
+input[type=checkbox] + label:before {
+    content: "\00a0 \2714";
+    border: 1.5px solid #024f79;
+    border-radius: 4px;
+    width: 1.375em;
+    height: 1.375em;
+    display:inline-block;
+    vertical-align: middle;
+    margin-right: 0.4em;
+    color: transparent;
+    transition: .25s;
+}
+
+input[type=checkbox]:hover + label:before {
+	background-color: #e5f0f1;
+    box-sizing: border-box; 
+	-webkit-box-sizing: border-box;
+	-webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
+	box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
+}
+
+input[type=checkbox]:checked + label:before {
+	background-color: #e5f0f1;
+    color: #6e777e;
+    box-sizing: border-box; 
+	-webkit-box-sizing: border-box;
+	-webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
+	box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
+    border: none;
+}
+
 button{
-    width: 30%;
-    margin-left: 35%;
+    width: 15%;
+    margin-left: 42.5%;
+    margin-top: 2.5%;
+    background-color: #295166;
+    color: white;
+    border: 2px solid #295166;
+    border-radius: 5px;
+    height: 35px;
+}
+
+button:hover{
+    background-color: #5c97b7; 
+    transition-duration: 0.25s;
+    border: 2px solid #5c97b7;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1), 0 3px 10px 0 rgba(0,0,0,0.1);
 }
 
