@@ -6,6 +6,7 @@ const mysql = require('mysql');
 const session = require('express-session');
 let MySQLStore = require('express-mysql-session')(session);
 const fileUpload = require('express-fileUpload');
+const flash = require('connect-flash');
 
 require('dotenv').config();
 
@@ -74,6 +75,9 @@ app.use(session({
 app.use(fileUpload({
     limits: {fileSize: 50 * 1024 * 1024 },
 }));
+
+// flash message configure
+app.use(flash());
 
 // Route settings
 const userRoutes = require('./server/routes/user');
