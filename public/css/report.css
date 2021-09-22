@@ -50,6 +50,7 @@ select:focus, textarea:focus{
 
 textarea{
     margin-top: 2%;
+    width: 105%;
 }
 
 #Issue, #Confirm{
@@ -62,6 +63,7 @@ textarea{
 
 #confirmform label{
    font-size: 1.12em;
+   margin-left: 5.4%;
 }
 
 input[type=checkbox] + label {
@@ -71,10 +73,13 @@ input[type=checkbox] + label {
 }
 
 input[type=checkbox]{
-    display: none;
+    opacity: 0;
+    width: 0.1%;
 }
 
 input[type=checkbox] + label:before {
+    position:absolute;
+    left: 35.35%;
     content: "\00a0 \2714";
     border: 1.5px solid #024f79;
     border-radius: 4px;
