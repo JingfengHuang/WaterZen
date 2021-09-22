@@ -1,6 +1,5 @@
 /** Imports */
 const mysql = require('mysql');
-const { check, validationResult } = require('express-validator');
 
 /** Create connection pool */
 const pool = mysql.createPool({
