@@ -1,18 +1,29 @@
 <link rel="stylesheet" href="/css/report.css">
 
 <div class="container">
-    <h2>Making a Water Quality Report</h2>
-    {{#if reportStatus}}
-    <p>{{reportStatus}}</p>
-    {{/if}}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+        <h2 class="text-center">Making a Water Quality Report</h2>
+        <img src="/img/arrows.png" alt="arrows">
+        <hr>
+         {{#if reportStatus}}
+        <p class="text-center">{{reportStatus}}</p>
+        {{/if}}
+        </div>
+    </div>
+   
+    
+   
+    
     <form action="/report/reportQuality" method="post">
         <fieldset {{#if disabled}}disabled="disabled" {{/if}}>
             <div class="row">
                 <div class="col-md-1 offset-md-3">
                     <img src="/img/map.png" alt="location icon">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <h3>Location</h3>
+                    <small>(Cities with a population of over 10k are included.)</small>
                 </div>
             </div>
             <div class="row" id="locationform">
@@ -35,8 +46,8 @@
                     </select>
                 </div>
                 <br>
-                <div class="col-md-4 offset-md-4">
-                    <textarea rows="3" cols="33" name="preciseLocation"
+                <div class="col-md-6 offset-md-4">
+                    <textarea rows="3" cols="38" name="preciseLocation"
                         placeholder="Input Your Precise Location"></textarea>
                 </div>
             </div>
@@ -52,8 +63,8 @@
 
             <div class="row" id="issueform">
                 <div class="col-md-4 offset-md-4">
-                    <textarea rows="1" cols="33" name="qualityTitle" placeholder="Write the title here"></textarea>
-                    <textarea rows="4" cols="33" name="qualityIssue" placeholder="Write the issue here"></textarea>
+                    <textarea rows="1" cols="38" name="qualityTitle" placeholder="Write the title here"></textarea>
+                    <textarea rows="4" cols="38" name="qualityIssue" placeholder="Write the issue here"></textarea>
                 </div>
             </div>
 
@@ -80,7 +91,7 @@
                 </div>
             </div>
 
-            <button type="submit">SUMBIT</button>
+            <button type="submit">SUBMIT</button>
         </fieldset>
     </form>
 </div>
