@@ -77,7 +77,7 @@ exports.upload = (req, res) => {
         pool.getConnection((err, connection) => {
             if (err) throw err; //not connected
 
-            connection.query('UPDATE user SET avatarPath = ?', [profileimg.name], (err, rows) => {
+            connection.query('UPDATE user SET avatarPath = ? WHERE email = ?', [profileimg.name, req.session.userEmail], (err, rows) => {
                 if (!err) {
                     req.flash('upload', 'Upload Success!');
                     res.redirect('/profile');
