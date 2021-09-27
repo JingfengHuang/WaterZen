@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/report.css">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <div class="container">
     <div class="row">
@@ -15,7 +16,7 @@
     
    
     
-    <form action="/report/reportQuality" method="post">
+    <form action="/report/reportQuality" method="post" id="reportForm">
         <fieldset {{#if disabled}}disabled="disabled" {{/if}}>
             <div class="row">
                 <div class="col-md-1 offset-md-3">
@@ -28,7 +29,7 @@
             </div>
             <div class="row" id="locationform">
                 <div class="col-md-2 offset-md-4">
-                    <select name="state" onchange="selectCity(this.value)">
+                    <select name="state" id="state" onchange="selectCity(this.value)">
                         <option value="null">Select State</option>
                         <option value="NSW">NSW</option>
                         <option value="VIC">VIC</option>
@@ -47,7 +48,7 @@
                 </div>
                 <br>
                 <div class="col-md-4 offset-md-4">
-                    <textarea rows="3" name="preciseLocation"
+                    <textarea rows="3" id="preciseLocation" name="preciseLocation"
                         placeholder="Input Your Precise Location"></textarea>
                 </div>
             </div>
@@ -63,8 +64,8 @@
 
             <div class="row" id="issueform">
                 <div class="col-md-4 offset-md-4">
-                    <textarea rows="1" name="qualityTitle" placeholder="Write the title here"></textarea>
-                    <textarea rows="4" name="qualityIssue" placeholder="Write the issue here"></textarea>
+                    <textarea rows="1" id="qualityTitle" name="qualityTitle" placeholder="Write the title here"></textarea>
+                    <textarea rows="4" id="qualityIssue" name="qualityIssue" placeholder="Write the issue here"></textarea>
                 </div>
             </div>
 
@@ -79,18 +80,18 @@
 
             <div class="row" id="confirmform">
                 <div class="col-md-4 offset-md-4">
-                    <input type="checkbox" id="private" name="isPrivate">
-                    <label for="private">Report as a private user</label>
+                    <input type="checkbox" id="isPrivate" name="isPrivate">
+                    <label for="isPrivate">Report as a private user</label>
                     <br>
-                    <input type="checkbox" id="policy" name="isAgreePolicy" required
+                    <input type="checkbox" id="isAgreePolicy" name="isAgreePolicy" required
                         oninvalid="this.setCustomValidity('You must agree to the privacy policy to report')"
                         oninput="this.setCustomValidity('')">
 
-                    <label for="policy">I agree with the privacy policy</label>
+                    <label for="isAgreePolicy">I agree with the privacy policy</label>
                     <br>
                 </div>
             </div>
-
+            <div class="g-recaptcha" data-sitekey="6LcPb4UcAAAAACEHVu2k6uInOXKcYa_ekXHYmuVY"></div>
             <button type="submit">SUBMIT</button>
         </fieldset>
     </form>

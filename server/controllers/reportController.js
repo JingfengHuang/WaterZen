@@ -1,5 +1,6 @@
 /** Imports */
 const mysql = require('mysql');
+const request = require('request');
 
 /** Create connection pool */
 const pool = mysql.createPool({
@@ -17,23 +18,47 @@ exports.view = (req, res) => {
     if (req.session.login) {
         pool.getConnection((err, connection) => {
             if (err) throw err;
-            const today = new Date();
+
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
                 if (!err) {
-                    res.render('report', {login: true, pageTitle: pageTitle, nickname: rows[0].nickname, reportStatus: req.flash('reportStatus'), avatar: rows[0].avatarPath});
+                    res.render('report', { login: true, pageTitle: pageTitle, nickname: rows[0].nickname, reportStatus: req.flash('reportStatus'), avatar: rows[0].avatarPath });
                 }
             });
         });
     } else {
-        res.render('report', {login: false, pageTitle: pageTitle, reportStatus: "Please log in to report water quality!", disabled: true });
+        res.render('report', { login: false, pageTitle: pageTitle, reportStatus: "Please log in to report water quality!", disabled: true });
     }
 }
 
 exports.reportQuality = (req, res) => {
+
+    console.log(req.body['g-recaptcha-response']);
+    if (
+        req.body['g-recaptcha-response'] === undefined ||
+        req.body['g-recaptcha-response'] === '' ||
+        req.body['g-recaptcha-response'] === null
+    ) {
+        req.flash('reportStatus', "Please select captcha!");
+        return res.redirect('/report');
+    }
+
+    const secretKey = "6LcPb4UcAAAAAJZpHpXiQYF-HKVTZtjSbzdYHY2p";
+
+    const verifyURL = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body['g-recaptcha-response']}&remoteip=${req.connection.remoteAddress}`;
+
+    // Make request to verify url
+    request(verifyURL, (err, response, body) => {
+        body = JSON.parse(body);
+
+        // if not successful
+        if (body.success !== undefined && !body.success) {
+            req.flash('reportStatus', "Captcha verification failed! Please try again!");
+            return res.redirect('/report');
+        }
+    });
+
     pool.getConnection((err, connection) => {
         if (err) throw err; //not connected
-        const today = new Date();
-        console.log(`Connect as ID ${connection.threadId} at ${today}`);
 
         // Get user input
         const { state, city, preciseLocation, qualityTitle, qualityIssue } = req.body;
@@ -50,5 +75,6 @@ exports.reportQuality = (req, res) => {
                 return res.redirect('/report');
             }
         });
+
     });
 }
