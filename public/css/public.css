@@ -106,3 +106,15 @@ section{
 .levelInvalid{
     background-color: #bdbdbd;
 }
+
+.loading{
+    width: 14%;
+    height: 200px;
+    background: url(/img/loading.gif) no-repeat;
+    display: flex;
+    margin-left: 43.25%;
+    margin-top: 5%;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+}
