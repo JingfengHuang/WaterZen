@@ -1,0 +1,20 @@
+<form action="/login/resetPermission" method="post">
+    <label for="floatingInput">Email</label>
+    <input type="text" name="userEmail" value="{{userEmail}}" readonly="true" id="userEmail">
+    <br>
+    <label for="floatingInput">New Password</label>
+    <input type="password" name="password" id="password">
+    <br>
+    <label for="floatingInput">Confirm Your New Password</label>
+    <input type="password" name="confirm" id="confirm">
+    <br>
+    <input style="opacity: 0;" type="text" name="token" id="token" value="{{token}}">
+    <br>
+    {{#if resetAlert}}
+        <p>{{resetAlert}}</p>
+    {{/if}}
+    {{#each validationError}}
+        <small>{{msg}}</small><br>
+    {{/each}}
+    <button type="submit" >Submit</button>
+</form>

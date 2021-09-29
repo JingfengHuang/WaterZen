@@ -1,0 +1,9 @@
+<form action="/login/resetVerify" method="post">
+    <label for="floatingInput">Enter Your Registered Email Address</label>
+    <input type="text" name="userEmail" placeholder=" Email" id="Email" required>
+    <br>
+    {{#if resetAlert}}
+        <p>{{resetAlert}}</p>
+    {{/if}}
+    <button type="submit">Submit</button>
+</form>

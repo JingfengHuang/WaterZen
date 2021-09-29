@@ -29,6 +29,18 @@ router.get('/registration/verify_email', registrationController.verifyEmail);
 // Check user login
 router.post('/login/verification', loginController.verification);
 
+// Reset password
+router.get('/login/resetCheck', loginController.resetCheck);
+
+// Reset password
+router.post('/login/resetVerify', loginController.resetVerify);
+
+// Reset password
+router.get('/login/resetPassword', loginController.resetPassword);
+
+
+router.post('/login/resetPermission', loginController.resetPermission);
+
 // Direct to profile page
 router.get('/profile', profileController.view);
 
