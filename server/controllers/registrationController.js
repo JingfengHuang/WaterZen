@@ -146,6 +146,6 @@ exports.verifyEmail = (req, res) => {
             });
         });
     } else {
-        res.send('<p>Verification Error, please contact IT Team.</p>')
+        res.send('<h1>Verification Error, please contact IT Team.</h1>')
     }
 }

@@ -32,7 +32,6 @@ exports.view = (req, res) => {
 
 exports.reportQuality = (req, res) => {
 
-    console.log(req.body['g-recaptcha-response']);
     if (
         req.body['g-recaptcha-response'] === undefined ||
         req.body['g-recaptcha-response'] === '' ||
@@ -40,10 +39,22 @@ exports.reportQuality = (req, res) => {
     ) {
         req.flash('reportStatus', "Please select captcha!");
         return res.redirect('/report');
+    } else if (!req.body.isAgreePolicy) {
+        req.flash('reportStatus', "Please agree to our private policy to report!");
+        return res.redirect('/report');
+    } else if (
+        req.body.state === 'null' ||
+        req.body.city === 'null' ||
+        req.body.preciseLocation === '' ||
+        req.body.qualityTitle === '' ||
+        req.body.qualityIssue === ''
+    ) {
+        req.flash('reportStatus', "Please fill in all the required field!");
+        return res.redirect('/report');
     }
 
+    // captcha verification
     const secretKey = "6LcPb4UcAAAAAJZpHpXiQYF-HKVTZtjSbzdYHY2p";
-
     const verifyURL = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body['g-recaptcha-response']}&remoteip=${req.connection.remoteAddress}`;
 
     // Make request to verify url
@@ -75,6 +86,5 @@ exports.reportQuality = (req, res) => {
                 return res.redirect('/report');
             }
         });
-
     });
 }
