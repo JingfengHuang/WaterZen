@@ -1,16 +1,22 @@
 
-.container{
-    margin-top: 15%;
+.container .search{
+    height: 500px;
+    margin-top: -55px;
+    background-image: url(/img/Searchbackground2.jpg);
+    background-position: center center;
+    background-size: cover; 
 }
 
 .col-md-2{
     margin-right: 3%;
-    height: 40px;
-    border: 3.5px solid #5c97b7;
+    margin-top: 18%;
+    height: 45px;
+    border: 3.5px solid white;
     border-radius: 50px;
     text-align: center;
-    line-height:33px;
+    line-height:40px;
     transition: 0.5s;
+    box-shadow: 3px 3px 0.5px 0.1px #466070;
 }
 
 select {
@@ -18,13 +24,26 @@ select {
     border: none;
     padding-left: 15%;
     outline: none;
+    -webkit-appearance: none;   /* google */
+    -moz-appearance: none;  /* firefox */
+    appearance: none; /*IE*/
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+select option{
+    color: black;
 }
 
 .col-md-4{
-    border: 3.5px solid #5c97b7;
+    margin-top: 18%;
+    border: 3.5px solid white;
     border-radius: 50px;
-    line-height:33px;
+    line-height:40px;
     transition: 0.5s;
+    box-shadow: 3px 3px 0.5px 0.1px #466070;
 }
 
 .col-md-4 input{
@@ -32,17 +51,25 @@ select {
     border: none;
     outline: none;
     margin-left: 3%;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+::placeholder{
+	color:white;
 }
 
 .col-md-4 ion-icon{
     margin-right: 2.5%;
     float: right;
-    margin-top: 0.3%;
-    color: #5c97b7;
+    margin-top: 1.25%;
+    color: white;
 }
 
 .col-md-4 ion-icon:hover{
-    color: #295166;
+    color: #194764;
 }
 
 .row + hr{
