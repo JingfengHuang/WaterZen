@@ -121,18 +121,36 @@ exports.resetVerify = (req, res) => {
                     }
                 });
 
-                connection.query('INSERT INTO reset SET userEmail = ?, reset_token= ?, timestamp = ?', [req.body.userEmail, token, new Date()], (err, rows) => {
+                connection.query('SELECT * FROM reset WHERE userEmail = ?', [req.body.userEmail], (err, rows) => {
+                    if (!err && rows.length === 0) {
+                        connection.query('INSERT INTO reset SET userEmail = ?, reset_token= ?, timestamp = ?', [req.body.userEmail, token, new Date()], (err, rows) => {
 
-                    // If success refresh registration page
-                    if (!err) {
-                        req.flash('resetAlert', 'Please check your email to get instructions for resetting your password.');
-                        return res.redirect('/login/resetCheck');
+                            // If success refresh registration page
+                            if (err) {
+                                console.log(err);
+                                req.flash('resetAlert', 'Reset Failed. Please contact IT team.');
+                                return res.redirect('/login/resetCheck');
+                            }
+                        });
+                    } else if (!err && rows.length > 0) {
+                        connection.query('UPDATE reset SET reset_token = ?, timestamp = ? WHERE userEmail = ?', [token, new Date(), req.body.userEmail], (err, rows) => {
+
+
+                            if (err) {
+                                console.log(err);
+                                req.flash('resetAlert', 'Reset Failed. Please contact IT team.');
+                                return res.redirect('/login/resetCheck');
+                            }
+                        });
                     } else {
                         console.log(err);
                         req.flash('resetAlert', 'Reset Failed. Please contact IT team.');
-                        res.redirect('/login/resetCheck');
+                        return res.redirect('/login/resetCheck');
                     }
-                });
+
+                    req.flash('resetAlert', 'Please check your email to get instructions for resetting your password.');
+                    return res.redirect('/login/resetCheck');
+                })
             });
         });
     }
