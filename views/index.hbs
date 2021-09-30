@@ -21,7 +21,7 @@
             </script>
 
             <div class ="col-md-4">
-                <input type="text" placeholder="Search......">
+                <input type="text" placeholder="Search......" onFocus = "hint()" onfocusout="hintdisappear()">
                 <a href="/">
                     <ion-icon name="search" size="large"></ion-icon>
                 </a>
@@ -34,6 +34,22 @@
                 $("input").mouseleave(function(){
                     $(".col-md-4").css("border","3.5px solid white");
                 });
+            </script>
+
+            <br>
+
+            <div class ="hint">
+                Geographic location (state/city/region) or river/creek/lake name
+            </div>
+
+            <script>
+                function hint(){
+                    $(".hint").css("opacity", "100");
+                }
+                function hintdisappear(){
+                    $(".hint").css("opacity", "0");
+                }
+                
             </script>
         </div>
     </div>
