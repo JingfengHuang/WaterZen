@@ -1,61 +1,112 @@
 <link rel="stylesheet" href="/css/public.css">
 
 <section class="top">
-    <h2>Finding ... </h2>
+    {{#if selected}}
+    <h2>{{selected}} Official Data</h2>
+    {{else}}
+    <h2>Official Data</h2>
+    {{/if}}
 
-    <form action="/publicArea" id="selection">
-        <span>
-            <label for="city">Search area</label>
-            <input id="citySelection" type="text" placeholder="Beijing" name="city">
-        </span>
+    <form action="/publicArea/searchState" method="POST" id="selection">
+        <select class="form-select" name="state">
+            <option value="null">Select state</option>
+            <option value="VIC">Victoria</option>
+            <option value="WA">Western Australia</option>
+            <option value="NSW">New South Wales</option>
+            <option value="TAS">Tasmania</option>
+            <option value="ACT">Australian Capital Territory</option>
+            <option value="QLD">Queensland</option>
+            <option value="SA">South Australia</option>
+            <option value="NT">Northern Territory</option>
+        </select>
+        <select class="form-select" name="orderBy">
+            <option value="null">Order by</option>
+            <option value="city">City/Region</option>
+            <option value="quality">Water quality</option>
+        </select>
+        <input name = "searchBar"></input>
+        <button type="submit">Search</button>
     </form>
-    <section id="selectionCity"></section>
+    {{#if alert}}
+        <p>{{alert}}</p>
+    {{/if}}
+    <form action="/publicArea/clear" method="GET">
+        <button type="submit">Clear</button>
+    </form>
 </section>
 
+{{#if results}}
+<div class='container'>
+    <div class="row align-items-center">
+        <div class="col">
+            City/Region
+        </div>
+        <div class="col">
+            Name
+        </div>
+        <div class="col">
+            Latitude
+        </div>
+        <div class="col">
+            Longitude
+        </div>
+        <div class="col">
+            Electrical conductivity
+        </div>
+        <div class="col">
+            pH
+        </div>
+        <div class="col">
+            Temperature
+        </div>
+        <div class="col">
+            Total dissolved solids
+        </div>
+        <div class="col">
+            Water turbidity
+        </div>
+        <div class="col">
+            Date
+        </div>
+    </div>
 
-
-<section>
-    <section class="Beijing"></section>
-    <section class="Tianjin"></section>
-    <section class="Hebei"></section>
-    <section class="Shanxi"></section>
-    <section class="Nei_Monggol"></section>
-    <section class="Liaoning"></section>
-    <section class="Jilin"></section>
-    <section class="Heilongjiang"></section>
-    <section class="Shanghai"></section>
-    <section class="Jiangsu"></section>
-    <section class="Zhejiang"></section>
-    <section class="Anhui"></section>
-    <section class="Fujian"></section>
-    <section class="Jiangxi"></section>
-    <section class="Shandong"></section>
-    <section class="Henan"></section>
-    <section class="Hubei"></section>
-    <section class="Hunan"></section>
-    <section class="Guangdong"></section>
-    <section class="Guangxi"></section>
-    <section class="Hainan"></section>
-    <section class="Chongqing"></section>
-    <section class="Sichuan"></section>
-    <section class="Guizhou"></section>
-    <section class="Yunnan"></section>
-    <section class="Tibet"></section>
-    <section class="Shaanxi"></section>
-    <section class="Gansu"></section>
-    <section class="Qinghai"></section>
-    <section class="Ningxia"></section>
-    <section class="Xinjiang"></section>
-</section>
-
-<div class="loading"></div>
-
-<script>
-    $(window).on("load",function(){
-        setTimeout(function(){
-            $(".loading").fadeOut("slow");
-        }, 750)  
-    });
-</script>
-
-<script src="\js\publicArea.js"></script>
+    {{#each results}}
+        <div class="row align-items-center">
+            <div class="col">
+                {{#if city}}
+                {{city}}
+                {{else}}
+                Unknown
+                {{/if}}
+            </div>
+            <div class="col">
+                {{placeName}}
+            </div>
+            <div class="col">
+                {{latitude}}
+            </div>
+            <div class="col">
+                {{longitude}}
+            </div>
+            <div class="col">
+                {{electricalConductivity}}
+            </div>
+            <div class="col">
+                {{pH}}
+            </div>
+            <div class="col">
+                {{temperature}}
+            </div>
+            <div class="col">
+                {{totalDissolvedSolids}}
+            </div>
+            <div class="col">
+                {{waterTurbidity}}
+            </div>
+            <div class="col">
+                {{date}}
+            </div>
+        </div>
+    {{/each}}
+</div>
+{{/if}}
