@@ -89,6 +89,10 @@ select option{
 
 hr + h2{
     margin-top: 2.5%;
+
+}
+
+h5{
     margin-bottom: 4%;
 }
 
@@ -135,6 +139,19 @@ hr + h2{
     margin-top: 250px;
     color:mintcream;
     font-weight: bold;
+    transition: 0.75s;
+    text-decoration: underline 0.125em transparent;
+}
+
+.row h4:hover{
+    text-decoration-color: white;
+    transition: 0.5s;
+}
+
+.row h4:active{
+   color: #5c97b7;
+   text-decoration-color:#5c97b7;
+   transition: 0.25s;
 }
 
 .col-md-5:hover{
@@ -142,6 +159,13 @@ hr + h2{
     filter:alpha(Opacity=80);
     -moz-opacity:0.8;
     opacity: 0.8;
+}
+
+#hide{
+    display: none;
+    color: white;
+    font-weight: bold;
+    font-size: 0.5em;
 }
 
 @media screen and (max-width:700px){
