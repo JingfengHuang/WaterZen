@@ -1,13 +1,10 @@
 <link rel="stylesheet" href="/css/public.css">
 
 <section class="top">
-    {{#if selected}}
-    <h2>{{selected}} Official Data</h2>
-    {{else}}
-    <h2>Official Data</h2>
-    {{/if}}
 
-    <form action="/publicArea/searchState" method="POST" id="selection">
+    <h2>Official Data</h2>
+
+    <form action="/publicArea/basicSearch" method="POST" id="selection">
         <select class="form-select" name="state">
             <option value="null">Select state</option>
             <option value="VIC">Victoria</option>
@@ -19,25 +16,72 @@
             <option value="SA">South Australia</option>
             <option value="NT">Northern Territory</option>
         </select>
-        <select class="form-select" name="orderBy">
-            <option value="null">Order by</option>
-            <option value="city">City/Region</option>
-            <option value="quality">Water quality</option>
-        </select>
-        <input name = "searchBar"></input>
+        <p>OR</p>
+        <div class="form-group">
+            <label for="searchCity" value="null">City/Region: </label>
+            <input class="form-control" name="searchCity" type="text"></input>
+        </div>
+        <p>OR</p>
+        <div class="form-group">
+            <label for="searchPlace" value="null">Place name: </label>
+            <input class="form-control" name="searchPlace" type="text"></input>
+        </div>
+
         <button type="submit">Search</button>
+
     </form>
     {{#if alert}}
-        <p>{{alert}}</p>
+    <p>{{alert}}</p>
     {{/if}}
+
+
+
+
     <form action="/publicArea/clear" method="GET">
         <button type="submit">Clear</button>
     </form>
 </section>
 
-{{#if results}}
+
+
+
+
 <div class='container'>
+    <section class="row">
+        {{#if selected}}
+        <p> <b>Search content — </b>
+            {{#if selected.state}}
+            <span>State: {{selected.state}}</span>
+            {{/if}}
+            {{#if selected.searchCity}}
+            <span>City: {{selected.searchCity}}</span>
+            {{/if}}
+            {{#if selected.searchPlace}}
+            <span>Place: {{selected.searchPlace}}</span>
+            {{/if}}
+        </p>
+        {{/if}}
+    </section>
+
+    <form action="/publicArea/advanceSearch" method="POST" id="order">
+        {{#if selected}}
+        <span><b>Order by: </b></span>
+        <span>
+            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+                    value="city">City/Region</label>
+            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+                    value="name">Place Name</label>
+            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+                    value="quality">Water quality</label>
+        </span>
+        {{/if}}
+    </form>
+
+    {{#if results}}
     <div class="row align-items-center">
+        <div class="col">
+            State
+        </div>
         <div class="col">
             City/Region
         </div>
@@ -71,42 +115,66 @@
     </div>
 
     {{#each results}}
-        <div class="row align-items-center">
-            <div class="col">
-                {{#if city}}
-                {{city}}
-                {{else}}
-                Unknown
-                {{/if}}
-            </div>
-            <div class="col">
-                {{placeName}}
-            </div>
-            <div class="col">
-                {{latitude}}
-            </div>
-            <div class="col">
-                {{longitude}}
-            </div>
-            <div class="col">
-                {{electricalConductivity}}
-            </div>
-            <div class="col">
-                {{pH}}
-            </div>
-            <div class="col">
-                {{temperature}}
-            </div>
-            <div class="col">
-                {{totalDissolvedSolids}}
-            </div>
-            <div class="col">
-                {{waterTurbidity}}
-            </div>
-            <div class="col">
-                {{date}}
-            </div>
+    <div class="row align-items-center">
+        <div class="col">
+            {{state}}
         </div>
+        <div class="col">
+            {{#if city}}
+            {{city}}
+            {{else}}
+            Unknown
+            {{/if}}
+        </div>
+        <div class="col">
+            {{placeName}}
+        </div>
+        <div class="col">
+            {{latitude}}
+        </div>
+        <div class="col">
+            {{longitude}}
+        </div>
+        <div class="col">
+            {{electricalConductivity}}
+        </div>
+        <div class="col">
+            {{pH}}
+        </div>
+        <div class="col">
+            {{temperature}}
+        </div>
+        <div class="col">
+            {{totalDissolvedSolids}}
+        </div>
+        <div class="col">
+            {{waterTurbidity}}
+        </div>
+        <div class="col">
+            {{date}}
+        </div>
+    </div>
     {{/each}}
+
+    {{/if}}
 </div>
-{{/if}}
+
+<script src="\js\publicArea.js"></script>
+<script language="javascript">
+    function jump(url) {
+        order.action = url;
+        order.method = "POST";
+        order.submit();
+    }
+
+    function isChecked() {
+        let orderBy = "{{selected.orderBy}}";
+        console.log(typeof orderBy);
+
+        let city = document.querySelector('input[name="city"]');
+        let name = document.querySelector('input[name="name"]');
+        let quality = document.querySelector('input[name="quality"]');
+    }
+
+
+</script>

@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e90ddcf-d031-4461-b92f-4f3ed75f3d61" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controllers/emailVerificationController.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controllers/loginController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/loginController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controllers/registrationController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/registrationController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/emailVerification.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/layouts/main.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/layouts/main.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/publicArea.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/publicArea.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/publicAreaController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/publicAreaController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/publicArea.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/publicArea.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/publicArea.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/publicArea.hbs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

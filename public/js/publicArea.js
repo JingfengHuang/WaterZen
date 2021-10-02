@@ -1,4 +1,4 @@
-function titleCase(str) {
+/* function titleCase(str) {
     newStr = str.slice(0, 1).toUpperCase() + str.slice(1);
     return newStr;
 }
@@ -241,11 +241,14 @@ function selectCity() {
             select = false;
         }
     });
-}
+} */
 
 $(document).ready(function () {
 
-    getcityName();
+    // let order = document.querySelector('#order');
+    
+
+/*     getcityName();
     createCitySelectionHtml();
     selectCity();
 
@@ -260,6 +263,6 @@ $(document).ready(function () {
     } else if (cityid !== -1) {
         document.querySelector('h2').innerHTML = `City: ${cityId[cityid]}`;
         sendRequest(cityid);
-    }
+    } */
 
 });
