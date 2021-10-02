@@ -49,33 +49,25 @@
 <div class='container'>
     <section class="row">
         {{#if selected}}
-        <p> <b>Search content — </b>
-            {{#if selected.state}}
-            <span>State: {{selected.state}}</span>
-            {{/if}}
-            {{#if selected.searchCity}}
-            <span>City: {{selected.searchCity}}</span>
-            {{/if}}
-            {{#if selected.searchPlace}}
-            <span>Place: {{selected.searchPlace}}</span>
-            {{/if}}
-        </p>
+        <p> <b>Advanced Search</b> </p>
         {{/if}}
+
+        <form action="/publicArea/advanceSearch" method="POST" id="order">
+            {{#if selected}}
+            <span><b>Order by: </b></span>
+            <span>
+                <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+                        value="city">City/Region</label>
+                <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+                        value="name">Place Name</label>
+                <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+                        value="quality">Water quality</label>
+            </span>
+            {{/if}}
+        </form>
     </section>
 
-    <form action="/publicArea/advanceSearch" method="POST" id="order">
-        {{#if selected}}
-        <span><b>Order by: </b></span>
-        <span>
-            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
-                    value="city">City/Region</label>
-            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
-                    value="name">Place Name</label>
-            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
-                    value="quality">Water quality</label>
-        </span>
-        {{/if}}
-    </form>
+
 
     {{#if results}}
     <div class="row align-items-center">
@@ -167,14 +159,45 @@
         order.submit();
     }
 
-    function isChecked() {
-        let orderBy = "{{selected.orderBy}}";
-        console.log(typeof orderBy);
+    let selected = "{{selected}}";
+    if (selected != "") {
+        const state = "{{selected.state}}"
+        const searchCity = "{{selected.searchCity}}"
+        const searchPlace = "{{selected.searchPlace}}"
+        const orderBy = "{{selected.orderBy}}"
 
-        let city = document.querySelector('input[name="city"]');
-        let name = document.querySelector('input[name="name"]');
-        let quality = document.querySelector('input[name="quality"]');
+        if (state != "") {
+            let selectedState = document.querySelector(`option[value=${state}]`);
+            selectedState.selected = true;
+        }
+
+        if (searchCity != "") {
+            let selectedCity = document.querySelector(`input[name="searchCity"]`);
+            selectedCity.value = searchCity;
+        }
+
+        if (searchPlace != "") {
+            let selectedCity = document.querySelector(`input[name="searchPlace"]`);
+            selectedCity.value = searchPlace;
+        }
+
+        if (orderBy != "") {
+            let city = document.querySelector('input[value="city"]');
+            let placeName = document.querySelector('input[value="name"]');
+            let quality = document.querySelector('input[value="quality"]');
+
+            switch (orderBy) {
+                case "city":
+                    city.checked = true;
+                    break;
+                case "name":
+                    placeName.checked = true;
+                    break;
+                case "quality":
+                    quality.checked = true;
+                    break;
+            }
+        }
     }
-
 
 </script>
