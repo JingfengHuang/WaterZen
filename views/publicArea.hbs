@@ -19,13 +19,15 @@
         <p>OR</p>
         <div class="form-group">
             <label for="searchCity" value="null">City/Region: </label>
-            <input class="form-control" name="searchCity" type="text"></input>
+            <input id="searchCity" class="form-control" name="searchCity" type="text" onkeyup = "fetchCity(this)"></input>
         </div>
         <p>OR</p>
         <div class="form-group">
             <label for="searchPlace" value="null">Place name: </label>
-            <input class="form-control" name="searchPlace" type="text"></input>
+            <input id="searchPlace" class="form-control" name="searchPlace" type="text" onkeyup = "fetchPlaceName(this)"></input>
         </div>
+        <section id="searchResultsCity" class="container d-flex flex-column"></section>
+        <section id="searchResultsPlaceName" class="container d-flex flex-column"></section>
 
         <button type="submit">Search</button>
 
@@ -49,25 +51,33 @@
 <div class='container'>
     <section class="row">
         {{#if selected}}
-        <p> <b>Advanced Search</b> </p>
-        {{/if}}
-
-        <form action="/publicArea/advanceSearch" method="POST" id="order">
-            {{#if selected}}
-            <span><b>Order by: </b></span>
-            <span>
-                <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
-                        value="city">City/Region</label>
-                <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
-                        value="name">Place Name</label>
-                <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
-                        value="quality">Water quality</label>
-            </span>
+        <p> <b>Search content — </b>
+            {{#if selected.state}}
+            <span>State: {{selected.state}}</span>
             {{/if}}
-        </form>
+            {{#if selected.searchCity}}
+            <span>City: {{selected.searchCity}}</span>
+            {{/if}}
+            {{#if selected.searchPlace}}
+            <span>Place: {{selected.searchPlace}}</span>
+            {{/if}}
+        </p>
+        {{/if}}
     </section>
 
-
+    <form action="/publicArea/advanceSearch" method="POST" id="order">
+        {{#if selected}}
+        <span><b>Order by: </b></span>
+        <span>
+            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+                    value="city">City/Region</label>
+            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+                    value="name">Place Name</label>
+            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+                    value="quality">Water quality</label>
+        </span>
+        {{/if}}
+    </form>
 
     {{#if results}}
     <div class="row align-items-center">
@@ -159,45 +169,73 @@
         order.submit();
     }
 
-    let selected = "{{selected}}";
-    if (selected != "") {
-        const state = "{{selected.state}}"
-        const searchCity = "{{selected.searchCity}}"
-        const searchPlace = "{{selected.searchPlace}}"
-        const orderBy = "{{selected.orderBy}}"
+    function isChecked() {
+        let orderBy = "{{selected.orderBy}}";
+        console.log(typeof orderBy);
 
-        if (state != "") {
-            let selectedState = document.querySelector(`option[value=${state}]`);
-            selectedState.selected = true;
+        let city = document.querySelector('input[name="city"]');
+        let name = document.querySelector('input[name="name"]');
+        let quality = document.querySelector('input[name="quality"]');
+    }
+
+    function fetchCity(e){
+        const searchResults = document.getElementById("searchResultsCity");
+        let match1 = e.value.match(/^[a-zA-Z ]*/);
+        let match2 = e.value.match(/\s*/);
+        if (match2[0] === e.value) {
+            searchResults.innerHTML = "";
+            return;
         }
-
-        if (searchCity != "") {
-            let selectedCity = document.querySelector(`input[name="searchCity"]`);
-            selectedCity.value = searchCity;
+        if (match1[0] === e.value) {
+            fetch('getCity', {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({payload: e.value})
+            }).then(res => res.json()).then(data => {
+                let payload = data.payload;
+                console.log(payload);
+                searchResults.innerHTML = "";
+                if (payload.length < 1) {
+                    searchResults.innerHTML = "<p>Sorry, nothing found.</p>";
+                    return;
+                }
+                payload.forEach((item, index) => {
+                    searchResults.innerHTML += `<p>${item.city}</p>`;
+                });
+            });
+            return;
         }
+        searchResults.innerHTML = "";
+    }
 
-        if (searchPlace != "") {
-            let selectedCity = document.querySelector(`input[name="searchPlace"]`);
-            selectedCity.value = searchPlace;
+    function fetchPlaceName(e){
+        const searchResults = document.getElementById("searchResultsPlaceName");
+        let match1 = e.value.match(/^[a-zA-Z ]*/);
+        let match2 = e.value.match(/\s*/);
+        if (match2[0] === e.value) {
+            searchResults.innerHTML = "";
+            return;
         }
-
-        if (orderBy != "") {
-            let city = document.querySelector('input[value="city"]');
-            let placeName = document.querySelector('input[value="name"]');
-            let quality = document.querySelector('input[value="quality"]');
-
-            switch (orderBy) {
-                case "city":
-                    city.checked = true;
-                    break;
-                case "name":
-                    placeName.checked = true;
-                    break;
-                case "quality":
-                    quality.checked = true;
-                    break;
-            }
+        if (match1[0] === e.value) {
+            fetch('getPlaceName', {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({payload: e.value})
+            }).then(res => res.json()).then(data => {
+                let payload = data.payload;
+                console.log(payload);
+                searchResults.innerHTML = "";
+                if (payload.length < 1) {
+                    searchResults.innerHTML = "<p>Sorry, nothing found.</p>";
+                    return;
+                }
+                payload.forEach((item, index) => {
+                    searchResults.innerHTML += `<p>${item.placeName}</p>`;
+                });
+            });
+            return;
         }
+        searchResults.innerHTML = "";
     }
 
 </script>
