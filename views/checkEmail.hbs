@@ -1,9 +1,24 @@
-<form action="/login/resetVerify" method="post">
-    <label for="floatingInput">Enter Your Registered Email Address</label>
-    <input type="text" name="userEmail" placeholder=" Email" id="Email" required>
-    <br>
-    {{#if resetAlert}}
-        <p>{{resetAlert}}</p>
-    {{/if}}
-    <button type="submit">Submit</button>
-</form>
+<link rel="stylesheet" href="/css/checkemail.css">
+
+<div class="container">
+    <div class="row">
+        <div class = "col-md-3 offset-md-4">
+            <h2>Password Reset</h2>
+            <hr>
+        </div>
+        <div class = "col-md-4 offset-md-4">
+            <form action="/login/resetVerify" method="post">
+                <label for="floatingInput">Enter Your Registered Email Address</label>
+                <input type="text" name="userEmail" placeholder=" Email" id="Email" required>
+                <br>
+                {{#if resetAlert}}
+                    <p class="text-danger text-center">{{resetAlert}}</p>
+                {{/if}}
+                <button type="submit">Submit</button>
+            </form>
+
+            <small>Contact&nbsp; <a href="mailto: waterzen7381@outlook.com">Development Team</a> &nbsp;for further help</small>
+        </div>
+    </div>
+
+</div>

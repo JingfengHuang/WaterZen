@@ -6,14 +6,6 @@
     </h2>
     <img src="/img/upload/{{avatar}}" alt="avatar">
     <br>
-    <form action="/upload" method="POST" encType="multipart/form-data">
-        <p>Update Profile Photo</p>
-        {{#if upload}}
-        <p class="text-success">{{upload}}</p>
-        {{/if}}
-        <input type="file" name="profileimg" accept="image/*" />
-        <input type="submit" class="btn btn-primary">
-    </form>
 
     <hr>
 
@@ -48,6 +40,15 @@
 
                 {{#if modifyAlert}}
                 <p class="text-success">{{modifyAlert}}</p>
+                {{/if}}
+            </form>
+
+            <form action="/upload" method="POST" encType="multipart/form-data">
+                <strong>Profile Photo: </strong>
+                <input type="file" name="profileimg" accept="image/*" />
+                <button type="submit">Submit</button>
+                {{#if upload}}
+                <p class="text-success">{{upload}}</p>
                 {{/if}}
             </form>
         </div>
