@@ -42,10 +42,6 @@
     </form>
 </section>
 
-
-
-
-
 <div class='container'>
     <section class="row">
         {{#if selected}}
@@ -153,12 +149,42 @@
 
 <script src="\js\publicArea.js"></script>
 <script language="javascript">
+    $(window).scroll(function () {
+        if ($(document).scrollTop() != 0) {
+            var offset = $(window).scrollTop();
+            localStorage.setItem("offsetTop", offset);
+        }
+    });
+
     function jump(url) {
+
         order.action = url;
         order.method = "POST";
         order.submit();
+        /*
+        // get ordered data, used with res.send(results); in publicAreaController.js
+        $.ajax({
+            type: "POST",
+            data: $('#order').serialize(),
+            url: url,
+            success: function (data) {
+                console.log(data);
+                results = data.results
+                console.log(results);
+            },
+            error: function (err) {
+                console.log(err.msg);
+            }
+        })*/
     }
 
+    // scroll to offset
+    var offset = localStorage.getItem("offsetTop");
+    $("HTML, BODY").animate({
+        scrollTop: offset
+    }, 0);
+
+    // restore selected content
     let selected = "{{selected}}";
     if (selected != "") {
         const state = "{{selected.state}}"
