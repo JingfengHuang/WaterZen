@@ -204,8 +204,6 @@ exports.advanceSearch = (req, res) => {
             return res.redirect('/publicArea/clear');
         }
     });
-
-
 }
 
 exports.clear = (req, res) => {

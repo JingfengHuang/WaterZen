@@ -96,3 +96,30 @@ const reportRoutes = require('./server/routes/report');
 app.use('/', reportRoutes);
 
 app.listen(port, () => console.log(`Listening on ${port}`));
+
+//Ajax
+app.post('/getCity', async (req, res) => {
+    let search = null;
+    let payload = req.body.payload.trim();
+    pool.query('SELECT DISTINCT city FROM qualityData WHERE city Like ? LIMIT 10', [payload + "%"], (err, rows) => {
+        if (!err) {
+            search = rows;
+            res.send({payload: search});
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/getPlaceName', async (req, res) => {
+    let search = null;
+    let payload = req.body.payload.trim();
+    pool.query('SELECT DISTINCT placeName FROM qualityData WHERE placeName Like ? LIMIT 10', ["%" + payload + "%"], (err, rows) => {
+        if (!err) {
+            search = rows;
+            res.send({payload: search});
+        } else {
+            console.log(err);
+        }
+    });
+});
