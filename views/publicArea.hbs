@@ -19,12 +19,13 @@
         <p>OR</p>
         <div class="form-group">
             <label for="searchCity" value="null">City/Region: </label>
-            <input id="searchCity" class="form-control" name="searchCity" type="text" onkeyup = "fetchCity(this)"></input>
+            <input id="searchCity" class="form-control" name="searchCity" type="text" onkeyup="fetchCity(this)"></input>
         </div>
         <p>OR</p>
         <div class="form-group">
             <label for="searchPlace" value="null">Place name: </label>
-            <input id="searchPlace" class="form-control" name="searchPlace" type="text" onkeyup = "fetchPlaceName(this)"></input>
+            <input id="searchPlace" class="form-control" name="searchPlace" type="text"
+                onkeyup="fetchPlaceName(this)"></input>
         </div>
         <section id="searchResultsCity" class="container d-flex flex-column"></section>
         <section id="searchResultsPlaceName" class="container d-flex flex-column"></section>
@@ -66,6 +67,17 @@
         {{/if}}
     </form>
 
+    <section id="filterLevel">
+        {{#if selected}}
+        <span><b>Level: </b></span>
+        <span>
+            <label><input onclick="" type="checkbox" name="level1">Level 1</label>
+            <label><input onclick="" type="checkbox" name="level2">Level 2</label>
+            <label><input onclick="" type="checkbox" name="level3">Level 3</label>
+        </span>
+        {{/if}}
+    </section>
+
     {{#if results}}
     <div class="row align-items-center">
         <div class="col">
@@ -75,8 +87,39 @@
             City/Region
         </div>
         <div class="col">
-            Name
+            Place Name
         </div>
+        <div class="col">
+            Date
+        </div>
+        <div class="col">
+            Level
+        </div>
+    </div>
+
+    {{#each results}}
+    <div class="row align-items-center main-info">
+        <div class="col">
+            {{state}}
+        </div>
+        <div class="col">
+            {{#if city}}
+            {{city}}
+            {{else}}
+            Unknown
+            {{/if}}
+        </div>
+        <div class="col">
+            {{placeName}}
+        </div>
+        <div class="col">
+            {{date}}
+        </div>
+        <div class="col">
+            xxx
+        </div>
+    </div>
+    <div class="row align-items-center detail-info">
         <div class="col">
             Latitude
         </div>
@@ -98,26 +141,8 @@
         <div class="col">
             Water turbidity
         </div>
-        <div class="col">
-            Date
-        </div>
     </div>
-
-    {{#each results}}
-    <div class="row align-items-center">
-        <div class="col">
-            {{state}}
-        </div>
-        <div class="col">
-            {{#if city}}
-            {{city}}
-            {{else}}
-            Unknown
-            {{/if}}
-        </div>
-        <div class="col">
-            {{placeName}}
-        </div>
+    <div class="row align-items-center detail-info">
         <div class="col">
             {{latitude}}
         </div>
@@ -139,17 +164,15 @@
         <div class="col">
             {{waterTurbidity}}
         </div>
-        <div class="col">
-            {{date}}
-        </div>
     </div>
     {{/each}}
-
     {{/if}}
 </div>
 
 <script src="\js\publicArea.js"></script>
 <script language="javascript">
+
+    /* record scroll offset*/
     $(window).scroll(function () {
         if ($(document).scrollTop() != 0) {
             var offset = $(window).scrollTop();
@@ -157,6 +180,7 @@
         }
     });
 
+    /* to submit form */
     function jump(url) {
         order.action = url;
         order.method = "POST";
@@ -226,7 +250,7 @@
         }
     }
 
-    function fetchCity(e){
+    function fetchCity(e) {
         const searchResults = document.getElementById("searchResultsCity");
         let match1 = e.value.match(/^[a-zA-Z ]*/);
         let match2 = e.value.match(/\s*/);
@@ -237,8 +261,8 @@
         if (match1[0] === e.value) {
             fetch('getCity', {
                 method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({payload: e.value})
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ payload: e.value })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
                 console.log(payload);
@@ -256,7 +280,7 @@
         searchResults.innerHTML = "";
     }
 
-    function fetchPlaceName(e){
+    function fetchPlaceName(e) {
         const searchResults = document.getElementById("searchResultsPlaceName");
         let match1 = e.value.match(/^[a-zA-Z ]*/);
         let match2 = e.value.match(/\s*/);
@@ -267,8 +291,8 @@
         if (match1[0] === e.value) {
             fetch('getPlaceName', {
                 method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({payload: e.value})
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ payload: e.value })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
                 console.log(payload);
@@ -285,5 +309,15 @@
         }
         searchResults.innerHTML = "";
     }
+
+
+    /* Click and show more infomation*/
+    $(".main-info").off().on({
+        click: function () {
+            console.log(this.nextElementSibling.classList);
+            this.nextElementSibling.classList.toggle("show");
+            this.nextElementSibling.nextElementSibling.classList.toggle("show");
+        }
+    })
 
 </script>

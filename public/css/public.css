@@ -1,120 +1,21 @@
-
 section{
     display: flex;
     flex-flow: row wrap;
 }
 
-#selectionCity{
-    flex-direction: column;
-    position: absolute;
-    background: #152d421f;
-    backdrop-filter: blur(10px);
-    width: 269px;
-    right: 5px;
-    top: 75%;
-    text-align: center;
-}
-
-#selectionCity p {
-    margin: 0;
-    line-height: 1.7em;
-}
-
-#selectionCity p:hover {
-    box-shadow: 0px 0px 1px 1px rgb(56 67 78 / 20%);
-}
-
 .top {
     justify-content: space-between;
     position: relative;
-}
-
-.entries, .top {
     width: 80%;
     margin: auto;
     padding: 5px;
 }
 
-#selection{
-    padding-top: 15px;
+.detail-info {
+    display: none;
+    background-color: antiquewhite;
 }
 
-#citySelection{
-    outline: none;
-    border: none;
-    border-bottom: 1px solid #00000085;
-    padding-left: 12px;
-}
-
-.entries:hover {
-    box-shadow: 0px 0px 8px 3px rgb(0 126 255 / 20%);
-}
-
-.firstEntries, .secondEntries {
-    width: 100%;
+.show {
     display: flex;
-    flex-flow: row wrap;
-}
-
-.secondEntriesHide{
-    display:none;
-}
-.data{
-    padding: 10px;
-}
-
-.firstEntries .city, .firstEntries .time {
-    flex: 1 0 10rem;
-}
-
-.firstEntries .riverBasin {
-    flex: 1 0 11rem;
-}
-.firstEntries .level {
-    flex: 0 0 7rem;
-}
-.firstEntries .monitoringPoint {
-    flex: 1 1 19rem;
-}
-
-
-
-.level{
-    border-radius: 1em;
-}
-/* .level::after{
-    content: '';
-    width: 100%;
-} */
-
-.level1{
-    background-color: #90be6d;
-}
-.level2{
-    background-color: #dff94f;
-}
-.level3{
-    background-color: #f8961e;
-}
-.level4{
-    background-color: #f94144;
-}
-.level5{
-    background-color: #7e27a1;
-    color: aliceblue;
-}
-.levelInvalid{
-    background-color: #bdbdbd;
-}
-
-.loading{
-    width: 14%;
-    height: 200px;
-    background: url(/img/loading.gif) no-repeat;
-    display: flex;
-    margin-left: 43.25%;
-    margin-top: 5%;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.5s ease;
 }
