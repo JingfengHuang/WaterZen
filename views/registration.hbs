@@ -30,14 +30,14 @@
                 <button type="submit">Submit</button>
 
                 {{#if registrationAlert}}
-                <small>{{registrationAlert}}</small>
+                <small class="text-danger">{{registrationAlert}}</small>
                 {{else}} {{#if emailSent}}
                 <br>
                 <small class="text-success">{{emailSent}}</small>
                 {{else}} {{/if}}{{/if}}
 
                 {{#each validationError}}
-                <small>{{msg}}</small>
+                <small class="text-danger">{{msg}}</small>
                 {{/each}}
             </form>
         </div>
