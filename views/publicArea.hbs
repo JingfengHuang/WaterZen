@@ -279,7 +279,7 @@
                     return;
                 }
                 payload.forEach((item, index) => {
-                    searchResults.innerHTML += `<p>${item.city}</p>`;
+                    searchResults.innerHTML += `<p class="cityOptions" id="option-${item.city}" onclick = "sendCityValue(this.id)">${item.city}</p>`;
                 });
             });
             return;
@@ -309,7 +309,7 @@
                     return;
                 }
                 payload.forEach((item, index) => {
-                    searchResults.innerHTML += `<p>${item.placeName}</p>`;
+                    searchResults.innerHTML += `<p class="placeNameOptions" id="option-${item.placeName}" onclick = "sendPlaceNameValue(this.id)">${item.placeName}</p>`;
                 });
             });
             return;
@@ -378,8 +378,17 @@
         }
     }, 100)
 
+    function sendCityValue(clicked_id) {
+        var city = clicked_id.substring(7);
+        console.log(city);
+        document.getElementById("searchCity").value = city;
+    }
 
-
+    function sendPlaceNameValue(clicked_id) {
+        var placeName = clicked_id.substring(7);
+        console.log(placeName);
+        document.getElementById("searchPlace").value = placeName;
+    }
 
 
 
