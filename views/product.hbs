@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="/css/product.css">
+<link rel="stylesheet" type="text/css" href="/slick/slick.css">
+<link rel="stylesheet" type="text/css" href="/slick/slick-theme.css">
+<script type="text/javascript" src="/slick/slick.min.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+    
+            <h1>Water sensors to protect your health</h1>
+            <p>Water pollution is becomimg a global crisis. Many harmful substances in water cannot be detected with the naked eye. Long-time exposure to the polluted water will eventually threaten people's physical health.</p>
+
+            <div class="slideshow">
+                <div><img src="/img/PublicArea.jpg" alt=""></div>
+                <div><img src="/img/PublicArea.jpg" alt=""></div>
+                <div><img src="/img/sensor.jpg" alt=""></div>
+            </div>
+
+            <p>Our product is equipped with multiple sensors and can test six water-related parameters, including Geographic Location, pH, Dissolved Solids, Turbility, Temperature and Electrical Conductivity.</p>
+
+        </div>
+
+        <div class="col-md-3 sticky-top">
+            <a href="mailto: waterzen7381@outlook.com">
+                <button>
+                    <span>Purchase Now</span>
+                </button>
+            </a>
+            <br>
+            <strong>-------- <br>
+                <strong>For More Information</strong><br>
+                <strong>Please Contact</strong>
+            </strong>
+            <section id="contact">
+                <p>Team Galaxy 6<br></p>
+               <p> +86 13208072051<br>
+                Mon-Fri, from 9am to 5pm<br></p>
+               <p> St Lucia QLD 4072<br></p>
+                <p>https://deco3801-galaxy6.uqcloud.net/<br>
+                </p>
+            </section>
+        </div>
+    </div>
+</div>
+
+ <script>
+    $(document).ready(function(){
+        $('.slideshow').slick({
+            dots: true,
+            infinite: true,
+            speed: 500,
+            fade: true,
+            cssEase: 'linear'
+        });
+    });
+    $(".col-md-3 button").mouseover(function(){
+        $(this).html("Order by Email");
+    });
+    $(".col-md-3 button").mouseleave(function(){
+        $(this).html("Purchase Now");
+    });
+</script>

@@ -36,6 +36,11 @@ button{
     width: 28%;
     margin-left: 36%;
     height:35px;
+    display: inline-block;
+}
+
+ion-icon{
+    margin-top: 50%;
 }
 
 button:hover{

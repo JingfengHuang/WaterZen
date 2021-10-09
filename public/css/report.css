@@ -110,6 +110,11 @@ input[type=checkbox]:checked + label:before {
     border: none;
 }
 
+.g-recaptcha{
+    padding-left: 7%;
+    margin-top: 5%;
+}
+
 button{
     width: 15%;
     margin-left: 42.5%;
