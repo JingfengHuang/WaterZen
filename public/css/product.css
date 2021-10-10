@@ -5,10 +5,16 @@
 .container h1{
     font-weight: 500;
     color: #295166;
+    margin-bottom: 3%;
+}
+
+.col-md-8 strong{
+    margin-top: 5%;
+    color: #295166;
+    text-shadow: 0px 1px 0px rgb(226, 226, 226), 0px 1px 0px rgb(226, 225, 225), 0px 2px 0px rgb(197, 196, 196), 0px 2px 0px rgb(196, 194, 194);
 }
 
 .col-md-8 p{
-    margin-top: 5%;
     font-size: 1.1em;
     line-height:170%;
     width: 90%;
