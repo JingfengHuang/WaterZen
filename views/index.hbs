@@ -1,10 +1,22 @@
 <link rel="stylesheet" href="/css/index.css">
 
-
-<div class="container">
+<div class="container-fluid">
     <div class ="search">
         <div class ="row">
-            <div class ="col-md-2 offset-md-3">
+            <div class="col-md-5 offset-md-1">
+                <h1>WaterZen<br></h1>
+                <h1>Protect citizen's health by monitoring real-time Australian water quality.</h1>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    $(".col-md-5 h1").css("opacity", "100");
+                });
+            </script>
+
+
+
+            {{!-- <div class ="col-md-2 offset-md-3">
                 <select id ="selectmenu">
                     <option value="Official">Official Data</option>
                     <option value="Community">Community</option>
@@ -50,21 +62,23 @@
                     $(".hint").css("opacity", "0");
                 }
                 
-            </script>
+            </script> --}}
         </div>
     </div>
+</div>
 
+<div class="container">
     <hr>
 
     <h2 class="text-center">Popular Choices</h2>
     <h5 class="text-center">(1 Oct 2021 - 15 Oct 2021)</h4>
 
     <div class="row">
-        <div class ="col-md-3">
+        <div class ="col-md-3" id="private">
             <a href="/"><h4>Private Area | Site 1</h4></a>
         </div>
         
-        <div class ="col-md-5">
+        <div class ="col-md-5" id="public">
            <a href="/publicArea"><h4>Public Area | Loddon River</h4></a>
            <p id="hide">An inland river of the Murray-Darling basin, is located in the Australian state of Victoria, is the second longest river in Victoria.</p>
         </div>
