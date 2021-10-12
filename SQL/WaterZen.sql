@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2021-10-12 15:04:02
+-- 生成日期： 2021-10-12 15:18:51
 -- 服务器版本： 10.4.20-MariaDB
 -- PHP 版本： 8.0.9
 
@@ -197,7 +197,8 @@ INSERT INTO `qualitydata` (`id`, `placeName`, `country`, `state`, `city`, `latit
 (122, 'MYPONGA RIVER @ U/S Dam And Road Bridge', 'Australia', 'SA', 'Yankalilla', -35.38, 138.48, '2021-09-18 20:41:01', 396, 6.77, 26.5, 225.7, 2.2),
 (123, 'River Murray EC Pontoon at Tailem Bend', 'Australia', 'SA', 'Rural City of Murray Bridge', -35.28, 139.45, '2021-09-18 20:43:56', 68.2, 8.26, 29, 30, 1.6),
 (124, 'Gregory River', 'Australia', 'QLD', NULL, -20.1688, 148.464, '2021-10-12 20:50:29', 57.196, 7.6, 27.047, NULL, 4.08),
-(125, 'Burnett River', 'Australia', 'QLD', NULL, -24.8649, 152.344, '2021-10-12 20:53:00', 49.05, 7.51, 25.93, NULL, 5.5);
+(125, 'Burnett River', 'Australia', 'QLD', NULL, -24.8649, 152.344, '2021-10-12 20:53:00', 49.05, 7.51, 25.93, NULL, 5.5),
+(126, 'Civic Centre Park', 'Australia', 'WA', 'Canning', -32.0169, 115.93, '2021-10-12 12:37:51\r\n', 157.08, 5.63, 19.78, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -272,7 +273,7 @@ CREATE TABLE `session_store` (
 --
 
 INSERT INTO `session_store` (`session_id`, `expires`, `data`) VALUES
-('K05USKA8ffU1C3KF2KPDC3EvSKJ76qTf', 1634049730, '{\"cookie\":{\"originalMaxAge\":7200000,\"expires\":\"2021-10-12T14:42:05.337Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":true},\"flash\":{},\"login\":true,\"userID\":1,\"userEmail\":\"liss.s.li@outlook.com\"}');
+('K05USKA8ffU1C3KF2KPDC3EvSKJ76qTf', 1634051218, '{\"cookie\":{\"originalMaxAge\":7200000,\"expires\":\"2021-10-12T14:42:05.337Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":true},\"flash\":{},\"login\":true,\"userID\":1,\"userEmail\":\"liss.s.li@outlook.com\"}');
 
 -- --------------------------------------------------------
 
@@ -305,7 +306,7 @@ INSERT INTO `user` (`id`, `nickname`, `email`, `password`, `avatarPath`, `isEmai
 --
 DROP TABLE IF EXISTS `select_state`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `select_state`  AS SELECT `qualitydata`.`id` AS `id`, `qualitydata`.`placeName` AS `placeName`, `qualitydata`.`country` AS `country`, `qualitydata`.`state` AS `state`, `qualitydata`.`city` AS `city`, `qualitydata`.`latitude` AS `latitude`, `qualitydata`.`longitude` AS `longitude`, `qualitydata`.`date` AS `date`, `qualitydata`.`electricalConductivity` AS `electricalConductivity`, `qualitydata`.`pH` AS `pH`, `qualitydata`.`temperature` AS `temperature`, `qualitydata`.`totalDissolvedSolids` AS `totalDissolvedSolids`, `qualitydata`.`waterTurbidity` AS `waterTurbidity` FROM `qualitydata` WHERE `qualitydata`.`state` = 'ACT' ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `select_state`  AS SELECT `qualitydata`.`id` AS `id`, `qualitydata`.`placeName` AS `placeName`, `qualitydata`.`country` AS `country`, `qualitydata`.`state` AS `state`, `qualitydata`.`city` AS `city`, `qualitydata`.`latitude` AS `latitude`, `qualitydata`.`longitude` AS `longitude`, `qualitydata`.`date` AS `date`, `qualitydata`.`electricalConductivity` AS `electricalConductivity`, `qualitydata`.`pH` AS `pH`, `qualitydata`.`temperature` AS `temperature`, `qualitydata`.`totalDissolvedSolids` AS `totalDissolvedSolids`, `qualitydata`.`waterTurbidity` AS `waterTurbidity` FROM `qualitydata` WHERE `qualitydata`.`state` = 'QLD' ;
 
 --
 -- 转储表的索引
@@ -358,7 +359,7 @@ ALTER TABLE `user`
 -- 使用表AUTO_INCREMENT `qualitydata`
 --
 ALTER TABLE `qualitydata`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- 使用表AUTO_INCREMENT `report`
