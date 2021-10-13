@@ -1,6 +1,7 @@
 /** Imports */
 const mysql = require('mysql');
 const path = require('path');
+const url = require('url');
 
 /** Create connection pool */
 const pool = mysql.createPool({
@@ -13,20 +14,57 @@ const pool = mysql.createPool({
 // Profile page
 exports.view = (req, res) => {
     const pageTitle = "My Profile";
-
+    console.log(req.session);
     if (!req.session.login) {
         res.redirect('/login');
     } else {
-        const userEmail = req.session.userEmail;
 
         pool.getConnection((err, connection) => {
             if (err) throw err; //not connected
 
-            connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
-                // If db match user email
+            // View required
+            // CREATE OR REPLACE VIEW REPORT_STATS AS
+            // SELECT U.id, U.nickname, U.avatarPath, R.status
+            // FROM user U, report R 
+            // WHERE U.id = R.userID;
+
+            let nickname = "username";
+            let avatarPath = "avatar.png";
+
+            connection.query('SELECT * FROM user WHERE email = ?', [req.session.userEmail], (err, rows) => {
                 if (!err) {
-                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: rows[0].nickname, userEmail: userEmail, 'modifyAlert': req.flash('modifyAlert'), 'avatar': rows[0].avatarPath, 'upload': req.flash('upload')} );
-                } 
+                    nickname = rows[0].nickname;
+                    avatarPath = rows[0].avatarPath;
+                } else {
+                    console.log(err);
+                }
+            });
+
+            connection.query('SELECT id, nickname, avatarPath, status, COUNT(*) AS Count FROM report_stats WHERE id = ? GROUP BY status', [req.session.userID], (err, rows) => {
+                if (!err && rows[0]) {
+                    let submit = 0;
+                    let progress = 0;
+                    let complete = 0;
+                    let total = 0;
+
+                    rows.forEach(function (item) {
+                        if (item.status === "In Progress") {
+                            progress = item.Count;
+                            total += progress;
+                        } else if (item.status === "Submitted for Review") {
+                            submit = item.Count;
+                            total += submit;
+                        } else if (item.status === "Completed") {
+                            complete = item.Count;
+                            total += complete
+                        }
+                    });
+                    console.log(total);
+
+                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: rows[0].nickname, userEmail: req.session.userEmail, 'modifyAlert': req.flash('modifyAlert'), 'avatar': rows[0].avatarPath, 'upload': req.flash('upload'), 'reportCount': total, progress: progress, submit: submit, complete: complete });
+                } else if (!rows[0]) {
+                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: nickname, userEmail: req.session.userEmail, 'modifyAlert': req.flash('modifyAlert'), 'avatar': avatarPath, 'upload': req.flash('upload'), 'reportCount': 0, progress: 0, submit: 0, complete: 0 });
+                }
             });
         });
     }
@@ -87,4 +125,64 @@ exports.upload = (req, res) => {
             });
         });
     })
+}
+
+exports.viewReports = (req, res) => {
+    const path = url.parse(req.originalUrl, true);
+
+
+    pool.getConnection((err, connection) => {
+        if (err) throw err; //not connected
+
+        let nickname = "username";
+        let avatarPath = "avatar.png";
+
+        connection.query('SELECT * FROM user WHERE email = ?', [req.session.userEmail], (err, rows) => {
+            if (!err) {
+                nickname = rows[0].nickname;
+                avatarPath = rows[0].avatarPath;
+            } else {
+                console.log(err);
+            }
+        });
+
+        console.log("first: " + nickname)
+        console.log("first: " + avatarPath)
+
+
+        if (path.query.kind) {
+            let kind = path.query.kind;
+            console.log("kind is: " + kind);
+            if (kind == "complete") {
+                kind = "Completed";
+            } else if (kind == "progress") {
+                kind = "In Progress";
+            } else if (kind == "submit") {
+                kind = "Submitted for Review";
+            }
+
+            connection.query('SELECT * FROM report R, user U WHERE U.id = R.userID AND userID = ? AND status = ?', [req.session.userID, kind], (err, rows) => {
+                if (!err) {
+                    if (rows[0]) {
+                        res.render('myReport', { login: true, pageTitle: "My Reports", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows });
+                    } else {
+                        res.render('myReport', { login: true, pageTitle: "My Reports", nickname: nickname, 'avatar': avatarPath, noRecord: "No Record." });
+                    }
+
+                } else {
+                    console.log(err);
+                }
+            });
+
+
+        } else {
+            connection.query('SELECT * FROM report R, user U WHERE U.id = R.userID AND userID = ?', [req.session.userID], (err, rows) => {
+                if (!err) {
+                    res.render('myReport', { login: true, pageTitle: "My Reports", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows });
+                } else {
+                    console.log(err);
+                }
+            });
+        }
+    });
 }

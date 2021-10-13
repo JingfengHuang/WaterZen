@@ -75,7 +75,7 @@ exports.reportQuality = (req, res) => {
         const { state, city, preciseLocation, qualityTitle, qualityIssue } = req.body;
         let isPrivate = req.body.isPrivate ? true : false;
 
-        connection.query("INSERT INTO report (userID, isPrivate, title, state, city, preciseLocation, latitude, longitude, details, status, governmentID, reply) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [req.session.userID, isPrivate, qualityTitle, state, city, preciseLocation, 0, 0, qualityIssue, "In process", 0, "No reply yet."], (err, rows) => {
+        connection.query("INSERT INTO report (userID, isPrivate, title, state, city, preciseLocation, latitude, longitude, details, status, governmentID, reply) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [req.session.userID, isPrivate, qualityTitle, state, city, preciseLocation, 0, 0, qualityIssue, "Submitted for Review", 0, "No reply yet."], (err, rows) => {
             // If success then insert this report
             if (!err) {
                 req.flash('reportStatus', 'Your report has been sent successfully!');
