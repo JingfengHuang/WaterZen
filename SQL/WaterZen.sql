@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2021 at 05:21 AM
+-- Generation Time: Oct 13, 2021 at 06:43 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -279,10 +279,10 @@ CREATE TABLE `report` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `report_status`
+-- Stand-in structure for view `report_stats`
 -- (See below for the actual view)
 --
-CREATE TABLE `report_status` (
+CREATE TABLE `report_stats` (
 `id` int(11)
 ,`nickname` varchar(256)
 ,`avatarPath` varchar(256)
@@ -350,11 +350,11 @@ INSERT INTO `user` (`id`, `nickname`, `email`, `password`, `avatarPath`, `isEmai
 -- --------------------------------------------------------
 
 --
--- Structure for view `report_status`
+-- Structure for view `report_stats`
 --
-DROP TABLE IF EXISTS `report_status`;
+DROP TABLE IF EXISTS `report_stats`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `report_status`  AS SELECT `u`.`id` AS `id`, `u`.`nickname` AS `nickname`, `u`.`avatarPath` AS `avatarPath`, `r`.`status` AS `status` FROM (`user` `u` join `report` `r`) WHERE `u`.`id` = `r`.`userID` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `report_stats`  AS SELECT `u`.`id` AS `id`, `u`.`nickname` AS `nickname`, `u`.`avatarPath` AS `avatarPath`, `r`.`status` AS `status` FROM (`user` `u` join `report` `r`) WHERE `u`.`id` = `r`.`userID` ;
 
 -- --------------------------------------------------------
 
