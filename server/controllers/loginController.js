@@ -110,7 +110,6 @@ exports.resetVerify = (req, res) => {
                     <p>Best Regards,<br>WaterZen IT</p>`
                 };
 
-                // Send verification email
                 transporter.sendMail(mailOptions, function (error, info) {
                     if (error) {
                         console.log(error);
@@ -125,7 +124,6 @@ exports.resetVerify = (req, res) => {
                     if (!err && rows.length === 0) {
                         connection.query('INSERT INTO reset SET userEmail = ?, reset_token= ?, timestamp = ?', [req.body.userEmail, token, new Date()], (err, rows) => {
 
-                            // If success refresh registration page
                             if (err) {
                                 console.log(err);
                                 req.flash('resetAlert', 'Reset Failed. Please contact IT team.');
@@ -166,7 +164,6 @@ exports.resetPassword = (req, res) => {
         pool.getConnection((err, connection) => {
             if (err) throw err; //not connected
 
-            // Query user existence
             connection.query('SELECT * FROM reset WHERE reset_token = ?', [token], (err, rows) => {
                 
                 let requestTime = Math.round(new Date(rows[0].timestamp).getTime() / 1000);
@@ -231,5 +228,4 @@ exports.resetPermission = [
             });
         });
     }
-    
 }]
