@@ -28,8 +28,20 @@ exports.view = (req, res) => {
             // FROM user U, report R 
             // WHERE U.id = R.userID;
 
-            connection.query('SELECT id, nickname, avatarPath, status, COUNT(*) AS Count FROM report_stats WHERE id = ? GROUP BY status', [req.session.userID], (err, rows) => {
+            let nickname = "username";
+            let avatarPath = "avatar.png";
+
+            connection.query('SELECT * FROM user WHERE email = ?', [req.session.userEmail], (err, rows) => {
                 if (!err) {
+                    nickname = rows[0].nickname;
+                    avatarPath = rows[0].avatarPath;
+                } else {
+                    console.log(err);
+                }
+            });
+
+            connection.query('SELECT id, nickname, avatarPath, status, COUNT(*) AS Count FROM report_stats WHERE id = ? GROUP BY status', [req.session.userID], (err, rows) => {
+                if (!err && rows[0]) {
                     let submit = 0;
                     let progress = 0;
                     let complete = 0;
@@ -50,8 +62,8 @@ exports.view = (req, res) => {
                     console.log(total);
 
                     res.render('profile', { login: true, pageTitle: pageTitle, nickname: rows[0].nickname, userEmail: req.session.userEmail, 'modifyAlert': req.flash('modifyAlert'), 'avatar': rows[0].avatarPath, 'upload': req.flash('upload'), 'reportCount': total, progress: progress, submit: submit, complete: complete });
-                } else {
-                    throw err;
+                } else if (!rows[0]) {
+                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: nickname, userEmail: req.session.userEmail, 'modifyAlert': req.flash('modifyAlert'), 'avatar': avatarPath, 'upload': req.flash('upload'), 'reportCount': 0, progress: 0, submit: 0, complete: 0 });
                 }
             });
         });
@@ -148,15 +160,15 @@ exports.viewReports = (req, res) => {
             } else if (kind == "submit") {
                 kind = "Submitted for Review";
             }
-            
+
             connection.query('SELECT * FROM report R, user U WHERE U.id = R.userID AND userID = ? AND status = ?', [req.session.userID, kind], (err, rows) => {
                 if (!err) {
                     if (rows[0]) {
                         res.render('myReport', { login: true, pageTitle: "My Reports", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows });
                     } else {
-                        res.render('myReport', { login: true, pageTitle: "My Reports", nickname: nickname, 'avatar': avatarPath, noRecord: "No Record."});
+                        res.render('myReport', { login: true, pageTitle: "My Reports", nickname: nickname, 'avatar': avatarPath, noRecord: "No Record." });
                     }
-                    
+
                 } else {
                     console.log(err);
                 }
