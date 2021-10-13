@@ -13,4 +13,4 @@ zone update 13/10/2021 Xueli
 
 zone update 13/10/2021 Xueli
   changed
-  style.css (30,32,42,43,48,50,51,59,60,189)
+  style.css (30,32,42,43,48,50,51,59,60,94,189)
