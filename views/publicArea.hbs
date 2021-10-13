@@ -375,28 +375,9 @@
 
     mymap.on('click', onMapClick);
 
-    // state layer ---------------------------------------
-    var geojson = L.geoJson(statesData).addTo(mymap);
+    // add layer and interation with mouse ----------------------------------------
 
-
-
-    /* set style of state layer */
-    function style() {
-        return {
-            fillColor: '#f8f9fa00',
-            weight: 1,
-            opacity: 1,
-            color: '#0d6efd',
-            dashArray: '3',
-            fillOpacity: 0.7
-        };
-    }
-
-    L.geoJson(statesData, { style: style }).addTo(mymap);
-
-    // interation with mouse ----------------------------------------
-
-    /* event for mouseover*/
+    /* event of genermal layer for mouseover*/
     function highlightFeature(e) {
         let layer = e.target;
         layer.setStyle({
@@ -411,13 +392,27 @@
             layer.bringToFront();
         }
     }
+    /* event of detail layer for mouseover*/
+    function highLineFeature(e) {
+        let layer = e.target;
+        layer.setStyle({
+            weight: 5,
+        });
 
-    /* event for mouseout*/
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            layer.bringToFront();
+        }
+    }
+    /* event of genermal layer for mouseout*/
     function resetHighlight(e) {
-        geojson.resetStyle(e.target);
+        geojsonGeneral.resetStyle(e.target);
+    }
+    /* event of detail layer for mouseout*/
+    function resetHighLine(e) {
+        geojsonDetail.resetStyle(e.target);
     }
 
-    /* event for mouseout*/
+    /* event for click layer*/
     function displayMark(e) {
         let layer = e.target;
         let stateCode = layer.feature.properties.STATE_CODE;
@@ -462,20 +457,69 @@
         document.getElementById("selection").submit();
     }
 
-    /* add listerner*/
-    function onEachFeature(feature, layer) {
+    /* add listerner for more interaction to map*/
+    function layerEvent(feature, layer) {
         layer.on({
             mouseover: highlightFeature,
             mouseout: resetHighlight,
-            click: displayMark
+            click: displayMark,
         });
     }
+    /* add listerner for see more detail on map*/
+    function layerEvent2(feature, layer) {
+        layer.on({
+            mouseover: highLineFeature,
+            mouseout: resetHighLine,
+            click: displayMark,
+        });
+    }
+    // geojson layer
+    let layerGroup = new L.LayerGroup();
+    let bounds = null;
+    geojsonGeneral = L.geoJson(statesData, {
+        style: function (feature) {
+            return {
+                fillColor: '#0d6efd',
+                weight: 1,
+                opacity: 1,
+                color: '#0d6efd',
+                dashArray: '3',
+                fillOpacity: 0.3
+            };
+        },
+        onEachFeature: layerEvent
+    });
 
-    geojson = L.geoJson(statesData, {
-        style: style,
-        onEachFeature: onEachFeature
-    }).addTo(mymap);
+    geojsonDetail = L.geoJson(statesData, {
+        style: function (feature) {
+            return {
+                weight: 1,
+                opacity: 1,
+                color: '#0d6efd',
+                dashArray: '3',
+                fillOpacity: 0
+            };
+        },
+        onEachFeature: layerEvent2
+    });
 
+    layerGroup.addTo(mymap);
+    layerGroup.addLayer(geojsonGeneral);
+
+    // add zoom event for the who map.
+    mymap.on("zoomend", function (e) {
+        if (bounds) {
+            layerGroup.clearLayers();
+            layerGroup.addLayer(geojsonDetail);
+            if (e.sourceTarget._zoom < mymap.getBoundsZoom(bounds)) {
+                layerGroup.clearLayers();
+                layerGroup.addLayer(geojsonGeneral);
+            }
+        } else {
+            layerGroup.clearLayers();
+            layerGroup.addLayer(geojsonGeneral);
+        }
+    });
 
     // Add marker to map -------------------------------------------
     setTimeout(() => {
@@ -502,9 +546,11 @@
 
         if (markers.length != 0) {
             var group = new L.featureGroup(markers);
-            mymap.fitBounds(group.getBounds());
+            bounds = group.getBounds();
+            mymap.fitBounds(bounds);
         }
     }, 100)
+
 
     function sendCityValue(clicked_id) {
         var city = clicked_id.substring(7);
