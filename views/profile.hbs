@@ -56,7 +56,7 @@
 
     <div class="row" id="history">
         <div class="col-md-6">
-            <h3>My Contribution</h3>
+            <h3>My Contribution: </h3>
             <a href="/privateArea"><img src="/img/add.png" alt="Contribute new data" class="add"></a>
             <label><strong>Date:</strong></label>
             <p>DD/MM/YYYY</p>
@@ -90,29 +90,16 @@
         </div>
 
         <div class="col-md-6">
-            <h3>My Report</h3>
-            <a href="/report"><img src="/img/add.png" alt="Contribute new data" class="add"></a>
-            <label><strong>Date:</strong></label>
-            <p>DD/MM/YYYY</p>
-            <label><strong>Report Details:</strong></label>
-            <table class="table">
-                <tr>
-                    <td>Location</td>
-                    <td>Here is State and City</td>
-                </tr>
-                <tr>
-                    <td>Water Quality Issue</td>
-                    <td>Here is the title</td>
-                </tr>
-                <tr>
-                    <td>Issue Details</td>
-                    <td>Here is the description</td>
-                </tr>
-                <tr>
-                    <td>Government Progress</td>
-                    <td>Here is the progress</td>
-                </tr>
-            </table>
+            <h3>My Report: <a href="/profile/report">{{reportCount}}</a></h3>
+            <a href="/report"><img src="/img/add.png" alt="Contribute new data" class="add">Add New</a>
+            <br>
+            <label>Submitted for Review: <a href="/profile/report/?kind=submit">{{submit}}</a></label>
+            <br>
+            <label>In Progress: <a href="/profile/report/?kind=progress">{{progress}}</a></label>
+            <br>
+            <label>Completed: <a href="/profile/report/?kind=complete">{{complete}}</a></label>
+            <br>
+            <label><a href="/profile/report">View All</a></label>
         </div>
     </div>
 </div>

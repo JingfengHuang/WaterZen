@@ -1,13 +1,48 @@
-
-.container .search{
-    height: 550px;
-    margin-top: -55px;
-    background-image: url(/img/Searchbackground2.jpg);
-    background-position: center center;
-    background-size: cover; 
+.container-fluid{
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
 }
 
-.col-md-2{
+.container-fluid .search{
+    height: 600px;
+    background-image: url(/img/background3.jpg);
+    background-position: center center;
+    background-size: cover;  
+    margin-top: -55px;
+    cursor: pointer;
+}
+
+
+.search .row .col-md-5{
+    margin-top: 9%;
+}
+
+.col-md-5 h1{
+    line-height: 1.35em;
+    font-size: 2.75em;
+    font-weight: 500;
+    color: white;
+    text-shadow: -1px -1px white, 1px 1px rgb(110, 110, 110);
+    overflow: hidden;
+    opacity: 0;
+    transition-delay: 0.25s;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+}
+
+.col-md-5 h1:first-child{
+    font-size: 3.5em;
+}
+
+.animate .letter {
+    display: inline-block;
+    line-height: 1.35em;
+  }
+
+/* .col-md-2{
     margin-right: 3%;
     margin-top: 19%;
     height: 45px;
@@ -24,9 +59,9 @@ select {
     border: none;
     padding-left: 9%;
     outline: none;
-    -webkit-appearance: none;   /* google */
-    -moz-appearance: none;  /* firefox */
-    appearance: none; /*IE*/
+    -webkit-appearance: none;   
+    /* -moz-appearance: none; 
+    appearance: none; 
     background-color: transparent;
     color: white;
     font-weight: bold;
@@ -79,24 +114,22 @@ select option{
     opacity: 0;
     font-weight: bold;  
     width: 40%; 
-}
+} */ 
 
 .search + hr{
-    margin-top: 1%;
     border: 1px solid black;
     background-color: black;
 }
 
 hr + h2{
     margin-top: 2.5%;
-
 }
 
 h5{
     margin-bottom: 4%;
 }
 
-.col-md-3:first-child{
+#private{
     margin-left: 4%;
     background-image: url(/img/privateArea.jpg);
     background-size: 110% 131%;
@@ -105,14 +138,14 @@ h5{
     transition: 0.75s;
 }
 
-.col-md-3:first-child:hover{
+#private:hover{
     background-size: 100% 119%;
     filter:alpha(Opacity=80);
     -moz-opacity:0.8;
     opacity: 0.8;
 }
 
-.col-md-3:last-child{
+#product{
     background-image: url(/img/sensor.jpg);
     background-size: 135% 110%;
     height: 300px;
@@ -120,14 +153,14 @@ h5{
     transition: 0.75s;
 }
 
-.col-md-3:last-child:hover{
+#product:hover{
     background-size: 123% 100%;
     filter:alpha(Opacity=80);
     -moz-opacity:0.8;
     opacity: 0.8;
 }
 
-.col-md-5{
+#public{
     background-image: url(/img/PublicArea.jpg);
     background-size: 110% 110%;
     height: 300px;
@@ -135,7 +168,7 @@ h5{
     transition: 0.75s;
 }
 
-.col-md-5 h4, .col-md-3 h4{
+#public h4, .col-md-3 h4{
     margin-top: 250px;
     color:mintcream;
     font-weight: bold;
@@ -143,18 +176,18 @@ h5{
     text-decoration: underline 0.125em transparent;
 }
 
-.row h4:hover{
+.row h4:hover, #public h4:hover{
     text-decoration-color: white;
     transition: 0.5s;
 }
 
-.row h4:active{
+.row h4:active, #public h4:active{
    color: #5c97b7;
    text-decoration-color:#5c97b7;
    transition: 0.25s;
 }
 
-.col-md-5:hover{
+#public:hover{
     background-size: 100% 100%;
     filter:alpha(Opacity=80);
     -moz-opacity:0.8;
@@ -169,22 +202,34 @@ h5{
 }
 
 @media screen and (max-width:700px){
-    .col-md-3:first-child{
+    #private{
         margin-left: 0;
     }
-    .col-md-2{
+    .search .row .col-md-5{
         margin-bottom: 5%;
         margin-top: 35%;
         width: 80%;
-        margin-left: 10%;
+        margin-left: 8%;
     }
 
-    select{
+    .col-md-5 h1{
+        line-height: 1.15em;
+        font-size: 2.5em;
+        transition-delay: 0.25s;
+        transition-duration: 1s;
+        transition-timing-function: ease-in-out;
+    }
+    
+    .col-md-5 h1:first-child{
+        font-size: 3em;
+    }
+
+    /* select{
         margin-left: -5%;
         padding-left: 0;
-    }
+    } */
 
-    .col-md-4{
+    /* .col-md-4{
         width: 80%;
         margin-left: 10%;
     }
@@ -192,5 +237,5 @@ h5{
     .hint{
         margin-left: 10%;
         width: 85%;
-    }
+    } */
 }

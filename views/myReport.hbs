@@ -1,0 +1,37 @@
+<h2><a href="/profile/report/?kind=submit">Submitted for Review</a></h2>
+<h2><a href="/profile/report/?kind=progress">In Progress</a></h2>
+<h2><a href="/profile/report/?kind=complete">Completed</a></h2>
+<h2><a href="/profile/report">Show all</a></h2>
+
+{{noRecord}}
+{{#if result}}
+    {{#each result}}
+    <label><strong>Date:</strong></label>
+    <p>{{this.date}}</p>
+    <label><strong>Report Details:</strong></label>
+    <table class="table">
+        <tr>
+            <td>Location</td>
+            <td>State: {{this.state}} City/Region: {{this.city}}</td>
+        </tr>
+        <tr>
+            <td>Water Quality Issue</td>
+            <td>{{this.title}}</td>
+        </tr>
+        <tr>
+            <td>Issue Details</td>
+            <td>{{this.details}}</td>
+        </tr>
+        <tr>
+            <td>Government Progress</td>
+            <td>{{this.status}}</td>
+        </tr>
+        <tr>
+            <td>Government Reply</td>
+            <td>{{this.reply}}</td>
+        </tr>
+    </table>
+    {{/each}}
+{{/if}}
+
+

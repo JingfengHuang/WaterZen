@@ -4,6 +4,9 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
+<script src="/js/au-state.js"></script>
+{{!--
+<script src="/js/us-states.js"></script> --}}
 <link rel="stylesheet" href="/css/public.css">
 
 <h2>Official Data</h2>
@@ -176,7 +179,8 @@
     {{/if}}
 </div>
 
-<script src="\js\publicArea.js"></script>
+{{!--
+<script src="\js\publicArea.js"></script> --}}
 <script language="javascript">
 
     /* record scroll offset*/
@@ -209,8 +213,16 @@
         })*/
     }
 
+    /* to submit form */
+    function jump(url, data) {
+        order.action = url;
+        order.method = "POST";
+        order.submit();
+    }
+
     // scroll to offset
     var offset = localStorage.getItem("offsetTop");
+
     $("HTML, BODY").animate({
         scrollTop: offset
     }, 0);
@@ -327,11 +339,26 @@
     })
 
 
-    /* for map */
-    var mymap = L.map('mapid').setView([-25.697226, -225.527344], 5);
+    /* -----------------------------------------------------for map -----------------------------------------------------------------------*/
+    /*
+        var mymap = L.map('mapid').setView([-25.888834, 134.127603], 4);
+    
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            id: 'mapbox/light-v9',
+            tileSize: 512,
+            zoomOffset: -1
+        }).addTo(mymap);
+    
+        var geojson = L.geoJson(statesData).addTo(mymap);
+    */
 
+    var mymap = L.map('mapid').setView([-25.888834, 134.127603], 4);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        //  minZoom: 4,
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
             'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -341,15 +368,116 @@
     }).addTo(mymap);
 
 
-    // click map and get position
+    // click map and get position -------------------------------
     function onMapClick(e) {
         console.log("You clicked the map at " + e.latlng);
     }
 
     mymap.on('click', onMapClick);
 
+    // state layer ---------------------------------------
+    var geojson = L.geoJson(statesData).addTo(mymap);
 
-    // for debugging
+
+
+    /* set style of state layer */
+    function style() {
+        return {
+            fillColor: '#f8f9fa00',
+            weight: 1,
+            opacity: 1,
+            color: '#0d6efd',
+            dashArray: '3',
+            fillOpacity: 0.7
+        };
+    }
+
+    L.geoJson(statesData, { style: style }).addTo(mymap);
+
+    // interation with mouse ----------------------------------------
+
+    /* event for mouseover*/
+    function highlightFeature(e) {
+        let layer = e.target;
+        layer.setStyle({
+            fillColor: '#0d6efd',
+            weight: 5,
+            color: '#0d6efd',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            layer.bringToFront();
+        }
+    }
+
+    /* event for mouseout*/
+    function resetHighlight(e) {
+        geojson.resetStyle(e.target);
+    }
+
+    /* event for mouseout*/
+    function displayMark(e) {
+        let layer = e.target;
+        let stateCode = layer.feature.properties.STATE_CODE;
+        let selectedState;
+        switch (stateCode) {
+            case '1':
+                selectedState = document.querySelector(`option[value=NSW]`);
+                selectedState.selected = true;
+                break;
+            case '2':
+                selectedState = document.querySelector(`option[value=VIC]`);
+                selectedState.selected = true;
+                break;
+            case '3':
+                selectedState = document.querySelector(`option[value=QLD]`);
+                selectedState.selected = true;
+                break;
+            case '4':
+                selectedState = document.querySelector(`option[value=SA]`);
+                selectedState.selected = true;
+                break;
+            case '5':
+                selectedState = document.querySelector(`option[value=WA]`);
+                selectedState.selected = true;
+                break;
+            case '6':
+                selectedState = document.querySelector(`option[value=TAS]`);
+                selectedState.selected = true;
+                break;
+            case '7':
+                selectedState = document.querySelector(`option[value=NT]`);
+                selectedState.selected = true;
+                break;
+            case '8':
+                selectedState = document.querySelector(`option[value=ACT]`);
+                selectedState.selected = true;
+                break;
+            default:
+                console.error("No correspond state");
+
+        }
+        document.getElementById("selection").submit();
+    }
+
+    /* add listerner*/
+    function onEachFeature(feature, layer) {
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: displayMark
+        });
+    }
+
+    geojson = L.geoJson(statesData, {
+        style: style,
+        onEachFeature: onEachFeature
+    }).addTo(mymap);
+
+
+    // Add marker to map -------------------------------------------
     setTimeout(() => {
         let results = document.querySelectorAll(".main-info");
         let mainInfo = document.querySelectorAll(".main-title");
@@ -367,12 +495,12 @@
             let longitude = parseFloat(detailData.children[1].innerText.trim());
 
             var marker = L.marker([latitude, longitude]).addTo(mymap);
-            marker.bindPopup("<div>" + `${$(mainInfo).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(mainData).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(detailInfo).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(detailData).html().replaceAll('div', 'span')}` + "</div>", {minWidth : '800'});
+            marker.bindPopup("<div>" + `${$(mainInfo).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(mainData).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(detailInfo).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(detailData).html().replaceAll('div', 'span')}` + "</div>", { minWidth: '800' });
             markers.push(marker);
 
         }
 
-        if (markers) {
+        if (markers.length != 0) {
             var group = new L.featureGroup(markers);
             mymap.fitBounds(group.getBounds());
         }
