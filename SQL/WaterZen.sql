@@ -73,7 +73,7 @@ CREATE TABLE `qualitydata` (
   `city` varchar(256) DEFAULT NULL,
   `latitude` float NOT NULL,
   `longitude` float NOT NULL,
-  `date` text NOT NULL DEFAULT current_timestamp(),
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
   `electricalConductivity` float DEFAULT NULL,
   `pH` double DEFAULT NULL,
   `temperature` double NOT NULL,
