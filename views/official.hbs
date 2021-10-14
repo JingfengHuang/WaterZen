@@ -15,7 +15,7 @@
 <section class="top">
 
     <form action="/official/basicSearch" method="POST" id="selection">
-        <select class="form-select" name="state">
+        <select id="select-state" class="form-select" name="state">
             <option value="null">Select state</option>
             <option value="VIC">Victoria</option>
             <option value="WA">Western Australia</option>
@@ -179,14 +179,14 @@
     {{/if}}
 </div>
 
-{{!--
-<script src="\js\official.js"></script> --}}
+
 <script language="javascript">
+    /* -----------------------------------------------------for order -----------------------------------------------------------------------*/
 
     /* record scroll offset*/
     $(window).scroll(function () {
         if ($(document).scrollTop() != 0) {
-            var offset = $(window).scrollTop();
+            let offset = $(window).scrollTop();
             localStorage.setItem("offsetTop", offset);
         }
     });
@@ -221,11 +221,13 @@
     }
 
     // scroll to offset
-    var offset = localStorage.getItem("offsetTop");
+    let offset = localStorage.getItem("offsetTop");
 
     $("HTML, BODY").animate({
         scrollTop: offset
     }, 0);
+
+    /* -----------------------------------------------------for keep selection -----------------------------------------------------------------------*/
 
     // restore selected content
     let selected = "{{selected}}";
@@ -268,9 +270,11 @@
             }
         }
     }
+    /* -----------------------------------------------------for input hint -----------------------------------------------------------------------*/
 
     function fetchCity(e) {
         const searchResults = document.getElementById("searchResultsCity");
+        const selectedState = document.getElementById("select-state").value;
         let match1 = e.value.match(/^[a-zA-Z ]*/);
         let match2 = e.value.match(/\s*/);
         if (match2[0] === e.value) {
@@ -281,7 +285,7 @@
             fetch('getCity', {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: e.value })
+                body: JSON.stringify({ payload: e.value, state: selectedState })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
                 console.log(payload);
@@ -301,6 +305,7 @@
 
     function fetchPlaceName(e) {
         const searchResults = document.getElementById("searchResultsPlaceName");
+        const selectedState = document.getElementById("select-state").value;
         let match1 = e.value.match(/^[a-zA-Z ]*/);
         let match2 = e.value.match(/\s*/);
         if (match2[0] === e.value) {
@@ -311,7 +316,7 @@
             fetch('getPlaceName', {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: e.value })
+                body: JSON.stringify({ payload: e.value, state: selectedState})
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
                 console.log(payload);
@@ -328,7 +333,19 @@
         }
         searchResults.innerHTML = "";
     }
+    
+    function sendCityValue(clicked_id) {
+        let city = clicked_id.substring(7);
+        console.log(city);
+        document.getElementById("searchCity").value = city;
+    }
 
+    function sendPlaceNameValue(clicked_id) {
+        let placeName = clicked_id.substring(7);
+        console.log(placeName);
+        document.getElementById("searchPlace").value = placeName;
+    }
+    /* -----------------------------------------------------for show maore information -----------------------------------------------------------------------*/
 
     /* Click and show more infomation*/
     $(".main-info").off().on({
@@ -340,33 +357,64 @@
 
 
     /* -----------------------------------------------------for map -----------------------------------------------------------------------*/
-    /*
-        var mymap = L.map('mapid').setView([-25.888834, 134.127603], 4);
-    
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            maxZoom: 18,
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            id: 'mapbox/light-v9',
-            tileSize: 512,
-            zoomOffset: -1
-        }).addTo(mymap);
-    
-        var geojson = L.geoJson(statesData).addTo(mymap);
-    */
 
-    var mymap = L.map('mapid').setView([-25.888834, 134.127603], 4);
+    let mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-        //  minZoom: 4,
-        maxZoom: 18,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1
-    }).addTo(mymap);
+    let grayscale = L.tileLayer(mbUrl, { id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr }),
+        streets = L.tileLayer(mbUrl, { id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr });
+    outdoor = L.tileLayer(mbUrl, { id: 'mapbox/outdoors-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr });
+    satellite = L.tileLayer(mbUrl, { id: 'mapbox/satellite-streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr });
 
+    let mymap = L.map('mapid', {
+        center: [-25.888834, 134.127603],
+        zoom: 4,
+        layers: [streets]
+    });
+
+    let baseLayers = {
+        "Grayscale": grayscale,
+        "Streets": streets,
+        "Satellite": satellite,
+    };
+
+    L.control.layers(baseLayers).addTo(mymap);
+    // reset title layer user selection----------------------------------------------
+    // store layer which are selected
+    $(".leaflet-control-layers-base").mouseout(function () {
+
+        if (mymap.hasLayer(grayscale)) {
+            localStorage.setItem("tileLayer", "Grayscale");
+        } else if (mymap.hasLayer(streets)) {
+            localStorage.setItem("tileLayer", "Streets");
+        }  else if (mymap.hasLayer(satellite)) {
+            localStorage.setItem("tileLayer", "Satellite");
+        } else {
+            console.error("Not a correct tileLayer");
+        }
+
+    });
+    // reset layer from store
+    let selectedControlLayer = localStorage.getItem("tileLayer");
+    if (selectedControlLayer) {
+        let layer = null;
+        switch (selectedControlLayer) {
+            case "Grayscale":
+                layer = grayscale;
+                break;
+            case "Streets":
+                layer = streets;
+                break;
+            case "Satellite":
+                layer = satellite;
+                break;
+            default:
+                console.error("Not a correct selection");
+        }
+        mymap.removeLayer(streets);
+        mymap.addLayer(layer);
+    }
 
     // click map and get position -------------------------------
     function onMapClick(e) {
@@ -376,7 +424,6 @@
     mymap.on('click', onMapClick);
 
     // add layer and interation with mouse ----------------------------------------
-
     /* event of genermal layer for mouseover*/
     function highlightFeature(e) {
         let layer = e.target;
@@ -538,32 +585,18 @@
             let latitude = parseFloat(detailData.children[0].innerText.trim());
             let longitude = parseFloat(detailData.children[1].innerText.trim());
 
-            var marker = L.marker([latitude, longitude]).addTo(mymap);
+            let marker = L.marker([latitude, longitude]).addTo(mymap);
             marker.bindPopup("<div>" + `${$(mainInfo).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(mainData).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(detailInfo).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(detailData).html().replaceAll('div', 'span')}` + "</div>", { minWidth: '800' });
             markers.push(marker);
 
         }
 
         if (markers.length != 0) {
-            var group = new L.featureGroup(markers);
+            let group = new L.featureGroup(markers);
             bounds = group.getBounds();
             mymap.fitBounds(bounds);
         }
     }, 100)
-
-
-    function sendCityValue(clicked_id) {
-        var city = clicked_id.substring(7);
-        console.log(city);
-        document.getElementById("searchCity").value = city;
-    }
-
-    function sendPlaceNameValue(clicked_id) {
-        var placeName = clicked_id.substring(7);
-        console.log(placeName);
-        document.getElementById("searchPlace").value = placeName;
-    }
-
 
 
 </script>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2021 at 06:47 AM
+-- Generation Time: Oct 14, 2021 at 08:28 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -62,10 +62,10 @@ CREATE TABLE `merchant` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `qualitydata`
+-- Table structure for table `qualityData`
 --
 
-CREATE TABLE `qualitydata` (
+CREATE TABLE `qualityData` (
   `id` int(11) NOT NULL,
   `placeName` varchar(256) NOT NULL,
   `country` varchar(256) NOT NULL DEFAULT 'Australia',
@@ -73,7 +73,7 @@ CREATE TABLE `qualitydata` (
   `city` varchar(256) DEFAULT NULL,
   `latitude` float NOT NULL,
   `longitude` float NOT NULL,
-  `date` text NOT NULL DEFAULT current_timestamp(),
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
   `electricalConductivity` float DEFAULT NULL,
   `pH` double DEFAULT NULL,
   `temperature` double NOT NULL,
@@ -82,10 +82,10 @@ CREATE TABLE `qualitydata` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `qualitydata`
+-- Dumping data for table `qualityData`
 --
 
-INSERT INTO `qualitydata` (`id`, `placeName`, `country`, `state`, `city`, `latitude`, `longitude`, `date`, `electricalConductivity`, `pH`, `temperature`, `totalDissolvedSolids`, `waterTurbidity`) VALUES
+INSERT INTO `qualityData` (`id`, `placeName`, `country`, `state`, `city`, `latitude`, `longitude`, `date`, `electricalConductivity`, `pH`, `temperature`, `totalDissolvedSolids`, `waterTurbidity`) VALUES
 (1, 'Portsea Beach', 'Australia', 'VIC', 'Melbourne', -38.3183, 144.717, '2021-09-16 13:50:22', 412.9, 7.84, 22.6, 554.23, 2.3),
 (2, 'Sorrento Beach', 'Australia', 'VIC', 'Melbourne', -38.3378, 144.744, '2021-09-14 21:07:38', 662.4, 7.36, 23.5, 134.76, 3.5),
 (3, 'Dandenong Creek', 'Australia', 'VIC', 'Melbourne', -37.94, 145.22, '2021-09-19 17:30:33', 368.3, 7.67, 21.4, 227.99, 2.2),
@@ -327,6 +327,22 @@ CREATE TABLE `select_state` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sensordata`
+--
+
+CREATE TABLE `sensordata` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `temperature` float NOT NULL,
+  `TU` float NOT NULL,
+  `ppm` int(11) NOT NULL,
+  `ms/cm` float NOT NULL,
+  `pH` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -363,7 +379,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `select_state`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `select_state`  AS SELECT `qualitydata`.`id` AS `id`, `qualitydata`.`placeName` AS `placeName`, `qualitydata`.`country` AS `country`, `qualitydata`.`state` AS `state`, `qualitydata`.`city` AS `city`, `qualitydata`.`latitude` AS `latitude`, `qualitydata`.`longitude` AS `longitude`, `qualitydata`.`date` AS `date`, `qualitydata`.`electricalConductivity` AS `electricalConductivity`, `qualitydata`.`pH` AS `pH`, `qualitydata`.`temperature` AS `temperature`, `qualitydata`.`totalDissolvedSolids` AS `totalDissolvedSolids`, `qualitydata`.`waterTurbidity` AS `waterTurbidity` FROM `qualitydata` WHERE `qualitydata`.`placeName` like '%Dandenong Creek%' AND `qualitydata`.`city` like 'Melbourne%' ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `select_state`  AS SELECT `qualityData`.`id` AS `id`, `qualityData`.`placeName` AS `placeName`, `qualityData`.`country` AS `country`, `qualityData`.`state` AS `state`, `qualityData`.`city` AS `city`, `qualityData`.`latitude` AS `latitude`, `qualityData`.`longitude` AS `longitude`, `qualityData`.`date` AS `date`, `qualityData`.`electricalConductivity` AS `electricalConductivity`, `qualityData`.`pH` AS `pH`, `qualityData`.`temperature` AS `temperature`, `qualityData`.`totalDissolvedSolids` AS `totalDissolvedSolids`, `qualityData`.`waterTurbidity` AS `waterTurbidity` FROM `qualityData` WHERE `qualityData`.`state` = 'NSW' ;
 
 --
 -- Indexes for dumped tables
@@ -382,9 +398,9 @@ ALTER TABLE `merchant`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `qualitydata`
+-- Indexes for table `qualityData`
 --
-ALTER TABLE `qualitydata`
+ALTER TABLE `qualityData`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -402,6 +418,13 @@ ALTER TABLE `reset`
   ADD KEY `FK_reset_userID` (`id`);
 
 --
+-- Indexes for table `sensordata`
+--
+ALTER TABLE `sensordata`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_sensorData_userID` (`userID`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -413,9 +436,9 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `qualitydata`
+-- AUTO_INCREMENT for table `qualityData`
 --
-ALTER TABLE `qualitydata`
+ALTER TABLE `qualityData`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
 
 --
@@ -428,6 +451,12 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT for table `reset`
 --
 ALTER TABLE `reset`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sensordata`
+--
+ALTER TABLE `sensordata`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -464,6 +493,12 @@ ALTER TABLE `report`
 --
 ALTER TABLE `reset`
   ADD CONSTRAINT `FK_reset_userID` FOREIGN KEY (`id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `sensordata`
+--
+ALTER TABLE `sensordata`
+  ADD CONSTRAINT `FK_sensorData_userID` FOREIGN KEY (`userID`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
