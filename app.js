@@ -83,11 +83,11 @@ app.use(flash());
 const userRoutes = require('./server/routes/user');
 app.use('/', userRoutes);
 
-const publicAreaRoutes = require('./server/routes/publicArea');
-app.use('/', publicAreaRoutes);
+const officialRoutes = require('./server/routes/official');
+app.use('/', officialRoutes);
 
-const privateAreaRoutes = require('./server/routes/privateArea');
-app.use('/', privateAreaRoutes);
+const communityRoutes = require('./server/routes/community');
+app.use('/', communityRoutes);
 
 const productRoutes = require('./server/routes/product');
 app.use('/', productRoutes);
@@ -101,25 +101,49 @@ app.listen(port, () => console.log(`Listening on ${port}`));
 app.post('/getCity', async (req, res) => {
     let search = null;
     let payload = req.body.payload.trim();
-    pool.query('SELECT DISTINCT city FROM qualityData WHERE city Like ? LIMIT 10', [payload + "%"], (err, rows) => {
-        if (!err) {
-            search = rows;
-            res.send({payload: search});
-        } else {
-            console.log(err);
-        }
-    });
+    let selectedState = req.body.state;
+    if (selectedState === "null") {
+        pool.query('SELECT DISTINCT city FROM qualityData WHERE city Like ? LIMIT 10', [payload + "%"], (err, rows) => {
+            if (!err) {
+                search = rows;
+                res.send({payload: search});
+            } else {
+                console.log(err);
+            }
+        });
+    } else {
+        pool.query('SELECT DISTINCT city FROM qualityData WHERE state = ? AND city Like ? LIMIT 10', [selectedState, payload + "%"], (err, rows) => {
+            if (!err) {
+                search = rows;
+                res.send({payload: search});
+            } else {
+                console.log(err);
+            }
+        });
+    }
 });
 
 app.post('/getPlaceName', async (req, res) => {
     let search = null;
     let payload = req.body.payload.trim();
-    pool.query('SELECT DISTINCT placeName FROM qualityData WHERE placeName Like ? LIMIT 10', ["%" + payload + "%"], (err, rows) => {
-        if (!err) {
-            search = rows;
-            res.send({payload: search});
-        } else {
-            console.log(err);
-        }
-    });
+    let selectedState = req.body.state;
+    if (selectedState === "null") {
+        pool.query('SELECT DISTINCT placeName FROM qualityData WHERE placeName Like ? LIMIT 10', ["%" + payload + "%"], (err, rows) => {
+            if (!err) {
+                search = rows;
+                res.send({payload: search});
+            } else {
+                console.log(err);
+            }
+        });
+    } else {
+        pool.query('SELECT DISTINCT placeName FROM qualityData WHERE state = ? AND placeName Like ? LIMIT 10', [selectedState, "%" + payload + "%"], (err, rows) => {
+            if (!err) {
+                search = rows;
+                res.send({payload: search});
+            } else {
+                console.log(err);
+            }
+        });
+    }
 });

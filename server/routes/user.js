@@ -38,7 +38,6 @@ router.post('/login/resetVerify', loginController.resetVerify);
 // Reset password
 router.get('/login/resetPassword', loginController.resetPassword);
 
-
 router.post('/login/resetPermission', loginController.resetPermission);
 
 // Direct to profile page

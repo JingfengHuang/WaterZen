@@ -27,7 +27,7 @@ exports.view = (req, res) => {
 
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
                 if (!err) {
-                    res.render('publicArea', {
+                    res.render('official', {
                         login: true,
                         pageTitle: pageTitle,
                         nickname: rows[0].nickname,
@@ -40,7 +40,7 @@ exports.view = (req, res) => {
             });
         });
     } else {
-        res.render('publicArea', {
+        res.render('official', {
             login: false,
             pageTitle: pageTitle,
             results: results,
@@ -129,7 +129,7 @@ exports.basicSearch = (req, res) => {
 
             if (searchCity == "" && searchPlace == "") {
                 req.flash('nullState', 'Please select a valid choice!');
-                return res.redirect('/publicArea/clear');
+                return res.redirect('/official/clear');
 
             } else if (searchCity != "" && searchPlace == "") {
                 selected.searchCity = searchCity;
@@ -165,7 +165,7 @@ exports.basicSearch = (req, res) => {
         connection.query('SELECT * FROM select_state', (err, rows) => {
             if (!err) {
                 results = rows;
-                res.redirect('/publicArea');
+                res.redirect('/official');
             } else {
                 console.log(err);
             }
@@ -180,7 +180,7 @@ exports.advanceSearch = (req, res) => {
             connection.query('SELECT * FROM select_state ORDER BY `city` ASC', (err, rows) => {
                 if (!err) {
                     results = rows;
-                    res.redirect('/publicArea');
+                    res.redirect('/official');
                     // used with ajax to get ordered data
                     // res.send(results);
 
@@ -201,7 +201,7 @@ exports.advanceSearch = (req, res) => {
             });
         } else if (orderBy == "quality") {
             selected.orderBy = "quality";
-            return res.redirect('/publicArea/clear');
+            return res.redirect('/official/clear');
         }
     });
 }
@@ -209,5 +209,5 @@ exports.advanceSearch = (req, res) => {
 exports.clear = (req, res) => {
     selected = null;
     results = null;
-    res.redirect('/publicArea');
+    res.redirect('/official');
 }
