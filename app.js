@@ -83,11 +83,11 @@ app.use(flash());
 const userRoutes = require('./server/routes/user');
 app.use('/', userRoutes);
 
-const publicAreaRoutes = require('./server/routes/publicArea');
-app.use('/', publicAreaRoutes);
+const officialRoutes = require('./server/routes/official');
+app.use('/', officialRoutes);
 
-const privateAreaRoutes = require('./server/routes/privateArea');
-app.use('/', privateAreaRoutes);
+const communityRoutes = require('./server/routes/community');
+app.use('/', communityRoutes);
 
 const productRoutes = require('./server/routes/product');
 app.use('/', productRoutes);

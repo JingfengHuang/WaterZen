@@ -2,8 +2,8 @@
 const router = require('express').Router();
 
 /** Import Controllers */
-const privateAreaController = require('../controllers/privateAreaController');
+const privateAreaController = require('../controllers/communityController');
 
 // Direct to private area page
-router.get('/privateArea', privateAreaController.view);
+router.get('/community', privateAreaController.view);
 module.exports = router;

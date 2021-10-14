@@ -14,7 +14,7 @@
 
 <section class="top">
 
-    <form action="/publicArea/basicSearch" method="POST" id="selection">
+    <form action="/official/basicSearch" method="POST" id="selection">
         <select class="form-select" name="state">
             <option value="null">Select state</option>
             <option value="VIC">Victoria</option>
@@ -50,7 +50,7 @@
 
 
 
-    <form action="/publicArea/clear" method="GET">
+    <form action="/official/clear" method="GET">
         <button type="submit">Clear</button>
     </form>
 </section>
@@ -63,15 +63,15 @@
         {{/if}}
     </section>
 
-    <form action="/publicArea/advanceSearch" method="POST" id="order">
+    <form action="/official/advanceSearch" method="POST" id="order">
         {{#if selected}}
         <span><b>Order by: </b></span>
         <span>
-            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+            <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
                     value="city">City/Region</label>
-            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+            <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
                     value="name">Place Name</label>
-            <label><input onclick="javascript:jump('/publicArea/advanceSearch');" type="radio" name="orderBy"
+            <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
                     value="quality">Water quality</label>
         </span>
         {{/if}}
@@ -180,7 +180,7 @@
 </div>
 
 {{!--
-<script src="\js\publicArea.js"></script> --}}
+<script src="\js\official.js"></script> --}}
 <script language="javascript">
 
     /* record scroll offset*/
@@ -197,7 +197,7 @@
         order.method = "POST";
         order.submit();
         /*
-        // get ordered data, used with res.send(results); in publicAreaController.js
+        // get ordered data, used with res.send(results); in officialController.js
         $.ajax({
             type: "POST",
             data: $('#order').serialize(),
