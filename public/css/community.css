@@ -346,3 +346,8 @@ body{
     padding-left: 10px;
   }
 } 
+
+/* Hidden data */
+.hiddenData {
+  display: none;
+}

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/css/private_area.css">
+<link rel="stylesheet" href="/css/community.css">
 
 
 <main>
@@ -18,16 +18,16 @@
                     <div class="filter">
                         <ul>
                             <li class="active" data-filter="*">All</li>
-                            <li data-filter=".swim">Swimming</li>
-                            <li data-filter=".fish">Fishing</li>
-                            <li data-filter=".aqua">Aquaculture</li>
+                            <li data-filter=".swimming">Swimming</li>
+                            <li data-filter=".fishing">Fishing</li>
+                            <li data-filter=".aquaculture">Aquaculture</li>
                         </ul>
                     </div>
                     <div id="search-box">
-                        <input type="text" placeholder="Type to search">
-                        <a class="search-btn" href="" target="_blank">
-                            <ion-icon name="search" size="large"></ion-icon>
-                        </a>
+                        <form action="/community/search" method="post">
+                            <input type="text" name="placeName" placeholder="Type to search">
+                            <button type="submit"><ion-icon name="search" size="large"></ion-icon></button>
+                        </form>
                     </div> 
                 </div>
                 <!-- End -->
@@ -35,15 +35,17 @@
                 <div class="col-lg-9"> 
                     <div class="filter-content">
                         <div class="row grid">
-                            <div class="col-md-4 all swim">
+                            {{#if allData}}
+                            {{#each allData}}
+                            <div class="col-md-4 all {{category}}" id="id-{{id}}">
                                 <div class="item">
                                     <div class="images">
-                                        <img src="\img\community\swim-1.jpg" alt="">
+                                        <img src="img/community/{{imagePath}}">
                                     </div>
                                     <div class="post-content">
-                                        <h4>Lorem ipsum dolor sit</h4>
-                                        <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia?</h6>
-                                        <div class="comment">
+                                        <h4>{{placeName}}</h4>
+                                        <h6>{{shortIntroduction}}</h6>
+                                        {{!-- <div class="comment">
                                             <span id="star">
                                                 <ion-icon name="star"></ion-icon>
                                                 <ion-icon name="star"></ion-icon>
@@ -52,116 +54,21 @@
                                                 <ion-icon name="star-outline"></ion-icon>
                                             </span>
                                             <span id="level_1">Level I</span>
+                                        </div> --}}
+                                        <div class="hiddenData">
+                                            <p class='location'>{{location}}</p>
+                                            <p class='temperature'>{{temperature}}</p>
+                                            <p class='TU'>{{turbidity}}</p>
+                                            <p class='ppm'>{{totalDissolvedSolids}}</p>
+                                            <p class='ms/cm'>{{electricalConductivity}}</p>
+                                            <p class='pH'>{{pH}}</p>
+                                            <p class='date'>{{date}}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 all swim">
-                                <div class="item">
-                                    <div class="images">
-                                        <img src="\img\community\swim-2.jpg" alt="">
-                                    </div>
-                                    <div class="post-content">
-                                        <h4>Lorem ipsum dolor sit</h4>
-                                        <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia?</h6>
-                                        <div class="comment">
-                                            <span id="star">
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star-outline"></ion-icon>
-                                            </span>
-                                            <span id="level_3">Level III</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 all fish">
-                                <div class="item">
-                                    <div class="images">
-                                        <img src="\img\community\fish-1.jpg" alt="">
-                                    </div>
-                                    <div class="post-content">
-                                        <h4>Lorem ipsum dolor sit</h4>
-                                        <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia?</h6>
-                                        <div class="comment">
-                                            <span id="star">
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star-outline"></ion-icon>
-                                            </span>
-                                            <span id="level_2">Level II</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 all aqua">
-                                <div class="item">
-                                    <div class="images">
-                                        <img src="\img\community\aqua-2.jpg" alt="">
-                                    </div>
-                                    <div class="post-content">
-                                        <h4>Lorem ipsum dolor sit</h4>
-                                        <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia?</h6>
-                                        <div class="comment">
-                                            <span id="star">
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star-outline"></ion-icon>
-                                            </span>
-                                            <span id="level_4">Level IV</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 all swim">
-                                <div class="item">
-                                    <div class="images">
-                                        <img src="\img\community\swim-3.jpg" alt="">
-                                    </div>
-                                    <div class="post-content">
-                                        <h4>Lorem ipsum dolor sit</h4>
-                                        <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia?</h6>
-                                        <div class="comment">
-                                            <span id="star">
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star-outline"></ion-icon>
-                                            </span>
-                                            <span id="level_1">Level I</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 all fish">
-                                <div class="item">
-                                    <div class="images">
-                                        <img src="\img\community\fish-2.jpg" alt="">
-                                    </div>
-                                    <div class="post-content">
-                                        <h4>Lorem ipsum dolor sit</h4>
-                                        <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia?</h6>
-                                        <div class="comment">
-                                            <span id="star">
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star"></ion-icon>
-                                                <ion-icon name="star-outline"></ion-icon>
-                                            </span>
-                                            <span id="level_3">Level III</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            {{/each}}
+                            {{/if}}
                         </div>
                     </div>
                 </div>
@@ -178,19 +85,20 @@
                 <div class="row">
                     <div class="col-xs-6" id="left_row">
                         <div class="data-information">
-                            <h1>Lorem</h1>
-                            <h6>Quality Check : Passed</h4>
-                            <h6>Location : loream.Rd.</h4>
-                            <div class="rating">
+                            <h1 id="popup-placeName"></h1>
+                            <h6 id="popup-qualityResult">Quality Check : Passed</h6>
+                            <h6 id="popup-location"></h6>
+                            <h6 id="popup-shortIntroduction"></h6>
+                            {{!-- <div class="rating">
                                 <ion-icon name="star"></ion-icon>
                                 <ion-icon name="star"></ion-icon>
                                 <ion-icon name="star"></ion-icon>
                                 <ion-icon name="star"></ion-icon>
                                 <ion-icon name="star-outline"></ion-icon>
                                 <a href="">(52 reviews)</a>
-                            </div>
+                            </div> --}}
                             <div class="pop-img">
-                                <img src="\img\community\swim-1.jpg" alt="">
+                                <img src="" alt="">
                             </div>
                             
                         </div>
@@ -201,31 +109,20 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
-                                        <th>Date</th>
+                                        <th>Temperature</th>
+                                        <th>Turbidity</th>
+                                        <th>Total Dissolved Solids</th>
                                         <th>Electrical Conductivity</th>
                                         <th>pH</th>
-                                        <th>Tempature</th>
-                                        <th>Total Dissolved Solids</th>
-                                        <th>Water Turbidity</th>
-                                        <th>Location</th>
+                                        <th>Date</th>
                                     </tr>
                                     <tr>
-                                        <td>10/10</td>
-                                        <td>200</td>
-                                        <td>300</td>
-                                        <td>400</td>
-                                        <td>500</td>
-                                        <td>600</td>
-                                        <td>700</td>
-                                    </tr>
-                                    <tr>
-                                        <td>05/10</td>
-                                        <td>200</td>
-                                        <td>300</td>
-                                        <td>400</td>
-                                        <td>500</td>
-                                        <td>600</td>
-                                        <td>700</td>
+                                        <td id="popup-temperature"></td>
+                                        <td id="popup-tu"></td>
+                                        <td id="popup-tds"></td>
+                                        <td id="popup-ec"></td>
+                                        <td id="popup-pH"></td>
+                                        <td id="popup-date"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -234,7 +131,7 @@
                         <!-- End -->
 
                     </div>
-                    <div class="Write-comments">
+                    {{!-- <div class="Write-comments">
                         <div class="rating-wrapper">
                             <input type="radio" name="rating" id="star-1"><label for="star-1"></label>
                             <input type="radio" name="rating" id="star-2"><label for="star-2"></label>
@@ -293,7 +190,7 @@
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -304,4 +201,4 @@
 <script src="\js\jquery-3.6.0.min.js"></script>
 <script src="\js\bootstrap.min.js"></script>
 <script src="\js\isotope.js"></script>
-<script src="\js\private.js"></script>
+<script src="\js\community.js"></script>

@@ -9,6 +9,9 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
+/** Variables */
+let searchData = null;
+
 /** Logic */
 exports.view = (req, res) => {
 
@@ -22,13 +25,38 @@ exports.view = (req, res) => {
             console.log(`Connect as ID ${connection.threadId} at ${today}`)
     
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
-                if (!err) {
-                    res.render('community', {login: true, pageTitle: pageTitle, nickname: rows[0].nickname, avatar: rows[0].avatarPath});
+                if (searchData == null) {
+                    connection.query('SELECT * FROM sensorData', (queryErr, allData) => {
+                        res.render('community', {login: true, pageTitle: pageTitle, nickname: rows[0].nickname, avatar: rows[0].avatarPath, allData: allData});
+                    });
+                } else {
+                    res.render('community', {login: true, pageTitle: pageTitle, nickname: rows[0].nickname, avatar: rows[0].avatarPath, allData: searchData});
                 }
             });
         });
         
     } else {
-        res.render('community', {login: false, pageTitle: pageTitle});
+        if (searchData === null) {
+            pool.getConnection((err, connection) => {
+                connection.query('SELECT * FROM sensorData', (queryErr, allData) => {
+                    res.render('community', {login: false, pageTitle: pageTitle, allData: allData});
+                });
+            });
+        } else {
+            console.log(searchData);
+            res.render('community', {login: false, pageTitle: pageTitle, allData: searchData});
+        }
     }
+
+    searchData = null;
+}
+
+exports.search = (req, res) => {
+    let keyword = req.body.placeName;
+    pool.getConnection((err, connection) => {
+        connection.query('SELECT * FROM sensorData WHERE placeName LIKE ?', ["%" + keyword + "%"], (err, rows) => {
+            searchData = rows;
+            return res.redirect('/community');
+        });
+    });
 }
