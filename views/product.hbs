@@ -11,18 +11,25 @@
             <p>Water pollution is becomimg a global crisis. Many harmful substances in water cannot be detected with the naked eye. Long-time exposure to the polluted water will eventually threaten people's physical health.</p>
 
             <div class="slideshow">
-                <div><img src="/img/PublicArea.jpg" alt=""></div>
-                <div><img src="/img/PublicArea.jpg" alt=""></div>
-                <div><img src="/img/sensor.jpg" alt=""></div>
+                <div><img src="/img/sensor1.jpg" alt="water quality sensor details"></div>
+                <div><img src="/img/sensor2.jpg" alt="water quality sensor details"></div>
+                <div><img src="/img/sensor3.jpg" alt="water quality sensor details"></div>
+                <div><img src="/img/sensor4.jpg" alt="water quality sensor details"></div>
             </div>
 
             <strong>WHAT WE DID</strong>
             <p>Our product is equipped with multiple sensors and can test six water-related parameters, including Geographic Location, pH, Dissolved Solids, Turbility, Temperature and Electrical Conductivity.</p>
 
-            <strong>INSTRUCTIONS</strong>
+            <video width="330" height="330" controls="controls">
+                <source src="/img/video.mp4" type="video/mp4">
+            </video>
+            <br>
+            <strong>HOW IT WORKS</strong>
             <p>
-                Random things here
+                6 sensors are interfaced to DFRduino Uno R3 + extend board. All of them require some interfacing circuit because they are current-output sensors. DFRduino Uno R3 collects the measurements data periodically, gets the GPS coordinates, and uploads the data bundle into a database using GPRS data link. Users can go to the Community page to view the result as shown above.
             </p>
+
+            
         </div>
 
         <div class="col-md-3 sticky-top">
