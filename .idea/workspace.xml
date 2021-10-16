@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8e90ddcf-d031-4461-b92f-4f3ed75f3d61" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL/WaterZen.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/WaterZen.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +61,7 @@
       <workItem from="1634042500693" duration="2297000" />
       <workItem from="1634099958738" duration="1175000" />
       <workItem from="1634170874381" duration="958000" />
-      <workItem from="1634189069570" duration="4853000" />
+      <workItem from="1634189069570" duration="5447000" />
     </task>
     <servers />
   </component>

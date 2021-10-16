@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2021 at 08:28 AM
+-- Generation Time: Oct 16, 2021 at 11:14 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -62,10 +62,10 @@ CREATE TABLE `merchant` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `qualityData`
+-- Table structure for table `qualitydata`
 --
 
-CREATE TABLE `qualityData` (
+CREATE TABLE `qualitydata` (
   `id` int(11) NOT NULL,
   `placeName` varchar(256) NOT NULL,
   `country` varchar(256) NOT NULL DEFAULT 'Australia',
@@ -82,10 +82,10 @@ CREATE TABLE `qualityData` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `qualityData`
+-- Dumping data for table `qualitydata`
 --
 
-INSERT INTO `qualityData` (`id`, `placeName`, `country`, `state`, `city`, `latitude`, `longitude`, `date`, `electricalConductivity`, `pH`, `temperature`, `totalDissolvedSolids`, `waterTurbidity`) VALUES
+INSERT INTO `qualitydata` (`id`, `placeName`, `country`, `state`, `city`, `latitude`, `longitude`, `date`, `electricalConductivity`, `pH`, `temperature`, `totalDissolvedSolids`, `waterTurbidity`) VALUES
 (1, 'Portsea Beach', 'Australia', 'VIC', 'Melbourne', -38.3183, 144.717, '2021-09-16 13:50:22', 412.9, 7.84, 22.6, 554.23, 2.3),
 (2, 'Sorrento Beach', 'Australia', 'VIC', 'Melbourne', -38.3378, 144.744, '2021-09-14 21:07:38', 662.4, 7.36, 23.5, 134.76, 3.5),
 (3, 'Dandenong Creek', 'Australia', 'VIC', 'Melbourne', -37.94, 145.22, '2021-09-19 17:30:33', 368.3, 7.67, 21.4, 227.99, 2.2),
@@ -230,7 +230,6 @@ INSERT INTO `qualityData` (`id`, `placeName`, `country`, `state`, `city`, `latit
 (181, 'Adelaide River', 'Australia', 'NT', 'Adam Bay', -12.13, 131.14, '2021-09-20 14:20:16', 457.4, 4.6, 28.4, 477.3, 3.4),
 (182, 'Towns River', 'Australia', 'NT', 'Limmen Bight', -14.55, 135.25, '2021-09-20 14:20:36', 523, 5.3, 22.6, 817, 3.4),
 (183, 'Negri River', 'Australia', 'NT', 'Confluence with the Ord River', -17.04, 128.54, '2021-09-20 14:21:45', 378, 5.3, 29.5, 451, 0.3),
-(184, 'Murray River', 'Australia', 'SA', 'Albury', -36.47, 148.11, '2021-09-20 14:31:02', 783.2, 4.6, 32.1, 556.2, 2.6),
 (185, 'Norht Para River', 'Australia', 'SA', 'Gawler', -34.36, 138.45, '2021-09-20 14:31:02', 466.3, 7.5, 25.3, 442.6, 5.3),
 (186, 'Kallakoopah Creek', 'Australia', 'SA', 'Far North', -27.29, 138.15, '2021-09-20 14:31:02', 345.3, 5.3, 31.1, 344.5, 2.1),
 (187, 'Aroona Dam', 'Australia', 'SA', NULL, -30.59, 138.36, '2021-09-23 12:33:32', 247.6, 6.8, 18.5, 632.5, 2.1),
@@ -316,7 +315,7 @@ CREATE TABLE `select_state` (
 ,`city` varchar(256)
 ,`latitude` float
 ,`longitude` float
-,`date` text
+,`date` timestamp
 ,`electricalConductivity` float
 ,`pH` double
 ,`temperature` double
@@ -333,6 +332,10 @@ CREATE TABLE `select_state` (
 CREATE TABLE `sensordata` (
   `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
+  `placeName` varchar(256) NOT NULL,
+  `location` varchar(256) NOT NULL,
+  `shortIntroduction` int(11) NOT NULL,
+  `imagePath` varchar(256) NOT NULL,
   `temperature` float NOT NULL,
   `TU` float NOT NULL,
   `ppm` int(11) NOT NULL,
@@ -379,7 +382,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `select_state`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `select_state`  AS SELECT `qualityData`.`id` AS `id`, `qualityData`.`placeName` AS `placeName`, `qualityData`.`country` AS `country`, `qualityData`.`state` AS `state`, `qualityData`.`city` AS `city`, `qualityData`.`latitude` AS `latitude`, `qualityData`.`longitude` AS `longitude`, `qualityData`.`date` AS `date`, `qualityData`.`electricalConductivity` AS `electricalConductivity`, `qualityData`.`pH` AS `pH`, `qualityData`.`temperature` AS `temperature`, `qualityData`.`totalDissolvedSolids` AS `totalDissolvedSolids`, `qualityData`.`waterTurbidity` AS `waterTurbidity` FROM `qualityData` WHERE `qualityData`.`state` = 'NSW' ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `select_state`  AS SELECT `qualitydata`.`id` AS `id`, `qualitydata`.`placeName` AS `placeName`, `qualitydata`.`country` AS `country`, `qualitydata`.`state` AS `state`, `qualitydata`.`city` AS `city`, `qualitydata`.`latitude` AS `latitude`, `qualitydata`.`longitude` AS `longitude`, `qualitydata`.`date` AS `date`, `qualitydata`.`electricalConductivity` AS `electricalConductivity`, `qualitydata`.`pH` AS `pH`, `qualitydata`.`temperature` AS `temperature`, `qualitydata`.`totalDissolvedSolids` AS `totalDissolvedSolids`, `qualitydata`.`waterTurbidity` AS `waterTurbidity` FROM `qualitydata` WHERE `qualitydata`.`state` = 'SA' ;
 
 --
 -- Indexes for dumped tables
@@ -398,9 +401,9 @@ ALTER TABLE `merchant`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `qualityData`
+-- Indexes for table `qualitydata`
 --
-ALTER TABLE `qualityData`
+ALTER TABLE `qualitydata`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -415,7 +418,7 @@ ALTER TABLE `report`
 -- Indexes for table `reset`
 --
 ALTER TABLE `reset`
-  ADD KEY `FK_reset_userID` (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `sensordata`
@@ -436,9 +439,9 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `qualityData`
+-- AUTO_INCREMENT for table `qualitydata`
 --
-ALTER TABLE `qualityData`
+ALTER TABLE `qualitydata`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
 
 --
