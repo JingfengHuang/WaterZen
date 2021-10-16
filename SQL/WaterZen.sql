@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2021 at 11:14 AM
+-- Generation Time: Oct 16, 2021 at 05:11 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -333,15 +333,25 @@ CREATE TABLE `sensordata` (
   `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `placeName` varchar(256) NOT NULL,
+  `category` varchar(256) NOT NULL,
   `location` varchar(256) NOT NULL,
-  `shortIntroduction` int(11) NOT NULL,
+  `shortIntroduction` varchar(256) NOT NULL,
   `imagePath` varchar(256) NOT NULL,
   `temperature` float NOT NULL,
-  `TU` float NOT NULL,
-  `ppm` int(11) NOT NULL,
-  `ms/cm` float NOT NULL,
-  `pH` float NOT NULL
+  `turbidity` float NOT NULL,
+  `totalDissolvedSolids` int(11) NOT NULL,
+  `electricalConductivity` float NOT NULL,
+  `pH` float NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sensordata`
+--
+
+INSERT INTO `sensordata` (`id`, `userID`, `placeName`, `category`, `location`, `shortIntroduction`, `imagePath`, `temperature`, `turbidity`, `totalDissolvedSolids`, `electricalConductivity`, `pH`, `date`) VALUES
+(1, 0, 'St Kilda', 'fishing', 'Melbourne', 'St Kilda beach', 'swim-1.jpg', 22, 1, 1, 1, 7, '2021-10-16 13:03:57'),
+(2, 0, 'Yarra river', 'swimming', 'Melbourne', 'It is just a river, nothing special.', 'fish-2.jpg', 100, 1000, 4234, 123123, 1, '2021-10-16 14:02:51');
 
 -- --------------------------------------------------------
 
@@ -460,7 +470,7 @@ ALTER TABLE `reset`
 -- AUTO_INCREMENT for table `sensordata`
 --
 ALTER TABLE `sensordata`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
