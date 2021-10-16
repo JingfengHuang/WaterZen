@@ -91,14 +91,29 @@
 
         <div class="col-md-6">
             <h3>My Report: <a href="/profile/report">{{reportCount}}</a></h3>
-            <a href="/report"><img src="/img/add.png" alt="Contribute new data" class="add">Add New</a>
+            <a href="/report">
+                <img src="/img/add.png" alt="Contribute new data" class="add">
+                <p id="add">Add New</p>
+            </a>
             <br>
-            <label>Submitted for Review: <a href="/profile/report/?kind=submit">{{submit}}</a></label>
-            <br>
-            <label>In Progress: <a href="/profile/report/?kind=progress">{{progress}}</a></label>
-            <br>
-            <label>Completed: <a href="/profile/report/?kind=complete">{{complete}}</a></label>
-            <br>
+            <div class="row report">
+                <div class="col-md-4">
+                    <label><h5 class="text-center">For Review </h5><br>
+                        <a href="/profile/report/?kind=submit">{{submit}}</a>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <label><h5 class="text-center">In Progress </h5><br>
+                        <a href="/profile/report/?kind=progress">{{progress}}</a>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <label><h5 class="text-center">Be Finalized </h5><br>
+                        <a href="/profile/report/?kind=complete">{{complete}}</a>
+                    </label>
+                </div>
+            </div>
+        
             <label><a href="/profile/report">View All</a></label>
         </div>
     </div>

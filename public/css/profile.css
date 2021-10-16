@@ -84,11 +84,20 @@ button+p{
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
 }
 
+#add{
+    width: 15%;
+    float: right;
+    cursor: pointer; 
+    font-size: 0.5em;
+    margin-right: 0%;
+}
+
 .add{
     width: 10%;
     float: right;
     margin-top: -10%;
-    cursor: pointer;
+    cursor: pointer;  
+    margin-right: 2.5%; 
 }
 
 #history{
@@ -113,6 +122,24 @@ button+p{
 #history table{
     margin-bottom: 3%;
     width: 95%
+}
+
+.report{
+    width: 100%;
+    margin-left: 0.5%;
+}
+
+.report .col-md-4{
+    height: 200px;
+}
+
+.report .col-md-4 h5{
+    margin-bottom: 50%;
+}
+
+.report .col-md-4 a{
+    font-size: 4em;
+    text-align: center;
 }
 
 @media screen and (max-width:900px){

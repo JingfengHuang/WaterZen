@@ -29,6 +29,11 @@
     width: 100%;
 }
 
+video{
+    margin-left: 27.5%;
+    margin-bottom: 5%;
+}
+
 .col-md-3{
     margin-left: 5%;
     height: 370px;
@@ -81,5 +86,12 @@
 @media screen and (max-width:900px) {
     .col-md-3{
         width: 80%;
+    }
+    video{
+        margin-left: 0%;
+    }
+
+    .col-md-8{
+        margin-top: 10%;
     }
 }
