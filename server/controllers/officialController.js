@@ -206,6 +206,15 @@ exports.advanceSearch = (req, res) => {
     });
 }
 
+exports.recommendation = (req, res) => {
+    pool.getConnection((err, connection) => {
+        connection.query('SELECT * FROM qualityData WHERE placeName = ?', ['Loddon River'], (err, resultRows) => {
+            results = resultRows;
+            res.redirect('/official');
+        });
+    });
+}
+
 exports.clear = (req, res) => {
     selected = null;
     results = null;
