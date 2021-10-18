@@ -57,35 +57,21 @@
     <div class="row" id="history">
         <div class="col-md-6">
             <h3>My Contribution: </h3>
-            <a href="/privateArea"><img src="/img/add.png" alt="Contribute new data" class="add"></a>
-            <label><strong>Date:</strong></label>
-            <p>DD/MM/YYYY</p>
-            <label><strong>Water Quality:</strong></label>
+            <a href="/privateArea"><img src="/img/add.png" alt="Contribute new data" class="add">Add New</a>
+            <br>
             <table class="table">
+                {{#if contribution}}
+                {{#each contribution}}
                 <tr>
-                    <td>Geographic Location</td>
-                    <td>Here is latitude and longitude</td>
+                    <td>Date: {{date}} <br>Place: {{placeName}}</td>
+                    <td></td>
                 </tr>
-                <tr>
-                    <td>Electrical Conductivity</td>
-                    <td>Here is XXXXXX</td>
-                </tr>
-                <tr>
-                    <td>pH</td>
-                    <td>Here is pH</td>
-                </tr>
-                <tr>
-                    <td>Temperature</td>
-                    <td>Here is Temperature</td>
-                </tr>
-                <tr>
-                    <td>Dissolved Solids</td>
-                    <td>Here is dissolved solids</td>
-                </tr>
-                <tr>
-                    <td>Water Turbidity</td>
-                    <td>Here is water Turbidity</td>
-                </tr>
+                {{/each}}
+                <label><a href="/profile/contribution">View All</a></label>
+                {{/if}}
+                {{#if nodata}}
+                {{nodata}}
+                {{/if}}
             </table>
         </div>
 

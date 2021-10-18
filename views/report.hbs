@@ -16,7 +16,7 @@
     
    
     
-    <form action="/report/reportQuality" method="post" id="reportForm">
+    <form action="/report/reportQuality" method="post" id="reportForm" encType="multipart/form-data">
         <fieldset {{#if disabled}}disabled="disabled" {{/if}}>
             <div class="row">
                 <div class="col-md-1 offset-md-3">
@@ -66,6 +66,13 @@
                 <div class="col-md-4 offset-md-4">
                     <textarea rows="1" id="qualityTitle" name="qualityTitle" placeholder="Write the title here"></textarea>
                     <textarea rows="4" id="qualityIssue" name="qualityIssue" placeholder="Write the issue here"></textarea>
+                </div>
+            </div>
+
+            <div class="row" id="reportimg">
+                <div class="col-md-4 offset-md-4">
+                    <strong>Upload Image</strong>
+                    <input type="file" name="reportimg" accept="image/*" />
                 </div>
             </div>
 

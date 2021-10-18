@@ -51,6 +51,8 @@ exports.reportQuality = (req, res) => {
     ) {
         req.flash('reportStatus', "Please fill in all the required field!");
         return res.redirect('/report');
+    } else if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
     }
 
     // captcha verification
@@ -68,23 +70,30 @@ exports.reportQuality = (req, res) => {
         }
     });
 
-    pool.getConnection((err, connection) => {
-        if (err) throw err; //not connected
+    let reportimg = req.files.reportimg;
+    let uploadPath = process.cwd() + '/public/img/report/' + reportimg.name;
 
-        // Get user input
-        const { state, city, preciseLocation, qualityTitle, qualityIssue } = req.body;
-        let isPrivate = req.body.isPrivate ? true : false;
+    reportimg.mv(uploadPath, function (err) {
+        if (err) return res.status(500).send(err);
 
-        connection.query("INSERT INTO report (userID, isPrivate, title, state, city, preciseLocation, latitude, longitude, details, status, governmentID, reply) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [req.session.userID, isPrivate, qualityTitle, state, city, preciseLocation, 0, 0, qualityIssue, "Submitted for Review", 0, "No reply yet."], (err, rows) => {
-            // If success then insert this report
-            if (!err) {
-                req.flash('reportStatus', 'Your report has been sent successfully!');
-                return res.redirect('/report');
-            } else {
-                console.log(err);
-                req.flash('reportStatus', "Couldn't send report. Please try again later!");
-                return res.redirect('/report');
-            }
+        pool.getConnection((err, connection) => {
+            if (err) throw err; //not connected
+
+            // Get user input
+            const { state, city, preciseLocation, qualityTitle, qualityIssue } = req.body;
+            let isPrivate = req.body.isPrivate ? true : false;
+
+            connection.query("INSERT INTO report (userID, isPrivate, title, state, city, preciseLocation, latitude, longitude, details, reportimg, status, governmentID, reply) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [req.session.userID, isPrivate, qualityTitle, state, city, preciseLocation, 0, 0, qualityIssue, reportimg.name, "Submitted for Review", 0, "No reply yet."], (err, rows) => {
+                // If success then insert this report
+                if (!err) {
+                    req.flash('reportStatus', 'Your report has been sent successfully!');
+                    return res.redirect('/report');
+                } else {
+                    console.log(err);
+                    req.flash('reportStatus', "Couldn't send report. Please try again later!");
+                    return res.redirect('/report');
+                }
+            });
         });
-    });
+    })
 }
