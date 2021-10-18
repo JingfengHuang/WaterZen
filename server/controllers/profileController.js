@@ -150,13 +150,9 @@ exports.viewReports = (req, res) => {
             }
         });
 
-        console.log("first: " + nickname)
-        console.log("first: " + avatarPath)
-
 
         if (path.query.kind) {
             let kind = path.query.kind;
-            console.log("kind is: " + kind);
             if (kind == "complete") {
                 kind = "Completed";
             } else if (kind == "progress") {
@@ -181,10 +177,10 @@ exports.viewReports = (req, res) => {
 
         } else {
             connection.query('SELECT * FROM report R, user U WHERE U.id = R.userID AND userID = ?', [req.session.userID], (err, rows) => {
-                if (!err) {
+                if (rows[0]) {
                     res.render('myReport', { login: true, pageTitle: "My Reports", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows });
                 } else {
-                    console.log(err);
+                    res.render('myReport', { login: true, pageTitle: "My Reports", nickname: nickname, 'avatar': avatarPath, noRecord: "No Record." });
                 }
             });
         }
