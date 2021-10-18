@@ -30,6 +30,12 @@
             <td>Government Reply</td>
             <td>{{this.reply}}</td>
         </tr>
+        {{#if this.reportimg}}
+        <tr>
+            <td>Report Image</td>
+            <td><img src="/img/report/{{this.reportimg}}" alt="reportimg"></td>
+        </tr>
+        {{/if}}
     </table>
     {{/each}}
 {{/if}}

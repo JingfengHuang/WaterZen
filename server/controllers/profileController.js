@@ -30,6 +30,10 @@ exports.view = (req, res) => {
 
             let nickname = "username";
             let avatarPath = "avatar.png";
+            let submit = 0;
+            let progress = 0;
+            let complete = 0;
+            let total = 0;
 
             connection.query('SELECT * FROM user WHERE email = ?', [req.session.userEmail], (err, rows) => {
                 if (!err) {
@@ -42,11 +46,6 @@ exports.view = (req, res) => {
 
             connection.query('SELECT id, nickname, avatarPath, status, COUNT(*) AS Count FROM report_stats WHERE id = ? GROUP BY status', [req.session.userID], (err, rows) => {
                 if (!err && rows[0]) {
-                    let submit = 0;
-                    let progress = 0;
-                    let complete = 0;
-                    let total = 0;
-
                     rows.forEach(function (item) {
                         if (item.status === "In Progress") {
                             progress = item.Count;
@@ -60,12 +59,17 @@ exports.view = (req, res) => {
                         }
                     });
                     console.log(total);
-
-                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: rows[0].nickname, userEmail: req.session.userEmail, 'modifyAlert': req.flash('modifyAlert'), 'avatar': rows[0].avatarPath, 'upload': req.flash('upload'), 'reportCount': total, progress: progress, submit: submit, complete: complete });
-                } else if (!rows[0]) {
-                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: nickname, userEmail: req.session.userEmail, 'modifyAlert': req.flash('modifyAlert'), 'avatar': avatarPath, 'upload': req.flash('upload'), 'reportCount': 0, progress: 0, submit: 0, complete: 0 });
                 }
             });
+
+            connection.query('SELECT * FROM sensordata WHERE userID = ? LIMIT 5', [req.session.userID], (err, rows) => {
+                if (!err && rows[0]) {
+                    console.log(rows);
+                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: nickname, userEmail: req.session.userEmail, modifyAlert: req.flash('modifyAlert'), avatar: avatarPath, 'upload': req.flash('upload'), reportCount: total, progress: progress, submit: submit, complete: complete, contribution: rows});
+                } else {
+                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: nickname, userEmail: req.session.userEmail, modifyAlert: req.flash('modifyAlert'), avatar: avatarPath, 'upload': req.flash('upload'), reportCount: total, progress: progress, submit: submit, complete: complete, nodata: "No contribution made."});
+                }
+            }); 
         });
     }
 }
@@ -184,5 +188,17 @@ exports.viewReports = (req, res) => {
                 }
             });
         }
+    });
+}
+
+exports.contribution = (req, res) => {
+    pool.getConnection((err, connection) => {
+        connection.query('SELECT * FROM sensordata WHERE userID = ?', [req.session.userID], (err, rows) => {
+            if (!err) {
+                res.render('myContribution', { login: true, pageTitle: "My Contribution", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows });
+            } else {
+                console.log(err);
+            }
+        });
     });
 }

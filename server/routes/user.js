@@ -49,6 +49,9 @@ router.post('/profile/modifyProfile', profileController.modifyProfile);
 // get reports
 router.get('/profile/report', profileController.viewReports);
 
+// get contribution
+router.get('/profile/contribution', profileController.contribution);
+
 router.post('/upload', profileController.upload);
 
 module.exports = router;
