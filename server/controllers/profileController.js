@@ -150,23 +150,23 @@ exports.viewReports = (req, res) => {
             }
         });
 
-        let progress = "background-color: red";
-        let complete = "background-color: red";
-        let submit = "background-color: red";
+        let progress = "background-color: none";
+        let complete = "background-color: none";
+        let submit = "background-color: none";
         if (path.query.kind) {
             let kind = path.query.kind;
             
             console.log("kind is: " + kind);
             if (kind == "complete") {
                 kind = "Completed";
-                complete = "background-color: blue";
+                complete = "background-color: #b6d7e979";
             } else if (kind == "progress") {
                 kind = "In Progress";
-                progress = "background-color: blue";
+                progress = "background-color: #b6d7e979";
             } else if (kind == "submit") {
-                submit = "background-color: blue";
+                submit = "background-color: #b6d7e979";
                 kind = "Submitted for Review";
-            }
+            } 
 
             console.log(complete);
             console.log(progress);

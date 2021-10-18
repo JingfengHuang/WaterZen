@@ -1,0 +1,41 @@
+.list-group{
+    margin-bottom: 5%;
+}
+
+
+.list-group-item a{
+    font-size: 1.5em;
+    color: #295166;
+    font-weight: 550;
+}
+
+.data{
+    width: 80%;
+    margin-left: 10%;
+}
+
+table img{
+    width: 75%;
+}
+
+tr td:first-child{
+    width: 25%;
+}
+
+.data .each-result{
+    margin-top: 5%;
+}
+
+p+.each-result{
+    margin-top: 0%;
+}
+
+@media screen and (max-width:900px) {
+    .list-group{
+        margin-top: 20%;
+    }
+    .list-group-item a{
+        font-size: 1.25em;
+    }
+    
+}
