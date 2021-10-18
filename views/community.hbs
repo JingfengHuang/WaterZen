@@ -44,7 +44,6 @@
                                     </div>
                                     <div class="post-content">
                                         <h4>{{placeName}}</h4>
-                                        <h6>{{shortIntroduction}}</h6>
                                         {{!-- <div class="comment">
                                             <span id="star">
                                                 <ion-icon name="star"></ion-icon>
@@ -56,6 +55,8 @@
                                             <span id="level_1">Level I</span>
                                         </div> --}}
                                         <div class="hiddenData">
+                                            <h6>{{latitude}}</h6>
+                                            <h6>{{longitude}}</h6>
                                             <p class='location'>{{location}}</p>
                                             <p class='temperature'>{{temperature}}</p>
                                             <p class='TU'>{{turbidity}}</p>
@@ -88,7 +89,7 @@
                             <h1 id="popup-placeName"></h1>
                             <h6 id="popup-qualityResult">Quality Check : Passed</h6>
                             <h6 id="popup-location"></h6>
-                            <h6 id="popup-shortIntroduction"></h6>
+                            <h6 id="popup-latitude-longitude"></h6>
                             {{!-- <div class="rating">
                                 <ion-icon name="star"></ion-icon>
                                 <ion-icon name="star"></ion-icon>

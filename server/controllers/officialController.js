@@ -165,6 +165,10 @@ exports.basicSearch = (req, res) => {
         connection.query('SELECT * FROM select_state', (err, rows) => {
             if (!err) {
                 results = rows;
+                results.forEach(element => 
+                    element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
+                );
+                console.log(results);
                 res.redirect('/official');
             } else {
                 console.log(err);
@@ -180,6 +184,9 @@ exports.advanceSearch = (req, res) => {
             connection.query('SELECT * FROM select_state ORDER BY `city` ASC', (err, rows) => {
                 if (!err) {
                     results = rows;
+                    results.forEach(element => 
+                        element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
+                    );
                     res.redirect('/official');
                     // used with ajax to get ordered data
                     // res.send(results);
@@ -194,15 +201,43 @@ exports.advanceSearch = (req, res) => {
             connection.query('SELECT * FROM select_state ORDER BY `placeName` ASC', (err, rows) => {
                 if (!err) {
                     results = rows;
-                    res.redirect('/publicArea');
+                    results.forEach(element => 
+                        element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
+                    );
+                    res.redirect('/official');
                 } else {
                     console.log(err);
                 }
             });
         } else if (orderBy == "quality") {
             selected.orderBy = "quality";
-            return res.redirect('/official/clear');
+            connection.query('SELECT * FROM select_state', (err, rows) => {
+                if (!err) {
+                    results = rows;
+                    results.forEach(element => 
+                        element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
+                    );
+                    results.sort((a, b) => {
+                        return a.level - b.level;
+                    });
+                    res.redirect('/official');
+                } else {
+                    console.log(err);
+                }
+            });
         }
+    });
+}
+
+exports.recommendation = (req, res) => {
+    pool.getConnection((err, connection) => {
+        connection.query('SELECT * FROM qualityData WHERE placeName = ?', ['Loddon River'], (err, resultRows) => {
+            results = resultRows;
+            results.forEach(element => 
+                element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
+            );
+            res.redirect('/official');
+        });
     });
 }
 
@@ -210,4 +245,21 @@ exports.clear = (req, res) => {
     selected = null;
     results = null;
     res.redirect('/official');
+}
+
+function calculateLevel(temperature, pH, waterConductivity) {
+    result = 1;
+    if (temperature >= 25) {
+        result++;
+    }
+    if (pH < 6.5 || pH > 8.5) {
+        result++;
+    }
+    if (waterConductivity >= 2500) {
+        result = result + 2;
+    } else if (waterConductivity > 800) {
+        result++;
+    }
+
+    return result;
 }

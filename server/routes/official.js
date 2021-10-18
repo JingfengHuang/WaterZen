@@ -8,6 +8,7 @@ const officialController = require('../controllers/officialController');
 router.get('/official', officialController.view);
 router.post('/official/basicSearch', officialController.basicSearch);
 router.post('/official/advanceSearch', officialController.advanceSearch);
+router.get('/official/recommendation', officialController.recommendation);
 router.get('/official/clear', officialController.clear);
 
 module.exports = router;
