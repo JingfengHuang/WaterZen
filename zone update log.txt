@@ -16,3 +16,6 @@ zone update 13/10/2021 Xueli
   style.css (30,32,42,43,48,50,51,59,60,94,189)
 
 zone update 14/10/2021 Wei-Ning
+
+
+Now latest SQL is on our zone -- 10/18/2021 Jingfeng
