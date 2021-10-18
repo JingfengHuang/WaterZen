@@ -2,49 +2,53 @@
 
 <div class="container">
     <ul class="list-group list-group-horizontal">
-        <li class="list-group-item list-group-item-action text-center" id="first" style="background-color:none"><a href="/profile/report/?kind=submit" class="test">For Review</a></li>
-        <li class="list-group-item list-group-item-action text-center"><a href="/profile/report/?kind=progress">In Progress</a></li>
-        <li class="list-group-item list-group-item-action text-center"><a href="/profile/report/?kind=complete">Be Finalized</a></li>
-        <li class="list-group-item list-group-item-action text-center"><a href="/profile/report">Show All</a></li>
+        <li class="list-group-item list-group-item-action text-center"  style="{{submit}}"><a href="/profile/report/?kind=submit">For Review</a></li>
+        <li class="list-group-item list-group-item-action text-center" style="{{progress}}"><a href="/profile/report/?kind=progress">In Progress</a></li>
+        <li class="list-group-item list-group-item-action text-center" style="{{complete}}"><a href="/profile/report/?kind=complete">Be Finalized</a></li>
+        <li class="list-group-item list-group-item-action text-center" style="{{all}}"><a href="/profile/report">Show All</a></li>
     </ul>
 
 
-    {{noRecord}}
-    {{#if result}}
+    <div class="data">
+        <p>{{noRecord}}</p>
+        {{#if result}}
         {{#each result}}
-        <label><strong>Date:</strong></label>
-        <p>{{this.date}}</p>
-        <label><strong>Report Details:</strong></label>
-        <table class="table">
-            <tr>
-                <td>Location</td>
-                <td>State: {{this.state}} City/Region: {{this.city}}</td>
-            </tr>
-            <tr>
-                <td>Water Quality Issue</td>
-                <td>{{this.title}}</td>
-            </tr>
-            <tr>
-                <td>Issue Details</td>
-                <td>{{this.details}}</td>
-            </tr>
-            <tr>
-                <td>Government Progress</td>
-                <td>{{this.status}}</td>
-            </tr>
-            <tr>
-                <td>Government Reply</td>
-                <td>{{this.reply}}</td>
-            </tr>
-             {{#if this.reportimg}}
-            <tr>
-                <td>Report Image</td>
-                <td><img src="/img/report/{{this.reportimg}}" alt="reportimg"></td>
-            </tr>
-            {{/if}}
-        </table>
-        {{/each}}
-    {{/if}}
+            <div class="each-result">
+                <label><strong>Date:</strong></label>
+                <p>{{this.date}}</p>
+                <label><strong>Report Details:</strong></label>
+                <table class="table table-hover">
+                    <tr>
+                        <td>Location</td>
+                        <td>State: {{this.state}} City/Region: {{this.city}}</td>
+                    </tr>
+                    <tr>
+                        <td>Water Quality Issue</td>
+                        <td>{{this.title}}</td>
+                    </tr>
+                    <tr>
+                        <td>Issue Details</td>
+                        <td>{{this.details}}</td>
+                    </tr>
+                    <tr>
+                        <td>Government Progress</td>
+                        <td>{{this.status}}</td>
+                    </tr>
+                    <tr>
+                        <td>Government Reply</td>
+                        <td>{{this.reply}}</td>
+                    </tr>
+                    {{#if this.reportimg}}
+                    <tr>
+                        <td>Report Image</td>
+                        <td><img src="/img/report/{{this.reportimg}}" alt="reportimg"></td>
+                    </tr>
+                    {{/if}}
+                </table>
+                {{/each}}
+            </div>  
+        {{/if}}
+    </div>
 </div>
 
 

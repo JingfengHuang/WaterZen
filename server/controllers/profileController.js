@@ -150,27 +150,39 @@ exports.viewReports = (req, res) => {
             }
         });
 
-        console.log("first: " + nickname)
-        console.log("first: " + avatarPath)
-
-
+        let progress = "background-color: none";
+        let complete = "background-color: none";
+        let submit = "background-color: none";
         if (path.query.kind) {
             let kind = path.query.kind;
+            
             console.log("kind is: " + kind);
             if (kind == "complete") {
                 kind = "Completed";
+                complete = "background-color: #b6d7e979";
             } else if (kind == "progress") {
                 kind = "In Progress";
+                progress = "background-color: #b6d7e979";
             } else if (kind == "submit") {
+                submit = "background-color: #b6d7e979";
                 kind = "Submitted for Review";
-            }
+            } 
+
+            console.log(complete);
+            console.log(progress);
+            console.log(submit);
 
             connection.query('SELECT * FROM report R, user U WHERE U.id = R.userID AND userID = ? AND status = ?', [req.session.userID, kind], (err, rows) => {
                 if (!err) {
-                    if (rows[0]) {
-                        res.render('myReport', { login: true, pageTitle: "My Reports", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows });
+                    if (rows[0] != null) {
+                        console.log("with record")
+                        console.log(complete);
+                        console.log(progress);
+                        console.log(submit);
+                        res.render('myReport', { login: true, pageTitle: "My Reports", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows, complete: complete, progress: progress, submit: submit });
                     } else {
-                        res.render('myReport', { login: true, pageTitle: "My Reports", nickname: nickname, 'avatar': avatarPath, noRecord: "No Record." });
+                        console.log("no record")
+                        res.render('myReport', { login: true, pageTitle: "My Reports", nickname: nickname, 'avatar': avatarPath, noRecord: "No Record.", complete: complete, progress: progress, submit: submit });
                     }
 
                 } else {
@@ -181,10 +193,10 @@ exports.viewReports = (req, res) => {
 
         } else {
             connection.query('SELECT * FROM report R, user U WHERE U.id = R.userID AND userID = ?', [req.session.userID], (err, rows) => {
-                if (!err) {
-                    res.render('myReport', { login: true, pageTitle: "My Reports", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows });
+                if (rows[0]) {
+                    res.render('myReport', { login: true, pageTitle: "My Reports", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows, complete: complete, progress: progress, submit: submit });
                 } else {
-                    console.log(err);
+                    res.render('myReport', { login: true, pageTitle: "My Reports", nickname: nickname, 'avatar': avatarPath, noRecord: "No Record.", complete: complete, progress: progress, submit: submit });
                 }
             });
         }
