@@ -204,14 +204,27 @@ exports.advanceSearch = (req, res) => {
                     results.forEach(element => 
                         element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
                     );
-                    res.redirect('/publicArea');
+                    res.redirect('/official');
                 } else {
                     console.log(err);
                 }
             });
         } else if (orderBy == "quality") {
             selected.orderBy = "quality";
-            return res.redirect('/official/clear');
+            connection.query('SELECT * FROM select_state', (err, rows) => {
+                if (!err) {
+                    results = rows;
+                    results.forEach(element => 
+                        element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
+                    );
+                    results.sort((a, b) => {
+                        return a.level - b.level;
+                    });
+                    res.redirect('/official');
+                } else {
+                    console.log(err);
+                }
+            });
         }
     });
 }
