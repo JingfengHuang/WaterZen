@@ -153,6 +153,7 @@ exports.viewReports = (req, res) => {
         let progress = "background-color: none";
         let complete = "background-color: none";
         let submit = "background-color: none";
+        let all = "background-color: none";
         if (path.query.kind) {
             let kind = path.query.kind;
             
@@ -167,10 +168,6 @@ exports.viewReports = (req, res) => {
                 submit = "background-color: #b6d7e979";
                 kind = "Submitted for Review";
             } 
-
-            console.log(complete);
-            console.log(progress);
-            console.log(submit);
 
             connection.query('SELECT * FROM report R, user U WHERE U.id = R.userID AND userID = ? AND status = ?', [req.session.userID, kind], (err, rows) => {
                 if (!err) {
@@ -192,11 +189,12 @@ exports.viewReports = (req, res) => {
 
 
         } else {
+            all = "background-color: #b6d7e979";
             connection.query('SELECT * FROM report R, user U WHERE U.id = R.userID AND userID = ?', [req.session.userID], (err, rows) => {
                 if (rows[0]) {
-                    res.render('myReport', { login: true, pageTitle: "My Reports", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows, complete: complete, progress: progress, submit: submit });
+                    res.render('myReport', { login: true, pageTitle: "My Reports", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows, complete: complete, progress: progress, submit: submit, all: all});
                 } else {
-                    res.render('myReport', { login: true, pageTitle: "My Reports", nickname: nickname, 'avatar': avatarPath, noRecord: "No Record.", complete: complete, progress: progress, submit: submit });
+                    res.render('myReport', { login: true, pageTitle: "My Reports", nickname: nickname, 'avatar': avatarPath, noRecord: "No Record.", complete: complete, progress: progress, submit: submit, all: all });
                 }
             });
         }
