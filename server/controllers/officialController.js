@@ -56,12 +56,10 @@ function onbeforeunload() {
     var scrollPos;
     if (typeof window.pageYOffset != 'undefined') {
         scrollPos = window.pageYOffset;
-    }
-    else if (typeof document.compatMode != 'undefined' &&
+    } else if (typeof document.compatMode != 'undefined' &&
         document.compatMode != 'BackCompat') {
         scrollPos = document.documentElement.scrollTop;
-    }
-    else if (typeof document.body != 'undefined') {
+    } else if (typeof document.body != 'undefined') {
         scrollPos = document.body.scrollTop;
     }
     document.cookie = "scrollTop=" + scrollPos; //存储滚动条位置到cookies中
@@ -85,7 +83,7 @@ exports.basicSearch = (req, res) => {
             "state": null,
             "searchCity": null,
             "searchPlace": null,
-            "orderby": null
+            "orderBy": null
         };
 
         /* Create view */
@@ -168,7 +166,6 @@ exports.basicSearch = (req, res) => {
                 results.forEach(element => 
                     element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
                 );
-                console.log(results);
                 res.redirect('/official');
             } else {
                 console.log(err);
@@ -204,6 +201,7 @@ exports.advanceSearch = (req, res) => {
                     results.forEach(element => 
                         element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
                     );
+
                     res.redirect('/official');
                 } else {
                     console.log(err);
@@ -233,9 +231,6 @@ exports.recommendation = (req, res) => {
     pool.getConnection((err, connection) => {
         connection.query('SELECT * FROM qualityData WHERE placeName = ?', ['Loddon River'], (err, resultRows) => {
             results = resultRows;
-            results.forEach(element => 
-                element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
-            );
             res.redirect('/official');
         });
     });

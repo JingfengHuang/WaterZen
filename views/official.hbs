@@ -5,13 +5,14 @@
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
 <script src="/js/au-state.js"></script>
-{{!--
-<script src="/js/us-states.js"></script> --}}
+
 <link rel="stylesheet" href="/css/public.css">
 
 <h2>Official Data</h2>
+{{!-- -------------------------------------------------map-------------------------------------------------------- --}}
 <div id="mapid"></div>
-
+{{!--------------------------------------------------basic filter-----------------------------------------------------
+--}}
 <section class="top">
 
     <form action="/official/basicSearch" method="POST" id="selection">
@@ -47,15 +48,14 @@
     <p>{{alert}}</p>
     {{/if}}
 
-
-
-
     <form action="/official/clear" method="GET">
         <button type="submit">Clear</button>
     </form>
 </section>
 
 <div class='container'>
+    {{!--------------------------------------------------advanced
+    filter----------------------------------------------------- --}}
     <section class="row">
         {{#if selected}}
         <p> <b>Advanced search: </b>
@@ -81,13 +81,15 @@
         {{#if selected}}
         <span><b>Level: </b></span>
         <span>
-            <label><input onclick="" type="checkbox" name="level1">Level 1</label>
-            <label><input onclick="" type="checkbox" name="level2">Level 2</label>
-            <label><input onclick="" type="checkbox" name="level3">Level 3</label>
+            <label><input onclick="showByLevel(this)" type="checkbox" name="level1">Level 1</label>
+            <label><input onclick="showByLevel(this)" type="checkbox" name="level2">Level 2</label>
+            <label><input onclick="showByLevel(this)" type="checkbox" name="level3">Level 3</label>
+            <label><input onclick="showByLevel(this)" type="checkbox" name="level4">Level 4</label>
         </span>
         {{/if}}
     </section>
-
+    {{!--
+    -----------------------------------------------data------------------------------------------------------------ --}}
     {{#if results}}
     <div class="row align-items-center main-title">
         <div class="col">
@@ -125,7 +127,7 @@
         <div class="col">
             {{date}}
         </div>
-        <div class="col">
+        <div class="col level{{level}}">
             {{level}}
         </div>
     </div>
@@ -181,7 +183,7 @@
 
 
 <script language="javascript">
-    /* -----------------------------------------------------for order -----------------------------------------------------------------------*/
+    /* -----------------------------------------------------for reset scroll -----------------------------------------------------------------------*/
 
     /* record scroll offset*/
     $(window).scroll(function () {
@@ -190,6 +192,16 @@
             localStorage.setItem("offsetTop", offset);
         }
     });
+
+
+    // scroll to offset
+    let offset = localStorage.getItem("offsetTop");
+
+    $("HTML, BODY").animate({
+        scrollTop: offset
+    }, 0);
+
+    /* -----------------------------------------------------for order -----------------------------------------------------------------------*/
 
     /* to submit form */
     function jump(url) {
@@ -220,12 +232,26 @@
         order.submit();
     }
 
-    // scroll to offset
-    let offset = localStorage.getItem("offsetTop");
+    /* -----------------------------------------------------for show and hide level -----------------------------------------------------------------------*/
+    function showByLevel(e) {
+        // hide all data in chart
+        $(".main-info").hide();
+        // for marker
+        $("img.leaflet-marker-icon").hide();
 
-    $("HTML, BODY").animate({
-        scrollTop: offset
-    }, 0);
+        let levels = e.parentElement.parentElement;
+        let count = e.parentElement.parentElement.childElementCount;
+        for (let i = 0; i < count; i++) {
+            let level = levels.children[i].children[0];
+            let levelName;
+            if (level.checked) {
+                levelName = '.' + level.name;
+                $(levelName).parent().show();
+                $("img" + levelName).show();
+            }
+        }
+
+    }
 
     /* -----------------------------------------------------for keep selection -----------------------------------------------------------------------*/
 
@@ -316,7 +342,7 @@
             fetch('getPlaceName', {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: e.value, state: selectedState})
+                body: JSON.stringify({ payload: e.value, state: selectedState })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
                 console.log(payload);
@@ -333,7 +359,7 @@
         }
         searchResults.innerHTML = "";
     }
-    
+
     function sendCityValue(clicked_id) {
         let city = clicked_id.substring(7);
         console.log(city);
@@ -388,7 +414,7 @@
             localStorage.setItem("tileLayer", "Grayscale");
         } else if (mymap.hasLayer(streets)) {
             localStorage.setItem("tileLayer", "Streets");
-        }  else if (mymap.hasLayer(satellite)) {
+        } else if (mymap.hasLayer(satellite)) {
             localStorage.setItem("tileLayer", "Satellite");
         } else {
             console.error("Not a correct tileLayer");
@@ -568,6 +594,31 @@
         }
     });
 
+    let level1Icon = L.icon({
+        iconUrl: './img/map/level1.png',
+        iconSize: [80, 80], // size of the icon
+        iconAnchor: [37, 59], // point of the icon which will correspond to marker's location
+        popupAnchor: [0, -30] // point from which the popup should open relative to the iconAnchor
+    });
+    let level2Icon = L.icon({
+        iconUrl: './img/map/level2.png',
+        iconSize: [80, 80],
+        iconAnchor: [37, 59],
+        popupAnchor: [0, -30]
+    });
+    let level3Icon = L.icon({
+        iconUrl: './img/map/level3.png',
+        iconSize: [80, 80],
+        iconAnchor: [37, 59],
+        popupAnchor: [0, -30]
+    });
+    let level4Icon = L.icon({
+        iconUrl: './img/map/level4.png',
+        iconSize: [80, 80],
+        iconAnchor: [37, 59],
+        popupAnchor: [0, -30]
+    });
+
     // Add marker to map -------------------------------------------
     setTimeout(() => {
         let results = document.querySelectorAll(".main-info");
@@ -585,7 +636,26 @@
             let latitude = parseFloat(detailData.children[0].innerText.trim());
             let longitude = parseFloat(detailData.children[1].innerText.trim());
 
-            let marker = L.marker([latitude, longitude]).addTo(mymap);
+            let levelClass = mainData.children[4].classList[1];
+            let icon;
+            switch (levelClass) {
+                case "level1":
+                    icon = level1Icon;
+                    break;
+                case "level2":
+                    icon = level2Icon;
+                    break;
+                case "level3":
+                    icon = level3Icon;
+                    break;
+                case "level4":
+                    icon = level4Icon;
+                    break;
+            }
+
+            let marker = L.marker([latitude, longitude], { icon: icon }).addTo(mymap);
+
+            marker._icon.classList.add(levelClass);
             marker.bindPopup("<div>" + `${$(mainInfo).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(mainData).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(detailInfo).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(detailData).html().replaceAll('div', 'span')}` + "</div>", { minWidth: '800' });
             markers.push(marker);
 
