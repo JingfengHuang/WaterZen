@@ -1,0 +1,10 @@
+.list-group{
+    margin-bottom: 5%;
+}
+
+
+.list-group-item a{
+    font-size: 1.5em;
+    color: #295166;
+    font-weight: 550;
+}
