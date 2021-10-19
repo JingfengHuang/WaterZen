@@ -3,16 +3,17 @@ section {
     flex-flow: row wrap;
 }
 
+/* changed 17/10/2021 */
 #mapid {
+    top:-110px;
     height: 69vh;
-    width: 80%;
-    margin: auto;
+    width: 100%;
 }
-
 
 .leaflet-popup-content div {
     display: flex;
     justify-content: space-around;
+    border-bottom: 1px solid #e3e3e3;
 }
 
 .leaflet-popup-content {
@@ -23,18 +24,127 @@ section {
     justify-content: space-around;
 }
 
-
+/* changed 17/10/2021 */
 .top {
+    position: absolute;
     justify-content: center;
-    position: relative;
-    width: 80%;
-    margin: auto;
+    top:80px;
+    left:80px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-left: 84px;
+    z-index: 460;
+
+}
+#selection {
+    position:relative;
+}
+.form-select, .form-control {
+    width:20rem;
+    background-position: right 2.75rem center;
+    margin-top: 10px;
+    border-radius: 1.5rem;
+}
+.search-btn {
+    position: absolute;
+    top: 13px;
+    right: 0;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 1.5rem;
+    color:#5c97b7;
+    background: white;
+    font-size: 22px;
+}
+.top .expand-button {
+    position:relative;
+    top:50px;
+    margin-bottom: 60px;
+    display:block;
+}
+.top .expand-button a {
+    color:black;
+}
+.top .expand-show label{
+    margin-top: 10px;
+}
+
+#clear button {
+    border: none;
+    width: 5rem;
+    background-color: #5c97b7;
+    box-shadow: 0 6px 9px rgb(0 0 0 / 25%), 0 7px 6px rgb(0 0 0 / 22%);
+    color: white;
     padding: 5px;
+    border-radius: 2.5rem;
+    margin-top: 30px;
+}
+
+/* container part */
+.advance-selections {
+    margin-bottom: 50px;    
+    padding: 10px 0 5px 10px;
+    border: 1px solid #ddd;
+}
+.advance-selections dl {
+    display: flex;
+    margin: 10px;
+}
+.advance-selections dt {
+    font-family: initial;
+    padding: 0 15px 0;
+}
+
+#filterLevel dt {
+    margin-right: 30px;
+}
+
+.advance-selections dd label {
+    padding-right: 2rem;
+}
+
+
+
+
+/* results-table */
+
+#results-table {
+    padding: 10px;
+    overflow: hidden;
+}
+
+
+.main-title {
+    background-color: #5c97b7;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+
+}
+
+.main-info {
+    cursor:pointer;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 0;
+}
+.main-info:hover {
+    background-color: #e5e5e5;
+}
+
+.detail-title {
+    font-family:initial;
+    font-size: 15px;
+    font-weight:700;
+    border-bottom: 1px solid #e5e5e5;
+    
 }
 
 .detail-info {
     display: none;
     background-color: antiquewhite;
+    padding: 10px;
 }
 
 .show {

@@ -6,17 +6,18 @@
     crossorigin=""></script>
 <script src="/js/au-state.js"></script>
 
+{{!-- <script src="\js\jquery-3.6.0.min.js"></script> --}}
 <link rel="stylesheet" href="/css/public.css">
 
-<h2>Official Data</h2>
-{{!-- -------------------------------------------------map-------------------------------------------------------- --}}
-<div id="mapid"></div>
-{{!--------------------------------------------------basic filter-----------------------------------------------------
---}}
-<section class="top">
 
+{{!-- main body --}}
+<div id="mapid"></div>
+
+{{!-- search area --}}
+<section class="top">
+    <h3>Official Data</h3>
     <form action="/official/basicSearch" method="POST" id="selection">
-        <select id="select-state" class="form-select" name="state">
+        <select class="form-select" name="state">
             <option value="null">Select state</option>
             <option value="VIC">Victoria</option>
             <option value="WA">Western Australia</option>
@@ -27,181 +28,200 @@
             <option value="SA">South Australia</option>
             <option value="NT">Northern Territory</option>
         </select>
-        <p>OR</p>
-        <div class="form-group">
+        <button type="submit" class="search-btn"><i class="bi bi-search"></i></button>
+
+
+        {{!-- <div class="expand-button">
+            <a href="#"><h5>Accurate search</h5></a> 
+        </div>
+
+        <div class="expand-show">
+            <div class="form-group">
             <label for="searchCity" value="null">City/Region: </label>
             <input id="searchCity" class="form-control" name="searchCity" type="text" onkeyup="fetchCity(this)"></input>
-        </div>
-        <p>OR</p>
-        <div class="form-group">
+            </div>
+
+            <div class="form-group">
             <label for="searchPlace" value="null">Place name: </label>
             <input id="searchPlace" class="form-control" name="searchPlace" type="text"
                 onkeyup="fetchPlaceName(this)"></input>
-        </div>
-        <section id="searchResultsCity" class="container d-flex flex-column"></section>
-        <section id="searchResultsPlaceName" class="container d-flex flex-column"></section>
+            </div>
 
-        <button type="submit">Search</button>
+            
+            <section id="searchResultsCity" class="container d-flex flex-column"></section>
+            <section id="searchResultsPlaceName" class="container d-flex flex-column"></section>
+        </div>
+         --}}
+
+        
 
     </form>
     {{#if alert}}
     <p>{{alert}}</p>
     {{/if}}
 
-    <form action="/official/clear" method="GET">
+    {{!-- <form action="/official/clear" method="GET" id="clear">
         <button type="submit">Clear</button>
-    </form>
+    </form> --}}
 </section>
 
+
+
+
 <div class='container'>
-    {{!--------------------------------------------------advanced
-    filter----------------------------------------------------- --}}
-    <section class="row">
-        {{#if selected}}
-        <p> <b>Advanced search: </b>
-        </p>
-        {{/if}}
-    </section>
-
-    <form action="/official/advanceSearch" method="POST" id="order">
-        {{#if selected}}
-        <span><b>Order by: </b></span>
-        <span>
-            <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
-                    value="city">City/Region</label>
-            <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
-                    value="name">Place Name</label>
-            <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
-                    value="quality">Water quality</label>
-        </span>
-        {{/if}}
-    </form>
-
-    <section id="filterLevel">
-        {{#if selected}}
-        <span><b>Level: </b></span>
-        <span>
-            <label><input onclick="showByLevel(this)" type="checkbox" name="level1">Level 1</label>
-            <label><input onclick="showByLevel(this)" type="checkbox" name="level2">Level 2</label>
-            <label><input onclick="showByLevel(this)" type="checkbox" name="level3">Level 3</label>
-            <label><input onclick="showByLevel(this)" type="checkbox" name="level4">Level 4</label>
-        </span>
-        {{/if}}
-    </section>
-    {{!--
-    -----------------------------------------------data------------------------------------------------------------ --}}
-    {{#if results}}
-    <div class="row align-items-center main-title">
-        <div class="col">
-            State
-        </div>
-        <div class="col">
-            City/Region
-        </div>
-        <div class="col">
-            Place Name
-        </div>
-        <div class="col">
-            Date
-        </div>
-        <div class="col">
-            Level
-        </div>
-    </div>
-
-    {{#each results}}
-    <div class="row align-items-center main-info">
-        <div class="col">
-            {{state}}
-        </div>
-        <div class="col">
-            {{#if city}}
-            {{city}}
-            {{else}}
-            Unknown
+    <div class="advance-selections">
+        {{!-- <section class="row">
+            {{#if selected}}
+            <p> <b>Advanced search: </b>
+            </p>
             {{/if}}
+        </section> --}}
+
+        <form action="/official/advanceSearch" method="POST" id="order">
+            {{#if selected}}
+            <dl class="filter-order">
+                <dt>Order by: </dt>
+
+                <dd>
+                    <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy" 
+                            value="city">City/Region</label>
+                    <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
+                            value="name">Place</label>
+                    <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
+                            value="quality">Water Quality</label>
+                </dd>
+
+            </dl>
+
+            {{/if}}
+        </form>
+
+        <dl id="filterLevel">
+
+            {{#if selected}}
+            <dt>Level: </dt>
+            <dd>
+                <label><input onclick="showByLevel(this)" type="checkbox" name="level1">Level 1</label>
+                <label><input onclick="showByLevel(this)" type="checkbox" name="level2">Level 2</label>
+                <label><input onclick="showByLevel(this)" type="checkbox" name="level3">Level 3</label>
+                <label><input onclick="showByLevel(this)" type="checkbox" name="level4">Level 4</label>
+            </dd>
+            {{/if}}
+        </dl>
+    </div>
+
+
+
+    {{#if results}}
+
+    <div id="results-table">
+
+        <div class="row align-items-center main-title">
+            <div class="col">
+                State
+            </div>
+            <div class="col">
+                City/Region
+            </div>
+            <div class="col">
+                Place Name
+            </div>
+            <div class="col">
+                Date
+            </div>
+            <div class="col">
+                Level
+            </div>
         </div>
-        <div class="col">
-            {{placeName}}
-        </div>
-        <div class="col">
-            {{date}}
-        </div>
-        <div class="col level{{level}}">
+
+        {{#each results}}
+        <div class="row align-items-center main-info">
+            <div class="col">
+                {{state}}
+            </div>
+            <div class="col">
+                {{#if city}}
+                {{city}}
+                {{else}}
+                Unknown
+                {{/if}}
+            </div>
+            <div class="col">
+                {{placeName}}
+            </div>
+            <div class="col">
+                {{date}}
+            </div>
+            <div class="col level{{level}}">
             {{level}}
+            </div>
         </div>
+        
+        <div class="row align-items-center detail-info detail-title">
+            <div class="col latitude">
+                Latitude
+            </div>
+            <div class="col longitude">
+                Longitude
+            </div>
+            <div class="col electricalConductivity">
+                Electrical conductivity
+            </div>
+            <div class="col pH">
+                pH
+            </div>
+            <div class="col temperature">
+                Temperature
+            </div>
+            <div class="col totalDissolvedSolids">
+                Total dissolved solids
+            </div>
+            <div class="col waterTurbidity">
+                Water turbidity
+            </div>
+        </div>
+        <div class="row align-items-center detail-info">
+        
+            <div class="col latitude">
+                {{latitude}}
+            </div>
+            <div class="col longitude">
+                {{longitude}}
+            </div>
+
+            <div class="col electricalConductivity">
+                {{electricalConductivity}}
+            </div>
+            <div class="col pH">
+                {{pH}}
+            </div>
+            <div class="col temperature">
+                {{temperature}}
+            </div>
+            <div class="col totalDissolvedSolids">
+                {{totalDissolvedSolids}}
+            </div>
+            <div class="col waterTurbidity">
+                {{waterTurbidity}}
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+
     </div>
-    <div class="row align-items-center detail-info">
-        <div class="col latitude">
-            Latitude
-        </div>
-        <div class="col longitude">
-            Longitude
-        </div>
-        <div class="col electricalConductivity">
-            Electrical conductivity
-        </div>
-        <div class="col pH">
-            pH
-        </div>
-        <div class="col temperature">
-            Temperature
-        </div>
-        <div class="col totalDissolvedSolids">
-            Total dissolved solids
-        </div>
-        <div class="col waterTurbidity">
-            Water turbidity
-        </div>
-    </div>
-    <div class="row align-items-center detail-info">
-        <div class="col latitude">
-            {{latitude}}
-        </div>
-        <div class="col longitude">
-            {{longitude}}
-        </div>
-        <div class="col electricalConductivity">
-            {{electricalConductivity}}
-        </div>
-        <div class="col pH">
-            {{pH}}
-        </div>
-        <div class="col temperature">
-            {{temperature}}
-        </div>
-        <div class="col totalDissolvedSolids">
-            {{totalDissolvedSolids}}
-        </div>
-        <div class="col waterTurbidity">
-            {{waterTurbidity}}
-        </div>
-    </div>
-    {{/each}}
-    {{/if}}
 </div>
 
-
+{{!--
+<script src="\js\official.js"></script> --}}
 <script language="javascript">
-    /* -----------------------------------------------------for reset scroll -----------------------------------------------------------------------*/
 
     /* record scroll offset*/
     $(window).scroll(function () {
         if ($(document).scrollTop() != 0) {
-            let offset = $(window).scrollTop();
+            var offset = $(window).scrollTop();
             localStorage.setItem("offsetTop", offset);
         }
     });
-
-
-    // scroll to offset
-    let offset = localStorage.getItem("offsetTop");
-
-    $("HTML, BODY").animate({
-        scrollTop: offset
-    }, 0);
-
-    /* -----------------------------------------------------for order -----------------------------------------------------------------------*/
 
     /* to submit form */
     function jump(url) {
@@ -232,6 +252,14 @@
         order.submit();
     }
 
+    // scroll to offset
+    var offset = localStorage.getItem("offsetTop");
+
+    $("HTML, BODY").animate({
+        scrollTop: offset
+    }, 0);
+
+
     /* -----------------------------------------------------for show and hide level -----------------------------------------------------------------------*/
     function showByLevel(e) {
         // hide all data in chart
@@ -252,9 +280,6 @@
         }
 
     }
-
-    /* -----------------------------------------------------for keep selection -----------------------------------------------------------------------*/
-
     // restore selected content
     let selected = "{{selected}}";
     if (selected != "") {
@@ -296,11 +321,9 @@
             }
         }
     }
-    /* -----------------------------------------------------for input hint -----------------------------------------------------------------------*/
 
     function fetchCity(e) {
         const searchResults = document.getElementById("searchResultsCity");
-        const selectedState = document.getElementById("select-state").value;
         let match1 = e.value.match(/^[a-zA-Z ]*/);
         let match2 = e.value.match(/\s*/);
         if (match2[0] === e.value) {
@@ -311,7 +334,7 @@
             fetch('getCity', {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: e.value, state: selectedState })
+                body: JSON.stringify({ payload: e.value })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
                 console.log(payload);
@@ -331,7 +354,6 @@
 
     function fetchPlaceName(e) {
         const searchResults = document.getElementById("searchResultsPlaceName");
-        const selectedState = document.getElementById("select-state").value;
         let match1 = e.value.match(/^[a-zA-Z ]*/);
         let match2 = e.value.match(/\s*/);
         if (match2[0] === e.value) {
@@ -342,7 +364,7 @@
             fetch('getPlaceName', {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: e.value, state: selectedState })
+                body: JSON.stringify({ payload: e.value })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
                 console.log(payload);
@@ -360,18 +382,6 @@
         searchResults.innerHTML = "";
     }
 
-    function sendCityValue(clicked_id) {
-        let city = clicked_id.substring(7);
-        console.log(city);
-        document.getElementById("searchCity").value = city;
-    }
-
-    function sendPlaceNameValue(clicked_id) {
-        let placeName = clicked_id.substring(7);
-        console.log(placeName);
-        document.getElementById("searchPlace").value = placeName;
-    }
-    /* -----------------------------------------------------for show maore information -----------------------------------------------------------------------*/
 
     /* Click and show more infomation*/
     $(".main-info").off().on({
@@ -380,6 +390,7 @@
             this.nextElementSibling.nextElementSibling.classList.toggle("show");
         }
     })
+
 
 
     /* -----------------------------------------------------for map -----------------------------------------------------------------------*/
@@ -668,5 +679,18 @@
         }
     }, 100)
 
+    function sendCityValue(clicked_id) {
+        var city = clicked_id.substring(7);
+        console.log(city);
+        document.getElementById("searchCity").value = city;
+    }
 
+    function sendPlaceNameValue(clicked_id) {
+        var placeName = clicked_id.substring(7);
+        console.log(placeName);
+        document.getElementById("searchPlace").value = placeName;
+    }
+
+
+    
 </script>

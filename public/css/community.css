@@ -50,11 +50,18 @@ body{
   display: flex;
   align-items: flex-start;
 }
-.search-btn {
+/* #search-box button{
   color: #fff;
   justify-content: right;
   transition: 0.4s;
   padding-left: 8px;
+} */
+#search-box button {
+  color: white;
+  border:none;
+  background-color:#5c97b7 ;
+  width:30px;
+
 }
 #search-box input {
   border: none;
