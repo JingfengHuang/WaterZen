@@ -33,7 +33,7 @@
 
         {{!-- <div class="expand-button">
             <a href="#"><h5>Accurate search</h5></a> 
-        </div>
+        </div> --}}
 
         <div class="expand-show">
             <div class="form-group">
@@ -51,7 +51,7 @@
             <section id="searchResultsCity" class="container d-flex flex-column"></section>
             <section id="searchResultsPlaceName" class="container d-flex flex-column"></section>
         </div>
-         --}}
+        
 
         
 
@@ -60,9 +60,9 @@
     <p>{{alert}}</p>
     {{/if}}
 
-    {{!-- <form action="/official/clear" method="GET" id="clear">
+    <form action="/official/clear" method="GET" id="clear">
         <button type="submit">Clear</button>
-    </form> --}}
+    </form>
 </section>
 
 
@@ -70,12 +70,12 @@
 
 <div class='container'>
     <div class="advance-selections">
-        {{!-- <section class="row">
+        <section class="row">
             {{#if selected}}
             <p> <b>Advanced search: </b>
             </p>
             {{/if}}
-        </section> --}}
+        </section>
 
         <form action="/official/advanceSearch" method="POST" id="order">
             {{#if selected}}
@@ -211,8 +211,6 @@
     </div>
 </div>
 
-{{!--
-<script src="\js\official.js"></script> --}}
 <script language="javascript">
 
     /* record scroll offset*/
@@ -324,6 +322,7 @@
 
     function fetchCity(e) {
         const searchResults = document.getElementById("searchResultsCity");
+        
         let match1 = e.value.match(/^[a-zA-Z ]*/);
         let match2 = e.value.match(/\s*/);
         if (match2[0] === e.value) {
