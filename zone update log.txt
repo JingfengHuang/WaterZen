@@ -28,3 +28,11 @@ zone update 18/10/2021 Xueli
 
 zone update 18/10/2021 Wei-Ning
 Full update except official.hbs
+
+zone update 19/10/2021 Xueli
+ changed
+ community.hbs
+ community.css
+ style.css
+ official.hbs
+ public.css
