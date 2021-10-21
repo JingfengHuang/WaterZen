@@ -6,7 +6,8 @@
     crossorigin=""></script>
 <script src="/js/au-state.js"></script>
 
-{{!-- <script src="\js\jquery-3.6.0.min.js"></script> --}}
+{{!--
+<script src="\js\jquery-3.6.0.min.js"></script> --}}
 <link rel="stylesheet" href="/css/public.css">
 
 
@@ -32,28 +33,31 @@
 
 
         {{!-- <div class="expand-button">
-            <a href="#"><h5>Accurate search</h5></a> 
+            <a href="#">
+                <h5>Accurate search</h5>
+            </a>
         </div> --}}
 
         <div class="expand-show">
             <div class="form-group">
-            <label for="searchCity" value="null">City/Region: </label>
-            <input id="searchCity" class="form-control" name="searchCity" type="text" onkeyup="fetchCity(this)"></input>
+                <label for="searchCity" value="null">City/Region: </label>
+                <input id="searchCity" class="form-control" name="searchCity" type="text"
+                    onkeyup="fetchCity(this)"></input>
             </div>
 
             <div class="form-group">
-            <label for="searchPlace" value="null">Place name: </label>
-            <input id="searchPlace" class="form-control" name="searchPlace" type="text"
-                onkeyup="fetchPlaceName(this)"></input>
+                <label for="searchPlace" value="null">Place name: </label>
+                <input id="searchPlace" class="form-control" name="searchPlace" type="text"
+                    onkeyup="fetchPlaceName(this)"></input>
             </div>
 
-            
+
             <section id="searchResultsCity" class="container d-flex flex-column"></section>
             <section id="searchResultsPlaceName" class="container d-flex flex-column"></section>
         </div>
-        
 
-        
+
+
 
     </form>
     {{#if alert}}
@@ -83,7 +87,7 @@
                 <dt>Order by: </dt>
 
                 <dd>
-                    <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy" 
+                    <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
                             value="city">City/Region</label>
                     <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
                             value="name">Place</label>
@@ -153,10 +157,10 @@
                 {{date}}
             </div>
             <div class="col level{{level}}">
-            {{level}}
+                {{level}}
             </div>
         </div>
-        
+
         <div class="row align-items-center detail-info detail-title">
             <div class="col latitude">
                 Latitude
@@ -181,7 +185,7 @@
             </div>
         </div>
         <div class="row align-items-center detail-info">
-        
+
             <div class="col latitude">
                 {{latitude}}
             </div>
@@ -278,7 +282,10 @@
         }
 
     }
-    // restore selected content
+
+
+    /* -----------------------------------------------------restore selected content -----------------------------------------------------------------------*/
+
     let selected = "{{selected}}";
     if (selected != "") {
         const state = "{{selected.state}}"
@@ -322,7 +329,7 @@
 
     function fetchCity(e) {
         const searchResults = document.getElementById("searchResultsCity");
-        
+
         let match1 = e.value.match(/^[a-zA-Z ]*/);
         let match2 = e.value.match(/\s*/);
         if (match2[0] === e.value) {
@@ -537,6 +544,10 @@
                 console.error("No correspond state");
 
         }
+        
+        document.querySelector(`input[name="searchCity"]`).value = null;
+        document.querySelector(`input[name="searchPlace"]`).value = null;
+
         document.getElementById("selection").submit();
     }
 
@@ -691,5 +702,5 @@
     }
 
 
-    
+
 </script>
