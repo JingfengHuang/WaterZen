@@ -228,9 +228,18 @@ exports.advanceSearch = (req, res) => {
 }
 
 exports.recommendation = (req, res) => {
+    selected = {
+        "state": null,
+        "searchCity": null,
+        "searchPlace": "Loddon River",
+        "orderBy": null
+    };
     pool.getConnection((err, connection) => {
         connection.query('SELECT * FROM qualityData WHERE placeName = ?', ['Loddon River'], (err, resultRows) => {
             results = resultRows;
+            results.forEach(element => 
+                element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
+            );
             res.redirect('/official');
         });
     });
