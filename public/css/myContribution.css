@@ -1,0 +1,22 @@
+.data{
+    width: 90%;
+    margin-left: 5%;
+}
+
+.data h1{
+    color: #295166;
+}
+
+hr{
+    background-color: #024f79; 
+    height: 1px; 
+    border: 0.5px solid black;
+}
+
+tr td:first-child{
+    width: 50%;
+}
+
+.each-result{
+    margin-bottom: 5%;
+}

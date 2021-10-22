@@ -45,6 +45,7 @@
 
             <form action="/upload" method="POST" encType="multipart/form-data">
                 <strong>Profile Photo: </strong>
+                <br>
                 <input type="file" name="profileimg" accept="image/*" />
                 <button type="submit">Submit</button>
                 {{#if upload}}
@@ -57,22 +58,26 @@
     <div class="row" id="history">
         <div class="col-md-6">
             <h3>My Contribution: </h3>
-            <a href="/privateArea"><img src="/img/add.png" alt="Contribute new data" class="add">Add New</a>
+            <a href="/privateArea">
+                <img src="/img/add.png" alt="Contribute new data" class="add">
+                <p id="add">Add New</p>
+            </a>
             <br>
             <table class="table">
                 {{#if contribution}}
                 {{#each contribution}}
                 <tr>
-                    <td>Date: {{date}} <br>Place: {{placeName}}</td>
+                    <td><strong>Date: </strong>{{date}} <br>
+                    <strong>Place: </strong>{{placeName}}</td>
                     <td></td>
                 </tr>
                 {{/each}}
-                <label><a href="/profile/contribution">View All</a></label>
                 {{/if}}
                 {{#if nodata}}
-                {{nodata}}
+                <p>{{nodata}}</p>
                 {{/if}}
             </table>
+             <button><a href="/profile/contribution">View All</a></button>
         </div>
 
         <div class="col-md-6">

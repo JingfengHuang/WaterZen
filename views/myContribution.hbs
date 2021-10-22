@@ -1,39 +1,49 @@
-{{#each result}}
-<label><strong>Date:</strong></label>
-<p>{{this.date}}</p>
-<label><strong>Water Quality:</strong></label>
-<table class="table">
-    <tr>
-        <td>Place Name</td>
-        <td>{{this.placeName}}</td>
-    </tr>
-    <tr>
-        <td>Category</td>
-        <td>{{this.category}}</td>
-    </tr>
-    <tr>
-        <td>Electrical Conductivity</td>
-        <td>{{this.electricalConductivity}}</td>
-    </tr>
-    <tr>
-        <td>pH</td>
-        <td>{{this.pH}}</td>
-    </tr>
-    <tr>
-        <td>Temperature</td>
-        <td>{{this.temperature}}</td>
-    </tr>
-    <tr>
-        <td>Dissolved Solids</td>
-        <td>{{this.totalDissolvedSolids}}</td>
-    </tr>
-    <tr>
-        <td>Water Turbidity</td>
-        <td>{{this.turbidity}}</td>
-    </tr>
-    <tr>
-        <td>Comments</td>
-        <td>{{this.shortIntroduction}}</td>
-    </tr>
-</table>
-{{/each}}
+<link rel="stylesheet" href="/css/myContribution.css">
+
+<div class="container">
+    <div class="data">
+        <h1 class="text-center">Contribution Details</h1>
+        <hr>
+        {{#each result}}
+         <div class="each-result">
+            <label><strong>Date:</strong></label>
+            <p>{{this.date}}</p>
+            <label><strong>Water Quality:</strong></label>
+            <table class="table table-hover">
+                <tr>
+                    <td>Place Name</td>
+                    <td>{{this.placeName}}</td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>{{this.category}}</td>
+                </tr>
+                <tr>
+                    <td>Electrical Conductivity</td>
+                    <td>{{this.electricalConductivity}}</td>
+                </tr>
+                <tr>
+                    <td>pH</td>
+                    <td>{{this.pH}}</td>
+                </tr>
+                <tr>
+                    <td>Temperature</td>
+                    <td>{{this.temperature}}</td>
+                </tr>
+                <tr>
+                    <td>Dissolved Solids</td>
+                    <td>{{this.totalDissolvedSolids}}</td>
+                </tr>
+                <tr>
+                    <td>Water Turbidity</td>
+                    <td>{{this.turbidity}}</td>
+                </tr>
+                <tr>
+                    <td>Comments</td>
+                    <td>{{this.shortIntroduction}}</td>
+                </tr>
+            </table>
+        </div>
+        {{/each}}
+    </div>
+</div>

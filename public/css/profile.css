@@ -85,11 +85,11 @@ button+p{
 }
 
 #add{
-    width: 15%;
+    width: 20%;
     float: right;
     cursor: pointer; 
-    font-size: 0.5em;
-    margin-right: 0%;
+    font-size: 1em;
+    margin-right: -2.3%;
     color: #295166;
     font-weight: bold;
 }
@@ -122,8 +122,8 @@ button+p{
 }
 
 #history table{
-    margin-bottom: 3%;
-    width: 95%
+    margin-bottom: 5.5%;
+    width: 95%;
 }
 
 .col-md-6 h3 a{
@@ -210,6 +210,7 @@ button+p{
 
     #add{
         width: 20%;
+        font-size: 0.75em;
     }
 
     .add{

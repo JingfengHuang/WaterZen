@@ -43,53 +43,6 @@
     </div>
 </div>
 
-            {{!-- <div class ="col-md-2 offset-md-3">
-                <select id ="selectmenu">
-                    <option value="Official">Official Data</option>
-                    <option value="Community">Community</option>
-                </select>
-            </div>
-
-            <script>
-                $("#selectmenu").mouseover(function(){
-                    $(".col-md-2").css("border","3.5px solid #194764");
-                });
-                $("#selectmenu").mouseleave(function(){
-                    $(".col-md-2").css("border","3.5px solid white");
-                });
-            </script>
-
-            <div class ="col-md-4">
-                <input type="text" placeholder="Search......" onFocus = "hint()" onfocusout="hintdisappear()">
-                <a href="/">
-                    <ion-icon name="search" size="large"></ion-icon>
-                </a>
-            </div>
-
-            <script>
-                $("input").mouseover(function(){
-                    $(".col-md-4").css("border","3.5px solid #194764");
-                });
-                $("input").mouseleave(function(){
-                    $(".col-md-4").css("border","3.5px solid white");
-                });
-            </script>
-
-            <br>
-
-            <div class ="hint">
-                Geographic location (state/city/region) or river/creek/lake name
-            </div>
-
-            <script>
-                function hint(){
-                    $(".hint").css("opacity", "100");
-                }
-                function hintdisappear(){
-                    $(".hint").css("opacity", "0");
-                }
-                
-            </script> --}}
 
 
 <div class="container">
@@ -98,9 +51,11 @@
     <h5 class="text-center">(1 Oct 2021 - 15 Oct 2021)</h4>
 
     <div class="row">
-        <div class ="col-md-3" id="private">
-            <a href="/community"><h4>Private Area | Site 1</h4></a>
-        </div>
+        <a href="/community">
+            <div class ="col-md-3" id="private">
+                <a href="/community"><h4>Private Area | Site 1</h4></a>
+            </div>
+        </a>
         
         <div class ="col-md-5" id="public">
            <a href="/official/recommendation"><h4>Public Area | Loddon River</h4></a>

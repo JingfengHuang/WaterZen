@@ -67,7 +67,7 @@ exports.view = (req, res) => {
                     console.log(rows);
                     res.render('profile', { login: true, pageTitle: pageTitle, nickname: nickname, userEmail: req.session.userEmail, modifyAlert: req.flash('modifyAlert'), avatar: avatarPath, 'upload': req.flash('upload'), reportCount: total, progress: progress, submit: submit, complete: complete, contribution: rows});
                 } else {
-                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: nickname, userEmail: req.session.userEmail, modifyAlert: req.flash('modifyAlert'), avatar: avatarPath, 'upload': req.flash('upload'), reportCount: total, progress: progress, submit: submit, complete: complete, nodata: "No contribution made."});
+                    res.render('profile', { login: true, pageTitle: pageTitle, nickname: nickname, userEmail: req.session.userEmail, modifyAlert: req.flash('modifyAlert'), avatar: avatarPath, 'upload': req.flash('upload'), reportCount: total, progress: progress, submit: submit, complete: complete, nodata: "No contribution was made."});
                 }
             }); 
         });
