@@ -203,11 +203,25 @@ exports.viewReports = (req, res) => {
 
 exports.contribution = (req, res) => {
     pool.getConnection((err, connection) => {
-        connection.query('SELECT * FROM sensordata WHERE userID = ?', [req.session.userID], (err, rows) => {
+        let nickname = "username";
+        let avatarPath = "avatar.png";
+
+        connection.query('SELECT * FROM user WHERE email = ?', [req.session.userEmail], (err, rows) => {
             if (!err) {
-                res.render('myContribution', { login: true, pageTitle: "My Contribution", nickname: rows[0].nickname, 'avatar': rows[0].avatarPath, result: rows });
+                nickname = rows[0].nickname;
+                avatarPath = rows[0].avatarPath;
+                console.log(nickname);
+                console.log(avatarPath);
             } else {
                 console.log(err);
+            }
+        });
+
+        connection.query('SELECT * FROM sensordata WHERE userID = ?', [req.session.userID], (err, rows) => {
+            if (!err && rows[0] != null) {
+                res.render('myContribution', { login: true, pageTitle: "My Contribution", nickname: nickname, 'avatar': avatarPath, result: rows });
+            } else if (rows[0] == null) {
+                res.render('myContribution', { login: true, pageTitle: "My Contribution", nickname: nickname, 'avatar': avatarPath, nodata:"No Record."});
             }
         });
     });
