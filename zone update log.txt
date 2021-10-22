@@ -40,3 +40,6 @@ zone update 19/10/2021 Xueli
 zone update 19/10/2021 Shanshan
 	official.hbs bug fix (level showing)
 	
+zone update 22/10/2021 Xueli
+	main.hbs
+	style.css 
