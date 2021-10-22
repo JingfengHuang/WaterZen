@@ -60,3 +60,8 @@ exports.search = (req, res) => {
         });
     });
 }
+
+exports.clear = (req, res) => {
+    searchData = null;
+    return res.redirect('/community');
+}
