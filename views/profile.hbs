@@ -39,7 +39,10 @@
                 <button type="submit">Save</button>
 
                 {{#if modifyAlert}}
-                <p class="text-success">{{modifyAlert}}</p>
+                <p class="text-danger">{{modifyAlert}}</p>
+                {{/if}}
+                {{#if modifySuccess}}
+                <p class="text-success">{{modifySuccess}}</p>
                 {{/if}}
             </form>
 

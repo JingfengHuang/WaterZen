@@ -39,6 +39,10 @@ exports.validation = [check('userEmail')
                         .trim()
                         .isLength({ min: 6, max:16 })
                         .withMessage('Password must be longer than 6 characters!'),
+                    check('nickname')
+                        .trim()
+                        .isLength({min: 3, max: 15})
+                        .withMessage('Nickname should be longer than 3 characters and less than 15 characters!'),
                     check('confirm')
                         .isLength({ min: 6 })
                         .withMessage('Confirm password is required.')
