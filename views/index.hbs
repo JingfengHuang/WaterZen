@@ -51,18 +51,17 @@
     <h5 class="text-center">(1 Oct 2021 - 15 Oct 2021)</h4>
 
     <div class="row">
-        <a href="/community">
-            <div class ="col-md-3" id="private">
-                <a href="/community"><h4>Private Area | Site 1</h4></a>
-            </div>
-        </a>
+        <div class ="col-md-3" id="private" onclick="window.open('/community', '_self')">
+            <a href="/community"><h4>Community | Site 1</h4></a>
+            <p id="hide">Share self-reported recreational water quality data with other people.</p>
+        </div>
         
-        <div class ="col-md-5" id="public">
-           <a href="/official/recommendation"><h4>Public Area | Loddon River</h4></a>
+        <div class ="col-md-5" id="public" onclick="window.open('/official/recommendation', '_self')">
+           <a href="/official/recommendation"><h4>Official Data | Loddon River</h4></a>
            <p id="hide">An inland river of the Murray-Darling basin, is located in the Australian state of Victoria, is the second longest river in Victoria.</p>
         </div>
 
-        <div class ="col-md-3" id="product">
+        <div class ="col-md-3" id="product" onclick="window.open('/product', '_self')">
             <a href="/product"><h4>Our Product | Sensor</h4></a>
             <p id="hide">To detect the water quality, and upload to the community automatically.</p>
         </div>
@@ -86,5 +85,14 @@
         $("#product #hide").css("display","none");
         $("#product h4").css("margin-top", "250px");
     });
+    $("#private").mouseover(function(){
+        $("#private #hide").css("display","block");
+        $("#private h4").css("margin-top", "200px");
+    });
+    $("#private").mouseleave(function(){
+        $("#private #hide").css("display","none");
+        $("#private h4").css("margin-top", "250px");
+    });
+    
 
 </script>
