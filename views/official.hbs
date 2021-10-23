@@ -18,7 +18,7 @@
 <section class="top">
     <h3>Official Data</h3>
     <form action="/official/basicSearch" method="POST" id="selection">
-        <select class="form-select" name="state">
+        <select id="select-state" class="form-select" name="state">
             <option value="null">Select state</option>
             <option value="VIC">Victoria</option>
             <option value="WA">Western Australia</option>
@@ -329,7 +329,7 @@
 
     function fetchCity(e) {
         const searchResults = document.getElementById("searchResultsCity");
-
+        const selectedState = document.getElementById("select-state").value;
         let match1 = e.value.match(/^[a-zA-Z ]*/);
         let match2 = e.value.match(/\s*/);
         if (match2[0] === e.value) {
@@ -340,10 +340,9 @@
             fetch('getCity', {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: e.value })
+                body: JSON.stringify({ payload: e.value, state: selectedState })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
-                console.log(payload);
                 searchResults.innerHTML = "";
                 if (payload.length < 1) {
                     searchResults.innerHTML = "<p>Sorry, nothing found.</p>";
@@ -360,6 +359,7 @@
 
     function fetchPlaceName(e) {
         const searchResults = document.getElementById("searchResultsPlaceName");
+        const selectedState = document.getElementById("select-state").value;
         let match1 = e.value.match(/^[a-zA-Z ]*/);
         let match2 = e.value.match(/\s*/);
         if (match2[0] === e.value) {
@@ -370,7 +370,7 @@
             fetch('getPlaceName', {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: e.value })
+                body: JSON.stringify({ payload: e.value, state: selectedState })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
                 console.log(payload);
@@ -692,13 +692,13 @@
     function sendCityValue(clicked_id) {
         var city = clicked_id.substring(7);
         document.getElementById("searchCity").value = city;
-        //document.getElementById("searchResultsCity").innerHTML = "";
+        document.getElementById("searchResultsCity").innerHTML = "";
     }
 
     function sendPlaceNameValue(clicked_id) {
         var placeName = clicked_id.substring(7);
         document.getElementById("searchPlace").value = placeName;
-        //document.getElementById("searchResultsPlaceName").innerHTML = "";
+        document.getElementById("searchResultsPlaceName").innerHTML = "";
     }
 
 
