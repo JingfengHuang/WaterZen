@@ -7,8 +7,14 @@
         <h2 class="text-center">Making a Water Pollution Report</h2>
         <img src="/img/arrows.png" alt="arrows">
         <hr>
-         {{#if reportStatus}}
-        <p class="text-center {{#if reportStatusBoolean}}text-success{{else}}text-danger{{/if}}">{{reportStatus}}</p>
+        {{#if reportStatus}}
+        <p class="text-center 
+        {{#if reportStatusBoolean}}
+        text-success
+        {{else}}
+        text-danger
+        {{/if}}">
+        {{reportStatus}}</p>
         {{/if}}
         </div>
     </div>

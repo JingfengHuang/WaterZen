@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 });
 
 // Variables
-let reportStatusBoolean = true;
+let reportStatusBoolean = null;
 
 exports.view = (req, res) => {
 
@@ -31,7 +31,7 @@ exports.view = (req, res) => {
     } else {
         res.render('report', { login: false, pageTitle: pageTitle, reportStatus: "Please log in to report water quality!", reportStatusBoolean: reportStatusBoolean, disabled: true });
     }
-    reportStatusBoolean = true;
+    reportStatusBoolean = null;
 }
 
 exports.reportQuality = (req, res) => {
@@ -95,6 +95,7 @@ exports.reportQuality = (req, res) => {
                 // If success then insert this report
                 if (!err) {
                     req.flash('reportStatus', 'Your report has been sent successfully!');
+                    reportStatusBoolean = true;
                     return res.redirect('/report');
                 } else {
                     console.log(err);
