@@ -1,8 +1,10 @@
+<link rel="stylesheet" href="/css/contribute.css">
+
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
         <h2 class="text-center">Contribute to Community</h2>
-        
+         <img src="/img/arrows.png" alt="arrows">
         <hr>
          {{#if contributeStatus}}
         <p class="text-center text-success">{{contributeStatus}}</p>
@@ -10,34 +12,36 @@
         </div>
     </div>
    
-    <form action="/contribute/data" method="post" id="contributeForm" encType="multipart/form-data">
-        <fieldset {{#if disabled}}disabled="disabled" {{/if}}>
-            <label for="placeName">Place Name</label>
-            <input id="placeName" name="placeName" type="text"> <br>
-            <label for="category">Category</label>
-            <input id="category" name="category" type="text"> <br>
-            <label for="location">Location</label>
-            <input id="location" name="location" type="text"> <br>
-            <label for="shortIntro">Short Introduction</label>
-            <textarea rows="3" id="shortIntro" name="shortIntro" placeholder="Say something about your data..."></textarea> <br>
-            <div class="row" id="contributionimg">
-                <div class="col-md-4 offset-md-4">
-                    <strong>Upload Image</strong>
-                    <input type="file" name="contributionimg" accept="image/*" />
+   <div class="col-md-4 offset-md-4">
+        <form action="/contribute/data" method="post" id="contributeForm" encType="multipart/form-data">
+            <fieldset {{#if disabled}}disabled="disabled" {{/if}}>
+                <label for="placeName">Place Name</label><br>
+                <input id="placeName" name="placeName" type="text"> <br>
+                <label for="category">Category</label><br>
+                <input id="category" name="category" type="text"> <br>
+                <label for="location">Location</label><br>
+                <input id="location" name="location" type="text"> <br>
+                <label for="shortIntro">Short Introduction</label> <br>
+                <textarea rows="3" id="shortIntro" name="shortIntro" placeholder="Say something about your data..."></textarea> <br>
+                <div id="contributionimg">
+                    <div class="col-md-4">
+                        <strong>Upload Image</strong>
+                        <input type="file" name="contributionimg" accept="image/*" />
+                    </div>
                 </div>
-            </div>
-            <label for="temperature">Temperature</label>
-            <input id="temperature" name="temperature" type="text"> <br>
-            <label for="turbidity">Turbidity</label>
-            <input id="turbidity" name="turbidity" type="text"> <br>
-            <label for="totalDissolved">Total Dissolved Solids</label>
-            <input id="totalDissolved" name="totalDissolved" type="text"> <br>
-            <label for="electricalCon">Electrical Conductivity</label>
-            <input id="electricalCon" name="electricalCon" type="text"> <br>
-            <label for="phV">pH Value</label>
-            <input id="phV" name="phV" type="text"> <br>
-             
-            <button type="submit">SUBMIT</button>
-        </fieldset>
-    </form>
+                <label for="temperature">Temperature</label><br>
+                <input id="temperature" name="temperature" type="text"> <br>
+                <label for="turbidity">Turbidity</label><br>
+                <input id="turbidity" name="turbidity" type="text"> <br>
+                <label for="totalDissolved">Total Dissolved Solids</label>
+                <input id="totalDissolved" name="totalDissolved" type="text"> <br>
+                <label for="electricalCon">Electrical Conductivity</label>
+                <input id="electricalCon" name="electricalCon" type="text"> <br>
+                <label for="phV">pH Value</label><br>
+                <input id="phV" name="phV" type="text"> <br>
+                
+                <button type="submit">SUBMIT</button>
+            </fieldset>
+        </form>
+    </div>
 </div>

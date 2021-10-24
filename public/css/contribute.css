@@ -1,0 +1,76 @@
+h2+img{
+    width: 3%;
+    margin-left: 48.5%;
+}
+
+.row hr{
+    background-color: #024f79; 
+    height: 3px; 
+    border: 0;
+}
+
+form label{
+    margin-top: 4%;
+    font-weight: bold;
+    color: #295166;
+    margin-right: 3%;
+    font-size: 1.1em;
+}
+
+strong{
+    color: #295166;
+    font-size: 1.05em;
+}
+
+
+form textarea, form #location{
+    width: 100%;
+}
+
+input{
+    width: 70%;
+}
+
+input, textarea{
+    border: none;
+	border-radius: 8px;
+    outline: 0;
+    padding: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box; 
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	background-color: #e5f0f1;
+    color:#6e777e;
+	-webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
+	box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
+}
+
+input:focus, textarea:focus{
+    background: #d4e6e9e0;
+    transition-duration: 0.25s;
+}
+
+#contributionimg input{
+    width: 250px;
+}
+
+button{
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 5%;
+    background-color: #295166;
+    color: white;
+    border: 2px solid #295166;
+    border-radius: 5px;
+    height: 35px;
+}
+
+button:hover{
+    background-color: #5c97b7; 
+    transition-duration: 0.25s;
+    border: 2px solid #5c97b7;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1), 0 3px 10px 0 rgba(0,0,0,0.1);
+}
+
