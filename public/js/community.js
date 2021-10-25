@@ -16,6 +16,7 @@ document.querySelectorAll('.container img').forEach(images => {
       let electricalConductivity = hiddenData[13].innerHTML;
       let pH = hiddenData[15].innerHTML;
       let date = hiddenData[17].innerHTML;
+      let level = hiddenData[19].innerHTML;
       document.getElementById("popup-placeName").innerHTML = placeName;
       document.getElementById("popup-location").innerHTML = "Location: " + location;
       document.getElementById("popup-latitude-longitude").innerHTML = "(" + latitude + ", " + longitude + ")";
@@ -25,6 +26,7 @@ document.querySelectorAll('.container img').forEach(images => {
       document.getElementById("popup-ec").innerHTML = electricalConductivity;
       document.getElementById("popup-pH").innerHTML = pH;
       document.getElementById("popup-date").innerHTML = date;
+      document.getElementById("popup-level").innerHTML = "Water Quality Level: " + level;
   }
 });
 
