@@ -64,6 +64,7 @@
     <p>{{alert}}</p>
     {{/if}}
 
+
     <form action="/official/clear" method="GET" id="clear">
         <button type="submit">Clear</button>
     </form>
@@ -73,45 +74,58 @@
 
 
 <div class='container'>
-    <div class="advance-selections">
-        <section class="row">
+    <h3>Data Table</h3>
+    <div class='d-flex flex-row justify-content-around align-items-center advance-selections'>
+        <div>
+            <section class="row">
+                {{#if selected}}
+                <p> <b>Advanced search: </b>
+                </p>
+                {{/if}}
+            </section>
+
+            <form action="/official/advanceSearch" method="POST" id="order">
+                {{#if selected}}
+                <dl class="filter-order">
+                    <dt>Order by: </dt>
+
+                    <dd>
+                        <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
+                                value="city">City/Region</label>
+                        <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
+                                value="name">Place</label>
+                        <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
+                                value="quality">Water Quality</label>
+                    </dd>
+
+                </dl>
+                {{/if}}
+            </form>
+
+            <dl id="filterLevel">
+                {{#if selected}}
+                <dt>Level: </dt>
+                <dd>
+                    <label><input onclick="showByLevel(this)" type="checkbox" name="level1">Level 1</label>
+                    <label><input onclick="showByLevel(this)" type="checkbox" name="level2">Level 2</label>
+                    <label><input onclick="showByLevel(this)" type="checkbox" name="level3">Level 3</label>
+                    <label><input onclick="showByLevel(this)" type="checkbox" name="level4">Level 4</label>
+                </dd>
+                {{/if}}
+            </dl>
+        </div>
+
+        <section class="d-flex flex-column">
             {{#if selected}}
-            <p> <b>Advanced search: </b>
-            </p>
+            <p><b>Water Level Description</b></p>
+            <label class="level1">Level 1: Best water quality</label>
+            <label class="level2">Level 2: Moderate water quality with 1 unqualified indicator</label>
+            <label class="level3">Level 3: Poor water quality with 2 unqualified indicators</label>
+            <label class="level4">Level 4: Worst water quality with 3 unqualified indicators</label>
+            <br>
+            <label>Indicators: Temperature, pH and Water Conductivity</label>
             {{/if}}
         </section>
-
-        <form action="/official/advanceSearch" method="POST" id="order">
-            {{#if selected}}
-            <dl class="filter-order">
-                <dt>Order by: </dt>
-
-                <dd>
-                    <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
-                            value="city">City/Region</label>
-                    <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
-                            value="name">Place</label>
-                    <label><input onclick="javascript:jump('/official/advanceSearch');" type="radio" name="orderBy"
-                            value="quality">Water Quality</label>
-                </dd>
-
-            </dl>
-
-            {{/if}}
-        </form>
-
-        <dl id="filterLevel">
-
-            {{#if selected}}
-            <dt>Level: </dt>
-            <dd>
-                <label><input onclick="showByLevel(this)" type="checkbox" name="level1">Level 1</label>
-                <label><input onclick="showByLevel(this)" type="checkbox" name="level2">Level 2</label>
-                <label><input onclick="showByLevel(this)" type="checkbox" name="level3">Level 3</label>
-                <label><input onclick="showByLevel(this)" type="checkbox" name="level4">Level 4</label>
-            </dd>
-            {{/if}}
-        </dl>
     </div>
 
 

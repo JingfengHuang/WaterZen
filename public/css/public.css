@@ -5,7 +5,7 @@ section {
 
 /* changed 17/10/2021 */
 #mapid {
-    top:-110px;
+    top:-79px;
     height: 69vh;
     width: 100%;
 }
@@ -91,10 +91,12 @@ section {
 .advance-selections dl {
     display: flex;
     margin: 10px;
+    margin-left: 0;
 }
 .advance-selections dt {
     font-family: initial;
-    padding: 0 15px 0;
+    padding: 0;
+    padding-right: 15px;
 }
 
 #filterLevel dt {
@@ -149,4 +151,20 @@ section {
 
 .show {
     display: flex;
+}
+
+.level1 {
+    color: green;
+}
+
+.level2 {
+    color:darksalmon;
+}
+
+.level3 {
+    color:crimson;
+}
+
+.level4 {
+    color:darkred;
 }
