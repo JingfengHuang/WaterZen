@@ -43,3 +43,9 @@ zone update 19/10/2021 Shanshan
 zone update 22/10/2021 Xueli
 	main.hbs
 	style.css 
+	
+zone update 25/10/2021 Xueli
+	community.hbs
+	community.css 
+	community.js
+	(具体改动我写在代码里面了）
