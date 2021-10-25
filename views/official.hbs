@@ -271,6 +271,7 @@
 
         let levels = e.parentElement.parentElement;
         let count = e.parentElement.parentElement.childElementCount;
+        let checked = false;
         for (let i = 0; i < count; i++) {
             let level = levels.children[i].children[0];
             let levelName;
@@ -278,9 +279,16 @@
                 levelName = '.' + level.name;
                 $(levelName).parent().show();
                 $("img" + levelName).show();
+                checked = true;
             }
         }
 
+        if (!checked) {
+        // show all data in chart
+        $(".main-info").show();
+        // show all marker
+        $("img.leaflet-marker-icon").show();
+        }
     }
 
 
