@@ -34,6 +34,7 @@ select, textarea{
     padding: 8px;
     padding-left: 20px;
     padding-right: 20px;
+    /*code snippt 1*/
     box-sizing: border-box; 
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box; 
@@ -41,6 +42,10 @@ select, textarea{
     color:#6e777e;
 	-webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
 	box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
+    /*end code snippet 1*/
+    /*author: Saran
+      link: https://www.sanwebe.com/2014/08/css-html-forms-designs
+      source: sanwebe.com */
 }
 
 select:focus, textarea:focus{

@@ -132,9 +132,14 @@ h5{
 
 #private:hover{
     background-size: 100% 119%;
-    filter:alpha(Opacity=80);
+    /*code snippet1 */
+    filter:alpha(Opacity=80); /*change the transparency*/
     -moz-opacity:0.8;
     opacity: 0.8;
+    /*End code snippet 1*/
+    /*author: 三味线的铲屎官
+     link:https://blog.csdn.net/u010965170/article/details/78729717
+     source: CSDN */
 }
 
 #product{
