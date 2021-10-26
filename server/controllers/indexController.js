@@ -10,6 +10,7 @@ const pool = mysql.createPool({
 });
 
 /** Logic */
+// Default page
 exports.view = (req, res) => {
     const {userEmail} = req.session;
     const pageTitle = "WaterZen | Home";
@@ -33,6 +34,7 @@ exports.view = (req, res) => {
     }
 }
 
+// Log out and return to home page
 exports.logout = (req, res) => {
     req.session.destroy(err => {
         // We can also clear out the cookie here. But even if we don't, the

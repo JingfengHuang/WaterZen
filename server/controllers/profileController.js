@@ -146,6 +146,7 @@ exports.upload = (req, res) => {
     })
 }
 
+// Load my reports
 exports.viewReports = (req, res) => {
     const path = url.parse(req.originalUrl, true);
 
@@ -216,6 +217,7 @@ exports.viewReports = (req, res) => {
     });
 }
 
+// Load my contribution
 exports.contribution = (req, res) => {
     pool.getConnection((err, connection) => {
         let nickname = "username";

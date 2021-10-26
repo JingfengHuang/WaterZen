@@ -87,6 +87,7 @@ exports.resetCheck = (req, res) => {
     res.render('checkEmail', { pageTitle: pageTitle, resetAlert: req.flash('resetAlert')});
 }
 
+// Verify reset password
 exports.resetVerify = (req, res) => {
     if (req.body.userEmail) {
         pool.getConnection((err, connection) => {
@@ -187,6 +188,7 @@ exports.resetPassword = (req, res) => {
     }
 }
 
+// Update password to database
 exports.resetPermission = [
                             check('password')
                             .trim()

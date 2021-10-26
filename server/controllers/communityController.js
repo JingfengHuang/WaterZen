@@ -13,6 +13,7 @@ const pool = mysql.createPool({
 let searchData = null;
 
 /** Logic */
+// Default page
 exports.view = (req, res) => {
 
     const userEmail = req.session.userEmail;
@@ -62,6 +63,7 @@ exports.view = (req, res) => {
     searchData = null;
 }
 
+// Search for places with keywords and return the query results
 exports.search = (req, res) => {
     let keyword = req.body.placeName;
     pool.getConnection((err, connection) => {
@@ -72,11 +74,13 @@ exports.search = (req, res) => {
     });
 }
 
+// Clear all search keywords and clear all query results
 exports.clear = (req, res) => {
     searchData = null;
     return res.redirect('/community');
 }
 
+// Calculaate water quality level, based on temperature, pH, and water conductivity.
 function calculateLevel(temperature, pH, waterConductivity) {
     result = 1;
     if (temperature >= 25) {

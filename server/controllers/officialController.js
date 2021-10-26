@@ -16,6 +16,7 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
+// Default official data page
 exports.view = (req, res) => {
 
     const userEmail = req.session.userEmail;
@@ -74,6 +75,7 @@ function onload() {
     }
 }
 
+// Basic search function, search the place name or city/region and select different states
 exports.basicSearch = (req, res) => {
     pool.getConnection((err, connection) => {
         let state = req.body.state;

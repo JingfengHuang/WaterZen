@@ -123,7 +123,7 @@ exports.validation = [check('userEmail')
     }
 }]
 
-
+// Verify email page
 exports.verifyEmail = (req, res) => {
     let path = url.parse(req.originalUrl, true);
 

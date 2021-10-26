@@ -7,6 +7,7 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
+// Default page
 exports.view = (req, res) => {
 
     const userEmail = req.session.userEmail;

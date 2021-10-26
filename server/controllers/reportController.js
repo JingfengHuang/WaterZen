@@ -34,6 +34,7 @@ exports.view = (req, res) => {
     reportStatusBoolean = null;
 }
 
+// Report quality issue and sent values to database.
 exports.reportQuality = (req, res) => {
 
     if (
