@@ -41,15 +41,15 @@ zone update 19/10/2021 Shanshan
 	official.hbs bug fix (level showing)
 	
 zone update 22/10/2021 Xueli
-	main.hbs
-	style.css 
+	main.hbs 【to GitHub✅】
+	style.css 【to GitHub✅】
 	
 zone update 25/10/2021 Xueli
-	community.hbs
-	community.css 
+	community.hbs 【to GitHub✅】
+	community.css 【to GitHub✅】
 	community.js
 	(具体改动我写在代码里面了）
 zone update 26/10/2021 Xueli
-	official.hbs
-	public.css
+	official.hbs【to GitHub✅】
+	public.css【to GitHub✅】
 	(具体改动我写在代码里面了）
