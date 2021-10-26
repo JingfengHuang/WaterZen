@@ -4,6 +4,7 @@ document.querySelectorAll('.container img').forEach(images => {
       document.querySelector('.popup-container').style.display = 'block';
       document.querySelector('.popup-container img').src = images.getAttribute('src');
       document.body.style.cssText = 'overflow:hidden';
+      
       let parent = images.parentNode.parentNode.parentNode;
       let placeName = parent.childNodes[1].childNodes[3].childNodes[1].innerHTML;
       let hiddenData = parent.childNodes[1].childNodes[3].childNodes[3].childNodes;
@@ -17,6 +18,7 @@ document.querySelectorAll('.container img').forEach(images => {
       let pH = hiddenData[15].innerHTML;
       let date = hiddenData[17].innerHTML;
       let level = hiddenData[19].innerHTML;
+
       document.getElementById("popup-placeName").innerHTML = placeName;
       document.getElementById("popup-location").innerHTML = "Location: " + location;
       document.getElementById("popup-latitude-longitude").innerHTML = "(" + latitude + ", " + longitude + ")";

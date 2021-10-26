@@ -12,7 +12,7 @@
                         <h3>Community</h3>
                     </div>
                     <button class="report">
-                        <a href="/contribute">Report</a>
+                        <a href="/contribute">Contribute Data</a>
                     </button>
                     
                     <div class="filter">
@@ -23,21 +23,22 @@
                             {{!-- <li data-filter=".aquaculture">Aquaculture</li> --}}
                         </ul>
                     </div>
-                    <div id="search-box">
-                        <form action="/community/search" method="post">
-                            <input type="text" name="placeName" placeholder="Type to search">
-                            <button type="submit"><ion-icon name="search" size="large"></ion-icon></button>
-                        </form>
-                        <form action="/community/clear" method="post">
-                            <button type="submit">View all</button>
-                        </form>
-                    </div> 
+                    
                 </div>
                 <!-- End -->
                 <!-- filter content -->
                 <div class="col-lg-9"> 
                     <div class="filter-content">
                         <div class="row grid">
+                            <div id="search-box">
+                                <form action="/community/search" method="post">
+                                    <button type="submit"><ion-icon name="search" size="large"></ion-icon></button>
+                                    <input type="text" name="placeName" placeholder="Type to search">
+                                </form>
+                                <form action="/community/clear" method="post">
+                                    <button type="submit" class="clear">Clear</button>
+                                </form>
+                            </div>
                             {{#if allData}}
                             {{#each allData}}
                             <div class="col-md-4 all {{category}}" id="id-{{id}}">
