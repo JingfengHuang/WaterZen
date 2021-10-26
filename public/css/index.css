@@ -40,7 +40,7 @@
 .animate .letter {
     display: inline-block;
     line-height: 1.35em;
-  }
+}
 
 
 .introduce{
@@ -132,7 +132,7 @@ h5{
 
 #private:hover{
     background-size: 100% 119%;
-    /*code snippet1 */
+    /*Start code snippet1 */
     filter:alpha(Opacity=80); /*change the transparency*/
     -moz-opacity:0.8;
     opacity: 0.8;
@@ -172,6 +172,7 @@ h5{
     color:mintcream;
     font-weight: bold;
     transition: 0.75s;
+    /*Start code snippet 2*/
     text-decoration: underline 0.125em transparent;
 }
 
@@ -179,6 +180,10 @@ h5{
     text-decoration-color: white;
     transition: 0.5s;
 }
+    /*End code snippet 2*/
+    /*author: Michelle Barker
+     link:https://codepen.io/michellebarker/pen/VwPvPMp
+     source: CodePen */
 
 .row h4:active, #public h4:active{
    color: #5c97b7;
