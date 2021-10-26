@@ -29,7 +29,7 @@
             <option value="SA">South Australia</option>
             <option value="NT">Northern Territory</option>
         </select>
-        <button type="submit" class="search-btn"><i class="bi bi-search"></i></button>
+        {{!-- <button type="submit" class="search-btn"><i class="bi bi-search"></i></button> --}}
 
 
         {{!-- <div class="expand-button">
@@ -45,6 +45,8 @@
                     onkeyup="fetchCity(this)"></input>
             </div>
 
+            <section id="searchResultsCity" class="container d-flex flex-column"></section>
+
             <div class="form-group">
                 <label for="searchPlace" value="null">Place name: </label>
                 <input id="searchPlace" class="form-control" name="searchPlace" type="text"
@@ -52,12 +54,10 @@
             </div>
 
 
-            <section id="searchResultsCity" class="container d-flex flex-column"></section>
             <section id="searchResultsPlaceName" class="container d-flex flex-column"></section>
         </div>
 
-
-
+        <button type="submit" class="search-btn">Search</button>
 
     </form>
     {{#if alert}}
@@ -77,12 +77,12 @@
     <h3>Data Table</h3>
     <div class='d-flex flex-row justify-content-around align-items-center advance-selections'>
         <div>
-            <section class="row">
+            {{!-- <section class="row">
                 {{#if selected}}
                 <p> <b>Advanced search: </b>
                 </p>
                 {{/if}}
-            </section>
+            </section> --}}
 
             <form action="/official/advanceSearch" method="POST" id="order">
                 {{#if selected}}

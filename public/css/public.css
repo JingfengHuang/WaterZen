@@ -35,28 +35,39 @@ section {
     margin-top: 40px;
     margin-left: 84px;
     z-index: 460;
-
+    padding:20px;
+    backdrop-filter: blur(20px);
+    border-radius: .5rem;
+    box-shadow: 0 0.5px 0.7px rgb(0 0 0 / 5%), 0 0.9px 1.7px rgb(0 0 0 / 10%), 0 1.8px 3.5px rgb(0 0 0 / 22%), 0 3.7px 7.3px rgb(0 0 0 / 20%), 0 10px 20px rgb(0 0 0 / 10%);
 }
 #selection {
     position:relative;
 }
 .form-select, .form-control {
-    width:20rem;
-    background-position: right 2.75rem center;
-    margin-top: 10px;
-    border-radius: 1.5rem;
+    border-radius: .5rem;
 }
+/* added ------6/10 */
+.top .button {
+    display: inherit;
+    justify-content: space-around;
+    margin-top: 3vh;
+}
+/* -------changed 26/10 */
 .search-btn {
     position: absolute;
-    top: 13px;
     right: 0;
-    width: 38px;
-    height: 38px;
     border: none;
-    border-radius: 1.5rem;
-    color:#5c97b7;
-    background: white;
-    font-size: 22px;
+    width: 5rem;
+    background-color: #5c97b7;
+    box-shadow: 0 6px 9px rgb(0 0 0 / 25%), 0 7px 6px rgb(0 0 0 / 22%);
+    color: white;
+    padding: 5px;
+    border-radius: 2.5rem;
+    margin: 2rem 0;
+}
+/* ------- added 26/10 */
+search-btn:hover{
+    background-color: #295166;
 }
 .top .expand-button {
     position:relative;
@@ -71,15 +82,28 @@ section {
     margin-top: 10px;
 }
 
+/* --------changed 26/10  */
 #clear button {
     border: none;
     width: 5rem;
-    background-color: #5c97b7;
-    box-shadow: 0 6px 9px rgb(0 0 0 / 25%), 0 7px 6px rgb(0 0 0 / 22%);
-    color: white;
+    background: none;
+    color: #5c97b7;
     padding: 5px;
-    border-radius: 2.5rem;
-    margin-top: 30px;
+    margin:2.5rem 0;
+}
+/* ---------added 26/10 */
+#clear button:hover {
+    color:black;
+}
+/* ---------added 26/10 */
+.flex-column {
+    /* position: absolute; */
+    background-color: white;
+    cursor: pointer;
+    z-index: 1;
+}
+.flex-column p:hover{
+    background-color: #e7e7e6;
 }
 
 /* container part */
@@ -151,6 +175,29 @@ section {
 
 .show {
     display: flex;
+}
+
+/* added 26/10  */
+.level-infor {
+    background: none;
+    color: white;
+    border: none;
+}
+
+/* added 26/10  */
+@media screen and (max-width:900px)  {
+    .top{
+        position:initial;
+        margin:0 ;
+        z-index:0;
+        box-shadow:none;
+        backdrop-filter: none;
+        
+    }
+    #mapid {
+        top: 40px;
+        margin-bottom: 40px;
+    }
 }
 
 .level1 {
