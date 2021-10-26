@@ -34,7 +34,7 @@ select, textarea{
     padding: 8px;
     padding-left: 20px;
     padding-right: 20px;
-    /*code snippt 1*/
+    /*Start code snippt 1*/
     box-sizing: border-box; 
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box; 
@@ -42,7 +42,7 @@ select, textarea{
     color:#6e777e;
 	-webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
 	box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
-    /*end code snippet 1*/
+    /*End code snippet 1*/
     /*author: Saran
       link: https://www.sanwebe.com/2014/08/css-html-forms-designs
       source: sanwebe.com */
@@ -82,6 +82,7 @@ input[type=checkbox]{
     width: 0.1%;
 }
 
+/*Start code snippet 2*/
 input[type=checkbox] + label:before {
     position:absolute;
     left: 35.35%;
@@ -114,6 +115,10 @@ input[type=checkbox]:checked + label:before {
 	box-shadow: 0 2px 0 rgba(0,0,0,0.03) inset;
     border: none;
 }
+/*End code snippet 2*/
+/*author: zFunx
+link: https://codepen.io/zFunx/pen/dWbevd
+source: CodePen */
 
 .g-recaptcha{
     padding-left: 7%;

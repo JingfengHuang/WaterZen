@@ -21,7 +21,12 @@ hr+.row{
     width: 80%;
     margin-left: 10%;
     border-radius: 10px;
+    /*Start code snippet 1*/
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    /*End code snippet 1*/
+    /*author: unknown
+    Link: https://getcssscan.com/css-box-shadow-examples
+    Source: CSS Scan*/
 }
 
 .row .col-md-5:first-child{
@@ -81,7 +86,12 @@ button+p{
     width: 49%;
     border: 1px solid rgb(212, 216, 219);
     border-radius: 10px;
+    /*Start code snippet 2*/
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    /*End code snippet 2*/
+    /*author: unknown
+    Link: https://getcssscan.com/css-box-shadow-examples
+    Source: CSS Scan*/
 }
 
 #add{
