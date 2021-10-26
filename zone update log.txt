@@ -49,3 +49,7 @@ zone update 25/10/2021 Xueli
 	community.css 
 	community.js
 	(具体改动我写在代码里面了）
+zone update 26/10/2021 Xueli
+	official.hbs
+	public.css
+	(具体改动我写在代码里面了）
