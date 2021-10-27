@@ -48,8 +48,10 @@ zone update 25/10/2021 Xueli
 	community.hbs 【to GitHub✅】
 	community.css 【to GitHub✅】
 	community.js
-	(具体改动我写在代码里面了）
+
 zone update 26/10/2021 Xueli
 	official.hbs【to GitHub✅】
 	public.css【to GitHub✅】
-	(具体改动我写在代码里面了）
+
+zone update 27/10/2021 Wei-Ning
+	Full update
