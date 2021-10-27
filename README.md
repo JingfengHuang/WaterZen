@@ -29,9 +29,13 @@ Before starting the WaterZen project on local
 
 2.2) Open the terminal in VScode (Make sure the terminal path is at the project directory)
 
-2.3) Type: "npm start"
+2.3) Type: "npm start" in terminal
 
 
 **If there's no error until now, then you should be good to go!**
 
 **Type "http://localhost:5000/" into your browser and start using WaterZen!😉**
+
+
+**To Stop the Project**
+Return back to VS terminal and press "Ctrl + C" to stop the project
