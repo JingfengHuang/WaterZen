@@ -9,8 +9,8 @@ int DS18S20_Pin = 12; //DS18S20 Signal pin on digital 2
 OneWire ds(DS18S20_Pin); // on digital pin 2
 
 // GPS/BDS
-//#include <SoftwareSerial.h> 
-//SoftwareSerial GpsSerial(7, 6); //RX,TX
+#include <SoftwareSerial.h> 
+SoftwareSerial GpsSerial(7, 6); //RX,TX
  
 // TDS
 #define TdsSensorPin A0
@@ -216,3 +216,123 @@ int getMedianNum(int bArray[], int iFilterLen)
     bTemp = (bTab[iFilterLen / 2] + bTab[iFilterLen / 2 - 1]) / 2;
   return bTemp;
 }
+void Error_Flag(int num)
+{
+ Serial.print("ERROR");
+ Serial.println(num);
+ while (1)
+ {
+ digitalWrite(13, HIGH);
+ delay(500);
+ digitalWrite(13, LOW);
+ delay(500);
+ }
+}
+void print_GpsDATA()
+{
+ if (Save_Data.ParseData_Flag)
+ {
+ Save_Data.ParseData_Flag = false;
+
+ Serial.print("Save_Data.UTCTime = ");
+ Serial.println(Save_Data.UTCTime);
+ if(Save_Data.Usefull_Flag)
+ {
+ Save_Data.Usefull_Flag = false;
+ Serial.print("Save_Data.latitude = ");
+ Serial.println(Save_Data.latitude);
+ Serial.print("Save_Data.N_S = ");
+ Serial.println(Save_Data.N_S);
+ Serial.print("Save_Data.longitude = ");
+ Serial.println(Save_Data.longitude);
+ Serial.print("Save_Data.E_W = ");
+ Serial.println(Save_Data.E_W);
+ }
+ else
+ {
+ Serial.println("GPS DATA is not usefull!");
+ }
+ }
+}
+void parse_GpsDATA()
+{
+ char *subString;
+ char *subStringNext;
+ if (Save_Data.GetData_Flag)
+ {
+ Save_Data.GetData_Flag = false;
+ Serial.println("************************");
+ Serial.println(Save_Data.GPS_DATA);
+
+ for (int i = 0 ; i <= 6 ; i++)
+ {
+ if (i == 0)
+ {
+ if ((subString = strstr(Save_Data.GPS_DATA, ",")) == NULL)
+ Error_Flag(1); // detect error
+ }
+ else
+ {
+ subString++;
+ if ((subStringNext = strstr(subString, ",")) != NULL)
+ {
+ char usefullBuffer[2];
+ switch(i)
+ {
+ case 1:memcpy(Save_Data.UTCTime, subString, subStringNext -
+subString);break; // get UTC standard time
+ case 2:memcpy(usefullBuffer, subString, subStringNext - subString);break;
+// get location status
+ case 3:memcpy(Save_Data.latitude, subString, subStringNext -
+subString);break; //// get longitude information
+ case 4:memcpy(Save_Data.N_S, subString, subStringNext - subString);break;
+// get N/S
+ case 5:memcpy(Save_Data.longitude, subString, subStringNext -
+subString);break; // get latitude information
+ case 6:memcpy(Save_Data.E_W, subString, subStringNext - subString);
+ break;
+ // get E/W
+ default:break;
+ }
+ subString = subStringNext;
+ Save_Data.ParseData_Flag = true;
+ if(usefullBuffer[0] == 'A')
+ Save_Data.Usefull_Flag = true;
+ else if(usefullBuffer[0] == 'V')
+ Save_Data.Usefull_Flag = false;
+ }
+ else
+ {
+ Error_Flag(2); // detect error
+ }
+ }
+ }
+ }
+}
+void Read_Gps()
+{
+ while (GpsSerial.available())
+ {
+ gpsRxBuffer[gpsRxLength++] = GpsSerial.read();
+ if (gpsRxLength == gpsRxBufferLength)RST_GpsRxBuffer();
+ }
+ char* GPS_DATAHead;
+ char* GPS_DATATail;
+ if ((GPS_DATAHead = strstr(gpsRxBuffer, "$GPRMC,")) != NULL || (GPS_DATAHead =
+strstr(gpsRxBuffer, "$GNRMC,")) != NULL )
+ {
+ if (((GPS_DATATail = strstr(GPS_DATAHead, "\r\n")) != NULL) && (GPS_DATATail >
+GPS_DATAHead))
+ {
+ memcpy(Save_Data.GPS_DATA, GPS_DATAHead, GPS_DATATail - GPS_DATAHead);
+ Save_Data.GetData_Flag = true;
+ RST_GpsRxBuffer();
+ }
+ }
+}
+void RST_GpsRxBuffer(void)
+{
+  memset(gpsRxBuffer, 0, gpsRxBufferLength); // reset buffer memorty
+  gpsRxLength = 0;
+}
+
