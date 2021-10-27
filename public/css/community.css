@@ -196,13 +196,13 @@ body{
   transform: rotate(90deg);
 } 
 /* changed 25/10 */
-.popup-container .container .col-xs-6 #pop-img{
+.popup-container .container .col-xs-6 .pop-img{
   text-align: center;
   margin-top: 10px;
   width:100%;
 }
 /* changed 25/10 */
-.popup-container .container .col-xs-6 #pop-img img{
+.popup-container .container .col-xs-6 .pop-img img{
   width: 70%;
 }
 

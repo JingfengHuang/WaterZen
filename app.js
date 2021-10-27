@@ -73,7 +73,7 @@ app.use(session({
 
 // file upload configure
 app.use(fileUpload({
-    limits: {fileSize: 50 * 1024 * 1024 },
+    limits: {fileSize: 50 * 1920 * 1080 },
 }));
 
 // flash message configure

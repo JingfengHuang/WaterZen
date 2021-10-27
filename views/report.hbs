@@ -8,13 +8,11 @@
         <img src="/img/arrows.png" alt="arrows">
         <hr>
         {{#if reportStatus}}
-        <p class="text-center 
-        {{#if reportStatusBoolean}}
-        text-success
-        {{else}}
-        text-danger
-        {{/if}}">
-        {{reportStatus}}</p>
+        <p class="text-center text-danger"> {{reportStatus}}</p>
+        {{/if}}
+
+        {{#if reportSuccess}}
+        <p class="text-center text-success"> {{reportSuccess}}</p>
         {{/if}}
         </div>
     </div>

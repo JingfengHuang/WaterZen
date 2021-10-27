@@ -84,7 +84,7 @@ exports.verification = (req, res) => {
 
 exports.resetCheck = (req, res) => {
     const pageTitle = "Reset Password";
-    res.render('checkEmail', { pageTitle: pageTitle, resetAlert: req.flash('resetAlert')});
+    res.render('checkEmail', { pageTitle: pageTitle, resetAlert: req.flash('resetAlert') });
 }
 
 // Verify reset password
@@ -100,7 +100,7 @@ exports.resetVerify = (req, res) => {
 
                 // Generate a reset token
                 let token = crypto.randomBytes(20).toString('hex');
-                
+
                 let mailOptions = {
                     from: process.env.MAIL,
                     to: req.body.userEmail,
@@ -118,38 +118,37 @@ exports.resetVerify = (req, res) => {
                         res.redirect('/login/resetCheck');
                     } else {
                         console.log('Email sent: ' + info.response);
+                        connection.query('SELECT * FROM reset WHERE userEmail = ?', [req.body.userEmail], (err, rows) => {
+                            if (!err && rows.length === 0) {
+                                connection.query('INSERT INTO reset SET userEmail = ?, reset_token= ?, timestamp = ?', [req.body.userEmail, token, new Date()], (err, rows) => {
+
+                                    if (err) {
+                                        console.log(err);
+                                        req.flash('resetAlert', 'Reset Failed. Please contact IT team.');
+                                        return res.redirect('/login/resetCheck');
+                                    }
+                                });
+                            } else if (!err && rows.length > 0) {
+                                connection.query('UPDATE reset SET reset_token = ?, timestamp = ? WHERE userEmail = ?', [token, new Date(), req.body.userEmail], (err, rows) => {
+
+
+                                    if (err) {
+                                        console.log(err);
+                                        req.flash('resetAlert', 'Reset Failed. Please contact IT team.');
+                                        return res.redirect('/login/resetCheck');
+                                    }
+                                });
+                            } else {
+                                console.log(err);
+                                req.flash('resetAlert', 'Reset Failed. Please contact IT team.');
+                                return res.redirect('/login/resetCheck');
+                            }
+
+                            req.flash('resetAlert', 'Please check your email to get instructions for resetting your password.');
+                            return res.redirect('/login/resetCheck');
+                        })
                     }
                 });
-
-                connection.query('SELECT * FROM reset WHERE userEmail = ?', [req.body.userEmail], (err, rows) => {
-                    if (!err && rows.length === 0) {
-                        connection.query('INSERT INTO reset SET userEmail = ?, reset_token= ?, timestamp = ?', [req.body.userEmail, token, new Date()], (err, rows) => {
-
-                            if (err) {
-                                console.log(err);
-                                req.flash('resetAlert', 'Reset Failed. Please contact IT team.');
-                                return res.redirect('/login/resetCheck');
-                            }
-                        });
-                    } else if (!err && rows.length > 0) {
-                        connection.query('UPDATE reset SET reset_token = ?, timestamp = ? WHERE userEmail = ?', [token, new Date(), req.body.userEmail], (err, rows) => {
-
-
-                            if (err) {
-                                console.log(err);
-                                req.flash('resetAlert', 'Reset Failed. Please contact IT team.');
-                                return res.redirect('/login/resetCheck');
-                            }
-                        });
-                    } else {
-                        console.log(err);
-                        req.flash('resetAlert', 'Reset Failed. Please contact IT team.');
-                        return res.redirect('/login/resetCheck');
-                    }
-
-                    req.flash('resetAlert', 'Please check your email to get instructions for resetting your password.');
-                    return res.redirect('/login/resetCheck');
-                })
             });
         });
     }
@@ -166,7 +165,7 @@ exports.resetPassword = (req, res) => {
             if (err) throw err; //not connected
 
             connection.query('SELECT * FROM reset WHERE reset_token = ?', [token], (err, rows) => {
-                
+
                 let requestTime = Math.round(new Date(rows[0].timestamp).getTime() / 1000);
                 let currentTime = Math.round(new Date().getTime() / 1000);
 
@@ -177,7 +176,7 @@ exports.resetPassword = (req, res) => {
                 }
 
                 if (!err) {
-                    res.render('reset', {pageTitle: pageTitle, userEmail: rows[0].userEmail, token: token, validationError: req.flash('validationError')});
+                    res.render('reset', { pageTitle: pageTitle, userEmail: rows[0].userEmail, token: token, validationError: req.flash('validationError') });
                 } else {
                     res.send('<h1 style="text-align: center">Reset Error, please contact IT Team.</h1>')
                 }
@@ -190,44 +189,44 @@ exports.resetPassword = (req, res) => {
 
 // Update password to database
 exports.resetPermission = [
-                            check('password')
-                            .trim()
-                            .isLength({ min: 6, max:16 })
-                            .withMessage('Password must be longer than 6 characters!'),
-                            check('confirm')
-                            .isLength({ min: 6 })
-                            .withMessage('Confirm password is required.')
-                            .custom(async (confirmPassword, {req}) => {
-                                const password = req.body.password
+    check('password')
+        .trim()
+        .isLength({ min: 6, max: 16 })
+        .withMessage('Password must be longer than 6 characters!'),
+    check('confirm')
+        .isLength({ min: 6 })
+        .withMessage('Confirm password is required.')
+        .custom(async (confirmPassword, { req }) => {
+            const password = req.body.password
 
-                                /** Inspired by https://www.geeksforgeeks.org/how-to-compare-password-and-confirm-password-inputs-using-express-validator */
-                                if(password !== confirmPassword){
-                                throw new Error('Passwords must match')
-                                }
-                            }),(req, res) => {
+            /** Inspired by https://www.geeksforgeeks.org/how-to-compare-password-and-confirm-password-inputs-using-express-validator */
+            if (password !== confirmPassword) {
+                throw new Error('Passwords must match')
+            }
+        }), (req, res) => {
 
-    const token = req.body.token;
-    const errors = validationResult(req);
+            const token = req.body.token;
+            const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-        console.log(errors.array());
-        req.flash('validationError', errors.array());
+            if (!errors.isEmpty()) {
+                console.log(errors.array());
+                req.flash('validationError', errors.array());
 
-        return res.redirect(`/login/resetPassword/?verify=${token}`);
-    } else {
-        pool.getConnection((err, connection) => {
-            if (err) throw err; //not connected
+                return res.redirect(`/login/resetPassword/?verify=${token}`);
+            } else {
+                pool.getConnection((err, connection) => {
+                    if (err) throw err; //not connected
 
-            const password = bcrypt.hashSync(req.body.password, 10);
+                    const password = bcrypt.hashSync(req.body.password, 10);
 
-            connection.query('UPDATE user SET password = ? WHERE email = ?', [password, req.body.userEmail], (err, rows) => {
+                    connection.query('UPDATE user SET password = ? WHERE email = ?', [password, req.body.userEmail], (err, rows) => {
 
-                if (!err) {
-                    res.send('<h1 style="text-align: center">Reset Success! Now you can log in from <a href="/login">here</a>.</h1>');
-                } else {
-                    res.send('<h1 style="text-align: center">Reset Error, please contact IT Team.</h1>')
-                }
-            });
-        });
-    }
-}]
+                        if (!err) {
+                            res.send('<h1 style="text-align: center">Reset Success! Now you can log in from <a href="/login">here</a>.</h1>');
+                        } else {
+                            res.send('<h1 style="text-align: center">Reset Error, please contact IT Team.</h1>')
+                        }
+                    });
+                });
+            }
+        }]

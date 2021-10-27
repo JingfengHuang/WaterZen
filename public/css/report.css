@@ -9,9 +9,9 @@ h2+img{
     border: 0;
 }
 
-hr + .text-center{
+/* hr + .text-center{
     color: rgb(199, 5, 5);
-}
+} */
 
 img{
     width: 70%;
