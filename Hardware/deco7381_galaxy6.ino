@@ -282,11 +282,11 @@ void parse_GpsDATA()
  case 1:memcpy(Save_Data.UTCTime, subString, subStringNext -
 subString);break; // get UTC standard time
  case 2:memcpy(usefullBuffer, subString, subStringNext - subString);break;
-//获取定位状态
+// get location status
  case 3:memcpy(Save_Data.latitude, subString, subStringNext -
 subString);break; //// get longitude information
  case 4:memcpy(Save_Data.N_S, subString, subStringNext - subString);break;
-//获取 N/S
+// get N/S
  case 5:memcpy(Save_Data.longitude, subString, subStringNext -
 subString);break; // get latitude information
  case 6:memcpy(Save_Data.E_W, subString, subStringNext - subString);
