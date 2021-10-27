@@ -37,9 +37,7 @@ exports.view = (req, res) => {
 // Log out and return to home page
 exports.logout = (req, res) => {
     req.session.destroy(err => {
-        // We can also clear out the cookie here. But even if we don't, the
-        // session is already destroyed at this point, so either way, the
-        // user won't be able to authenticate with that same cookie again.
+        // destroy session
         res.clearCookie('sid');
         res.redirect('/');
     })
