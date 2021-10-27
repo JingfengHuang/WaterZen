@@ -38,4 +38,5 @@ Before starting the WaterZen project on local
 
 
 **To Stop the Project**
+
 Return back to VS terminal and press "Ctrl + C" to stop the project
