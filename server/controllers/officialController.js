@@ -51,30 +51,6 @@ exports.view = (req, res) => {
     }
 }
 
-
-function onbeforeunload() {
-    console.log("onbeforeunload");
-    var scrollPos;
-    if (typeof window.pageYOffset != 'undefined') {
-        scrollPos = window.pageYOffset;
-    } else if (typeof document.compatMode != 'undefined' &&
-        document.compatMode != 'BackCompat') {
-        scrollPos = document.documentElement.scrollTop;
-    } else if (typeof document.body != 'undefined') {
-        scrollPos = document.body.scrollTop;
-    }
-    document.cookie = "scrollTop=" + scrollPos; //存储滚动条位置到cookies中
-}
-
-function onload() {
-    console.log("onload");
-    if (document.cookie.match(/scrollTop=([^;]+)(;|$)/) != null) {
-        var arr = document.cookie.match(/scrollTop=([^;]+)(;|$)/); //cookies中不为空，则读取滚动条位置
-        document.documentElement.scrollTop = parseInt(arr[1]);
-        document.body.scrollTop = parseInt(arr[1]);
-    }
-}
-
 // Basic search function, search the place name or city/region and select different states
 exports.basicSearch = (req, res) => {
     pool.getConnection((err, connection) => {
@@ -175,6 +151,8 @@ exports.basicSearch = (req, res) => {
         });
     });
 }
+
+/* Advance search for order function. */
 exports.advanceSearch = (req, res) => {
     pool.getConnection((err, connection) => {
         let orderBy = req.body.orderBy;
@@ -183,12 +161,11 @@ exports.advanceSearch = (req, res) => {
             connection.query('SELECT * FROM select_state ORDER BY `city` ASC', (err, rows) => {
                 if (!err) {
                     results = rows;
+                    // for show and calculate level
                     results.forEach(element => 
                         element.level = calculateLevel(element.temperature, element.pH, element.eletricalConductivity)
                     );
                     res.redirect('/official');
-                    // used with ajax to get ordered data
-                    // res.send(results);
 
                 } else {
                     console.log(err);
@@ -229,6 +206,7 @@ exports.advanceSearch = (req, res) => {
     });
 }
 
+/* show recommend data in offical page */
 exports.recommendation = (req, res) => {
     selected = {
         "state": null,
@@ -247,12 +225,14 @@ exports.recommendation = (req, res) => {
     });
 }
 
+/* clear button, to clear all reset the search function */
 exports.clear = (req, res) => {
     selected = null;
     results = null;
     res.redirect('/official');
 }
 
+/* calculate level based on exsit data */
 function calculateLevel(temperature, pH, waterConductivity) {
     result = 1;
     if (temperature >= 25) {

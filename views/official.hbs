@@ -268,13 +268,13 @@
         order.submit();
     }
 
-    // scroll to offset
-    var offset = localStorage.getItem("offsetTop");
-
-    $("HTML, BODY").animate({
-        scrollTop: offset
-    }, 0);
-
+    /* Click and show more infomation*/
+    $(".main-info").off().on({
+        click: function () {
+            this.nextElementSibling.classList.toggle("show");
+            this.nextElementSibling.nextElementSibling.classList.toggle("show");
+        }
+    })
 
     /* -----------------------------------------------------for show and hide level -----------------------------------------------------------------------*/
     function showByLevel(e) {
@@ -298,14 +298,19 @@
         }
 
         if (!checked) {
-        // show all data in chart
-        $(".main-info").show();
-        // show all marker
-        $("img.leaflet-marker-icon").show();
+            // show all data in chart
+            $(".main-info").show();
+            // show all marker
+            $("img.leaflet-marker-icon").show();
         }
     }
 
+    // scroll to offset
+    var offset = localStorage.getItem("offsetTop");
 
+    $("HTML, BODY").animate({
+        scrollTop: offset
+    }, 0);
     /* -----------------------------------------------------restore selected content -----------------------------------------------------------------------*/
 
     let selected = "{{selected}}";
@@ -348,76 +353,6 @@
             }
         }
     }
-
-    function fetchCity(e) {
-        const searchResults = document.getElementById("searchResultsCity");
-        const selectedState = document.getElementById("select-state").value;
-        let match1 = e.value.match(/^[a-zA-Z ]*/);
-        let match2 = e.value.match(/\s*/);
-        if (match2[0] === e.value) {
-            searchResults.innerHTML = "";
-            return;
-        }
-        if (match1[0] === e.value) {
-            fetch('getCity', {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: e.value, state: selectedState })
-            }).then(res => res.json()).then(data => {
-                let payload = data.payload;
-                searchResults.innerHTML = "";
-                if (payload.length < 1) {
-                    searchResults.innerHTML = "<p>Sorry, nothing found.</p>";
-                    return;
-                }
-                payload.forEach((item, index) => {
-                    searchResults.innerHTML += `<p class="cityOptions" id="option-${item.city}" onclick = "sendCityValue(this.id)">${item.city}</p>`;
-                });
-            });
-            return;
-        }
-        searchResults.innerHTML = "";
-    }
-
-    function fetchPlaceName(e) {
-        const searchResults = document.getElementById("searchResultsPlaceName");
-        const selectedState = document.getElementById("select-state").value;
-        let match1 = e.value.match(/^[a-zA-Z ]*/);
-        let match2 = e.value.match(/\s*/);
-        if (match2[0] === e.value) {
-            searchResults.innerHTML = "";
-            return;
-        }
-        if (match1[0] === e.value) {
-            fetch('getPlaceName', {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: e.value, state: selectedState })
-            }).then(res => res.json()).then(data => {
-                let payload = data.payload;
-                console.log(payload);
-                searchResults.innerHTML = "";
-                if (payload.length < 1) {
-                    searchResults.innerHTML = "<p>Sorry, nothing found.</p>";
-                    return;
-                }
-                payload.forEach((item, index) => {
-                    searchResults.innerHTML += `<p class="placeNameOptions" id="option-${item.placeName}" onclick = "sendPlaceNameValue(this.id)">${item.placeName}</p>`;
-                });
-            });
-            return;
-        }
-        searchResults.innerHTML = "";
-    }
-
-
-    /* Click and show more infomation*/
-    $(".main-info").off().on({
-        click: function () {
-            this.nextElementSibling.classList.toggle("show");
-            this.nextElementSibling.nextElementSibling.classList.toggle("show");
-        }
-    })
 
 
 
@@ -566,7 +501,7 @@
                 console.error("No correspond state");
 
         }
-        
+
         document.querySelector(`input[name="searchCity"]`).value = null;
         document.querySelector(`input[name="searchPlace"]`).value = null;
 
@@ -699,7 +634,10 @@
             let marker = L.marker([latitude, longitude], { icon: icon }).addTo(mymap);
 
             marker._icon.classList.add(levelClass);
-            marker.bindPopup("<div>" + `${$(mainInfo).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(mainData).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(detailInfo).html().replaceAll('div', 'span')}` + "</div><div>" + `${$(detailData).html().replaceAll('div', 'span')}` + "</div>", { minWidth: '800' });
+            marker.bindPopup("<div>" + `${$(mainInfo).html().replaceAll('div', 'span')}` + 
+                "</div><div>" + `${$(mainData).html().replaceAll('div', 'span')}` + "</div><div>" + 
+                    `${$(detailInfo).html().replaceAll('div', 'span')}` + "</div><div>" + 
+                        `${$(detailData).html().replaceAll('div', 'span')}` + "</div>", { minWidth: '800' });
             markers.push(marker);
 
         }
@@ -711,12 +649,80 @@
         }
     }, 100)
 
+
+    /* ------------------------------------------------------------for search hint -----------------------------------------------------------------------*/
+
+    // keyboard event to fetch city
+    function fetchCity(e) {
+        const searchResults = document.getElementById("searchResultsCity");
+        const selectedState = document.getElementById("select-state").value;
+        let match1 = e.value.match(/^[a-zA-Z ]*/);
+        let match2 = e.value.match(/\s*/);
+        if (match2[0] === e.value) {
+            searchResults.innerHTML = "";
+            return;
+        }
+        if (match1[0] === e.value) {
+            fetch('getCity', {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ payload: e.value, state: selectedState })
+            }).then(res => res.json()).then(data => {
+                let payload = data.payload;
+                searchResults.innerHTML = "";
+                if (payload.length < 1) {
+                    searchResults.innerHTML = "<p>Sorry, nothing found.</p>";
+                    return;
+                }
+                payload.forEach((item, index) => {
+                    searchResults.innerHTML += `<p class="cityOptions" id="option-${item.city}" onclick = "sendCityValue(this.id)">${item.city}</p>`;
+                });
+            });
+            return;
+        }
+        searchResults.innerHTML = "";
+    }
+
+    // keyboard event to fetch place
+    function fetchPlaceName(e) {
+        const searchResults = document.getElementById("searchResultsPlaceName");
+        const selectedState = document.getElementById("select-state").value;
+        let match1 = e.value.match(/^[a-zA-Z ]*/);
+        let match2 = e.value.match(/\s*/);
+        if (match2[0] === e.value) {
+            searchResults.innerHTML = "";
+            return;
+        }
+        if (match1[0] === e.value) {
+            fetch('getPlaceName', {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ payload: e.value, state: selectedState })
+            }).then(res => res.json()).then(data => {
+                let payload = data.payload;
+                console.log(payload);
+                searchResults.innerHTML = "";
+                if (payload.length < 1) {
+                    searchResults.innerHTML = "<p>Sorry, nothing found.</p>";
+                    return;
+                }
+                payload.forEach((item, index) => {
+                    searchResults.innerHTML += `<p class="placeNameOptions" id="option-${item.placeName}" onclick = "sendPlaceNameValue(this.id)">${item.placeName}</p>`;
+                });
+            });
+            return;
+        }
+        searchResults.innerHTML = "";
+    }
+
+    // click event to hide all city hint
     function sendCityValue(clicked_id) {
         var city = clicked_id.substring(7);
         document.getElementById("searchCity").value = city;
         document.getElementById("searchResultsCity").innerHTML = "";
     }
 
+    // click event to hide all place hint
     function sendPlaceNameValue(clicked_id) {
         var placeName = clicked_id.substring(7);
         document.getElementById("searchPlace").value = placeName;
