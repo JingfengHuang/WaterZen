@@ -10,9 +10,6 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
-// Variables
-let reportStatusBoolean = null;
-
 exports.view = (req, res) => {
 
     const userEmail = req.session.userEmail;
@@ -24,14 +21,13 @@ exports.view = (req, res) => {
 
             connection.query('SELECT * FROM user WHERE email = ?', [userEmail], (err, rows) => {
                 if (!err) {
-                    res.render('report', { login: true, pageTitle: pageTitle, nickname: rows[0].nickname, reportStatus: req.flash('reportStatus'), reportStatusBoolean: reportStatusBoolean, avatar: rows[0].avatarPath });
+                    res.render('report', { login: true, pageTitle: pageTitle, nickname: rows[0].nickname, reportStatus: req.flash('reportStatus'), reportSuccess: req.flash('reportSuccess'), avatar: rows[0].avatarPath });
                 }
             });
         });
     } else {
-        res.render('report', { login: false, pageTitle: pageTitle, reportStatus: "Please log in to report water quality!", reportStatusBoolean: reportStatusBoolean, disabled: true });
+        res.render('report', { login: false, pageTitle: pageTitle, reportStatus: "Please log in to report water quality!", disabled: true });
     }
-    reportStatusBoolean = null;
 }
 
 // Report quality issue and sent values to database.
@@ -43,11 +39,9 @@ exports.reportQuality = (req, res) => {
         req.body['g-recaptcha-response'] === null
     ) {
         req.flash('reportStatus', "Please select captcha!");
-        reportStatusBoolean = false;
         return res.redirect('/report');
     } else if (!req.body.isAgreePolicy) {
         req.flash('reportStatus', "Please agree to our private policy to report!");
-        reportStatusBoolean = false;
         return res.redirect('/report');
     } else if (
         req.body.state === 'null' ||
@@ -57,7 +51,6 @@ exports.reportQuality = (req, res) => {
         req.body.qualityIssue === ''
     ) {
         req.flash('reportStatus', "Please fill in all the required field!");
-        reportStatusBoolean = false;
         return res.redirect('/report');
     } else if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
@@ -74,7 +67,6 @@ exports.reportQuality = (req, res) => {
         // if not successful
         if (body.success !== undefined && !body.success) {
             req.flash('reportStatus', "Captcha verification failed! Please try again!");
-            reportStatusBoolean = false;
             return res.redirect('/report');
         }
     });
@@ -95,13 +87,11 @@ exports.reportQuality = (req, res) => {
             connection.query("INSERT INTO report (userID, isPrivate, title, state, city, preciseLocation, latitude, longitude, details, reportimg, status, governmentID, reply) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [req.session.userID, isPrivate, qualityTitle, state, city, preciseLocation, 0, 0, qualityIssue, reportimg.name, "Submitted for Review", 0, "No reply yet."], (err, rows) => {
                 // If success then insert this report
                 if (!err) {
-                    req.flash('reportStatus', 'Your report has been sent successfully!');
-                    reportStatusBoolean = true;
+                    req.flash('reportSuccess', 'Your report has been sent successfully!');
                     return res.redirect('/report');
                 } else {
                     console.log(err);
                     req.flash('reportStatus', "Couldn't send report. Please try again later!");
-                    reportStatusBoolean = false;
                     return res.redirect('/report');
                 }
             });
