@@ -1,6 +1,9 @@
 # WaterZen
 DECO7381 Assignment - Team Galaxy 6
 
+--------------------------------------------------------------------------------------------
+**SOFTWARE PART**
+
 Before starting the WaterZen project on local
 
 **1) Windows Computer is recommended!**
@@ -40,3 +43,42 @@ Before starting the WaterZen project on local
 **To Stop the Project**
 
 Return back to VS terminal and press "Ctrl + C" to stop the project
+
+--------------------------------------------------------------------------------------------
+**HARDWARE PART**
+
+********(For WaterZen Users)********
+Before starting the WaterZen Water Monitor Device (For WaterZen Users)
+
+**1) Make sure you have WiFi or Mobile Hotspot.**
+
+⏬Now Let's begin the starting process⏬
+
+**Step 1. Connect the USB cable to your PC or Use Battery Instead to have power supply**
+
+**Step 2. Testing and Uploading date to WaterZen**
+
+2.1) Insert the probe into the solution
+
+2.2) Open report page to see the result of testing
+
+NOTE:
+The probe is a laboratory-grade probe. Do not immerse in liquid for a long time. Otherwise this will shorten the life of the probe.
+
+********(For Developer)********
+Before starting the WaterZen Water Monitor Device (For Developer)
+
+**ESP8266-s01**
+
+There’s so many ways to bend this SoC (System on a Chip), but the basics are:
+
+To program, you have to toggle the GPIO 0 “PRGM” pin to ground after a low signal to the “RSET” pin, so both have to have their own momentary button connected to ground.
+Hook it up to a FTDI (or similar UART as shown in the product images), making sure it’s configured for 3.3V.
+Program it through the Arduino IDE. After you click the “Program” button in Arduino, it will start compiling your program.
+At this time: 
+press and HOLD your “PRGM” button,
+tap the “RSET” button then RELEASE the “program” button when the Arduino IDE finishes the compile, and start “programming…”
+Manually wiring it up can be a PAIN. Look into the very-convenient 29248 adapter that mates your USB-TTL to it easily.
+
+**Arduino Uno with I/O Expansion Shield**
+
