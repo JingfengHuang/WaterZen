@@ -7,6 +7,7 @@ DECO7381 Assignment - Team Galaxy 6
 Before starting the WaterZen project on local
 
 **1) Windows Computer is recommended!**
+Recommended resolution: 1920*1080
 
 **2) Make sure you have node.js and XAMPP installed on your computer.**
 
@@ -80,9 +81,6 @@ tap the “RSET” button then RELEASE the “program” button when the Arduino
 Manually wiring it up can be a PAIN. Look into the very-convenient 29248 adapter that mates your USB-TTL to it easily.
 
 To see the source code of esp8266, please check the Hardware Folder -> deco7381_galaxy6_esp8266.ino
-
-Note:
-Connect to the esp8266 using ssid and password(yours) through mobile phone or personal computer.
 
 **Arduino Uno with I/O Expansion Shield**
 
