@@ -47,8 +47,8 @@ Return back to VS terminal and press "Ctrl + C" to stop the project
 --------------------------------------------------------------------------------------------
 **HARDWARE PART**
 
-********(For WaterZen Users)********
-Before starting the WaterZen Water Monitor Device (For WaterZen Users)
+***(For WaterZen Users)***
+Before starting the WaterZen Water Monitor Device
 
 **1) Make sure you have WiFi or Mobile Hotspot.**
 
@@ -65,7 +65,7 @@ Before starting the WaterZen Water Monitor Device (For WaterZen Users)
 NOTE:
 The probe is a laboratory-grade probe. Do not immerse in liquid for a long time. Otherwise this will shorten the life of the probe.
 
-********(For Developer)********
+***(For Developer)***
 
 **ESP8266-s01**
 
