@@ -66,7 +66,6 @@ NOTE:
 The probe is a laboratory-grade probe. Do not immerse in liquid for a long time. Otherwise this will shorten the life of the probe.
 
 ********(For Developer)********
-Before starting the WaterZen Water Monitor Device (For Developer)
 
 **ESP8266-s01**
 
@@ -80,5 +79,8 @@ press and HOLD your “PRGM” button,
 tap the “RSET” button then RELEASE the “program” button when the Arduino IDE finishes the compile, and start “programming…”
 Manually wiring it up can be a PAIN. Look into the very-convenient 29248 adapter that mates your USB-TTL to it easily.
 
+To see the source code of esp8266, please check the Hardware Folder -> deco7381_galaxy6_esp8266.ino
+
 **Arduino Uno with I/O Expansion Shield**
 
+Source code for 6 different sensors can be viewed in the Hardware Folder -> deco7381_galaxy6.ino
