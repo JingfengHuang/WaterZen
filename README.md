@@ -81,6 +81,9 @@ Manually wiring it up can be a PAIN. Look into the very-convenient 29248 adapter
 
 To see the source code of esp8266, please check the Hardware Folder -> deco7381_galaxy6_esp8266.ino
 
+Note:
+Connect to the esp8266 using ssid and password(yours) through mobile phone or personal computer.
+
 **Arduino Uno with I/O Expansion Shield**
 
 Source code for 6 different sensors can be viewed in the Hardware Folder -> deco7381_galaxy6.ino
