@@ -7,6 +7,8 @@ DECO7381 Assignment - Team Galaxy 6
 Before starting the WaterZen project on local
 
 **1) Windows Computer is recommended!**
+
+
 Recommended resolution: 1920*1080
 
 **2) Make sure you have node.js and XAMPP installed on your computer.**
